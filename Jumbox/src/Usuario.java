@@ -1,0 +1,118 @@
+
+public class Usuario implements Encriptador{
+    protected int id;
+    protected String nombre;
+    protected String email;
+    protected String contrasenia;
+    protected String direccion;
+    protected int id_sucursal;
+    protected String elegido;
+    protected int Venta_id_venta;
+    protected int Venta_VentaProducto_id_venta;
+    
+    
+    public Usuario(int id, String nombre, String email, String contrasenia, String direccion, int id_sucursal,
+			String elegido, int venta_id_venta, int venta_VentaProducto_id_venta) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.email = email;
+		this.contrasenia = contrasenia;
+		this.direccion = direccion;
+		this.id_sucursal = id_sucursal;
+		this.elegido = elegido;
+		Venta_id_venta = venta_id_venta;
+		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
+	}
+    
+	public Usuario() {
+      
+    }
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getContrasenia() {
+		return contrasenia;
+	}
+
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public int getId_sucursal() {
+		return id_sucursal;
+	}
+
+	public void setId_sucursal(int id_sucursal) {
+		this.id_sucursal = id_sucursal;
+	}
+
+	public String getElegido() {
+		return elegido;
+	}
+
+	public void setElegido(String elegido) {
+		this.elegido = elegido;
+	}
+
+	public int getVenta_id_venta() {
+		return Venta_id_venta;
+	}
+
+	public void setVenta_id_venta(int venta_id_venta) {
+		Venta_id_venta = venta_id_venta;
+	}
+
+	public int getVenta_VentaProducto_id_venta() {
+		return Venta_VentaProducto_id_venta;
+	}
+
+	public void setVenta_VentaProducto_id_venta(int venta_VentaProducto_id_venta) {
+		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", contrasenia=" + contrasenia
+				+ ", direccion=" + direccion + ", id_sucursal=" + id_sucursal + ", elegido=" + elegido
+				+ ", Venta_id_venta=" + Venta_id_venta + ", Venta_VentaProducto_id_venta="
+				+ Venta_VentaProducto_id_venta + "]";
+	}
+	
+	
+	
+	
+	
+    
+
+}
