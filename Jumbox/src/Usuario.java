@@ -25,8 +25,21 @@ public class Usuario implements Encriptador{
 		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
 	}
     
-	public Usuario() {
-      
+    public Usuario() {
+    	
+    }
+    
+	public Usuario(String nombre, String email, String contrasenia, String direccion, int id_sucursal,
+			String elegido, int venta_id_venta, int venta_VentaProducto_id_venta) {
+		super();
+		this.nombre = nombre;
+		this.email = email;
+		this.contrasenia = contrasenia;
+		this.direccion = direccion;
+		this.id_sucursal = id_sucursal;
+		this.elegido = elegido;
+		Venta_id_venta = venta_id_venta;
+		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
     }
 
 	public int getId() {
