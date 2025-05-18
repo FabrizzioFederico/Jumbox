@@ -23,20 +23,18 @@ public class ControllerUsuario{
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_usuario");
                 String email = rs.getString("email");
                 String direccion = rs.getString("direccion");
+                String password = rs.getString("contrasenia");
                 int id_sucursal = rs.getInt("id_sucursal");
                 String elegido = rs.getString("rol");
                 int venta_id_venta = rs.getInt("Venta_id_venta");
-                int venta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta ");
+                int venta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta");
                 
                 
-
-              
-                usuario =  new Usuario(id, nombre, email, usuario.desencriptar(contrasenia), direccion, id_sucursal, elegido, venta_id_venta , venta_VentaProducto_id_venta  );
-
-                  
+                usuario =  new Usuario(id, nombre, email, usuario.desencriptar(password), direccion, id_sucursal, elegido, venta_id_venta , venta_VentaProducto_id_venta);
+  
             }
         } catch (Exception e) {
             e.printStackTrace();
