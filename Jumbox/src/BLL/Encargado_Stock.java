@@ -1,3 +1,4 @@
+package BLL;
 
 public class Encargado_Stock extends Usuario{
 

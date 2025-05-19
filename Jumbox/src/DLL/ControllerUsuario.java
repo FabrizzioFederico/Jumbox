@@ -1,3 +1,4 @@
+package DLL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -5,6 +6,11 @@ import java.sql.ResultSet;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+
+import BLL.Usuario;
+
 
 public class ControllerUsuario{
 
@@ -61,6 +67,9 @@ public class ControllerUsuario{
             if (filas > 0) {
                 System.out.println("Usuario agregado correctamente.");
             }
+            
+        }catch(MySQLIntegrityConstraintViolationException e) {
+        	JOptionPane.showMessageDialog(null, "Usuario Existente");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,7 +78,7 @@ public class ControllerUsuario{
     public static void Registrarse(Usuario nuevo) {
 		LinkedList<Usuario> creados = mostrarUsuarios();
 		for (Usuario creado : creados) {
-			if (creado.getEmail().equalsIgnoreCase(nuevo.email)) {
+			if (creado.getEmail().equalsIgnoreCase(nuevo.getEmail())) {
 				JOptionPane.showMessageDialog(null, "Usuario creado, con este mismo mail");
 				return;
 			}

@@ -1,3 +1,6 @@
+package BLL;
+
+import repository.Encriptador;
 
 public class Usuario implements Encriptador{
     protected int id;

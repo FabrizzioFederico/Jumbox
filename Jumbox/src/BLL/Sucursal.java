@@ -1,3 +1,4 @@
+package BLL;
 import java.util.LinkedList;
 
 public class Sucursal {
