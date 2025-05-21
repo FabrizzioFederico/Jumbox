@@ -2,13 +2,15 @@ package BLL;
 
 public class Producto {
 	private Sucursal sucursal;
+	private int id;
 	private String nombre;
 	private double precio;
 	private int stock;
 	
-	public Producto(Sucursal sucursal, String nombre, double precio, int stock) {
+	public Producto(Sucursal sucursal, int id, String nombre, double precio, int stock) {
 		super();
 		this.sucursal = sucursal;
+		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.stock = stock;
@@ -20,6 +22,14 @@ public class Producto {
 
 	public void setSucursal(Sucursal sucursal) {
 		this.sucursal = sucursal;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
