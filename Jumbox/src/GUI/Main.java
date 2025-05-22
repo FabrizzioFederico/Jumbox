@@ -49,7 +49,7 @@ public class Main {
 
                 case 1: 
                 	
-                	ControllerUsuario.agregarUsuario(new Usuario("Tano","tano.mastri@davinci.edu.ar","mastri08","almagro 123",1,"Cliente",1,1));
+                	ControllerUsuario.agregarUsuario(new Usuario("Agus","Agus.Spadafora@jumbox.com.ar","Amigo123","Vicente Lopez 123",1,"Admin",1,1));
                     
                     break;
             }
