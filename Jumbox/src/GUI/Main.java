@@ -48,7 +48,7 @@ public class Main {
                     break;
                     
                 case 1: 
-                	ControllerUsuario.agregarUsuario(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),"Agus.Spadafora@jumbox.com.ar","Amigo123","Vicente Lopez 123",1,"Cliente",1,1));
+                	ControllerUsuario.agregarUsuario(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.ValidarContraseña("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,"Cliente",1,1));
                     break;
             }
         } while (menu != 2);

@@ -68,8 +68,8 @@ public class ControllerUsuario{
                 System.out.println("Usuario agregado correctamente.");
             }
             
-        }catch(MySQLIntegrityConstraintViolationException e) {
-        	JOptionPane.showMessageDialog(null, "Usuario Existente");
+        } catch(MySQLIntegrityConstraintViolationException e) { // Preguntar al Gami Existente (Validaciones) o Campos Vacios
+        	JOptionPane.showMessageDialog(null, "Usuario Existente o Campos Vacios");
         } catch (Exception e) {
             e.printStackTrace();
         }
