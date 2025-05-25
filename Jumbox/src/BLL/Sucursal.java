@@ -44,29 +44,6 @@ public class Sucursal {
 		this.direccion = direccion;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Repartidor getRepartidor() {
-		return repartidor;
-	}
-
-	public void setRepartidor(Repartidor repartidor) {
-		this.repartidor = repartidor;
-	}
-
-	public Encargado_Stock getEncargado_stock() {
-		return encargado_stock;
-	}
-
-	public void setEncargado_stock(Encargado_Stock encargado_stock) {
-		this.encargado_stock = encargado_stock;
-	}
 
 	public LinkedList<Producto> getProductos() {
 		return productos;
