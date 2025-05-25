@@ -95,15 +95,15 @@ public class ControllerUsuario{
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_usuario");
                 String nombre = rs.getString("nombre");
                 String email = rs.getString("email");
                 String contrasenia = rs.getString("contrasenia");
                 String direccion = rs.getString("direccion");
                 int idSucursal = rs.getInt("Id_sucursal");
-                String elegido = rs.getString("elegido");
-                int idVenta_id_venta = rs.getInt("Id_venta");
-                int idVenta_VentaProducto_id_venta = rs.getInt("idVenta_VentaProducto_id_venta");
+                String elegido = rs.getString("rol");
+                int idVenta_id_venta = rs.getInt("Venta_id_venta");
+                int idVenta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta");
                
                 usuarios.add(new Usuario(id, nombre, email, contrasenia, direccion, idSucursal, elegido, idVenta_id_venta, idVenta_VentaProducto_id_venta));
 

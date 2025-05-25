@@ -15,7 +15,7 @@ public class Main {
         
         ControllerUsuario controller = new ControllerUsuario();
         
-        String[] acciones = { "Login", "Registrar", "Salir" };
+        String[] acciones = { "Login", "Registrar", "Ver Usuarios", "Salir" };
         int menu = 0;
         
         do {
@@ -48,9 +48,21 @@ public class Main {
                     break;
                     
                 case 1: 
-                	ControllerUsuario.agregarUsuario(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.ValidarContraseña("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,"Cliente",1,1));
+                	ControllerUsuario.Registrarse(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.ValidarContraseña("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,"Cliente",1,1));
                     break;
+                case 2:
+                	String nombresUsuarios="";
+                	if (ControllerUsuario.mostrarUsuarios().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "La lista está vacía");
+					} else {
+						for (Usuario u : ControllerUsuario.mostrarUsuarios()) {
+	    					nombresUsuarios = nombresUsuarios + "ID Cuenta: "+ u.getId() + " | Nombre: " + u.getNombre() + " | Email: " + u.getEmail() + " | Rol: " + u.getElegido() + " | Dirección: " + u.getDireccion() + "\n";
+	    				}
+	    				String[] nombreUsuarios = nombresUsuarios.split("\n");
+	    				JOptionPane.showMessageDialog(null, nombreUsuarios);
+					}
+                	break;
             }
-        } while (menu != 2);
+        } while (menu != 3);
     }
 }
