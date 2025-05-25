@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import BLL.Usuario;
 import DLL.ControllerUsuario;
+import repository.Validaciones;
 
 public class Main {
     public static void main(String[] args) {
@@ -38,19 +39,16 @@ public class Main {
                         }
                     }
 
-                    
                     Usuario usuario = controller.login(nombre, contrasenia);
                     if (usuario != null) {
-                        JOptionPane.showMessageDialog(null, usuario);
+                        JOptionPane.showMessageDialog(null, "Bienvenido " + usuario.getNombre() + "!!!");
                     } else {
                         JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
                     }
                     break;
-
-                case 1: 
-                	
-                	ControllerUsuario.agregarUsuario(new Usuario("Agus","Agus.Spadafora@jumbox.com.ar","Amigo123","Vicente Lopez 123",1,"Admin",1,1));
                     
+                case 1: 
+                	ControllerUsuario.agregarUsuario(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),"Agus.Spadafora@jumbox.com.ar","Amigo123","Vicente Lopez 123",1,"Cliente",1,1));
                     break;
             }
         } while (menu != 2);
