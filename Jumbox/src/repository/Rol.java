@@ -1,8 +1,8 @@
 package repository;
 
 public enum Rol {
-	Cliente,
-	Encargado_Stock,
-	Repartidor,
-	Admin
+	CLIENTE,
+	ENCARGADO_STOCK,
+	REPARTIDOR,
+	ADMIN
 }

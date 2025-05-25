@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import BLL.Usuario;
 import DLL.ControllerUsuario;
+import repository.Rol;
 import repository.Validaciones;
 
 public class Main {
@@ -47,8 +48,8 @@ public class Main {
                     }
                     break;
                     
-                case 1: 
-                	ControllerUsuario.Registrarse(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.ValidarContraseña("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,"Cliente",1,1));
+                case 1:
+                	ControllerUsuario.Registrarse(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.ValidarContraseña("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,((Rol)JOptionPane.showInputDialog(null,"Seleccione una Opción","Jumbox",0,null,Rol.values(),Rol.values()[0])).name(),1,1));
                     break;
                 case 2:
                 	String nombresUsuarios="";
