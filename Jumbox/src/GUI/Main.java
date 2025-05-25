@@ -6,7 +6,9 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import BLL.Producto;
 import BLL.Usuario;
+import DLL.ControllerProducto;
 import DLL.ControllerUsuario;
 import repository.Rol;
 import repository.Validaciones;
@@ -16,7 +18,7 @@ public class Main {
         
         ControllerUsuario controller = new ControllerUsuario();
         
-        String[] acciones = { "Login", "Registrar", "Ver Usuarios", "Salir" };
+        String[] acciones = { "Login", "Registrar", "Ver Usuarios","Agregar Producto","Mostrar producto", "Salir" };
         int menu = 0;
         
         do {
@@ -63,7 +65,22 @@ public class Main {
 	    				JOptionPane.showMessageDialog(null, nombreUsuarios);
 					}
                 	break;
+                case 3:
+                	ControllerProducto.agregarProducto(new Producto("Pepsi", 20, 5, 1,1));
+                case 4:
+                	String nombresProductos="";
+                	if (ControllerProducto.mostrarProductos().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "La lista está vacía");
+					} else {
+						for (Producto p : ControllerProducto.mostrarProductos()) {
+	    					nombresProductos = nombresProductos + "ID Producto: "+ p.getId() + " | Nombre: " + p.getNombre() + " | Precio: " + p.getPrecio() + " | Stock: " + p.getStock() + "\n";
+	    				}
+	    				String[] nombreProductos = nombresProductos.split("\n");
+	    				JOptionPane.showMessageDialog(null, nombreProductos);
+					}
+                	break;
+                	
             }
-        } while (menu != 3);
+        } while (menu != 5);
     }
 }

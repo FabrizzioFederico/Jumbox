@@ -2,12 +2,15 @@ package DLL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import BLL.Producto;
+import BLL.Usuario;
 
 public class ControllerProducto {
 	
@@ -16,7 +19,7 @@ public class ControllerProducto {
 	public static void agregarProducto(Producto producto) {
         try {
             PreparedStatement statement = con.prepareStatement(
-                "INSERT INTO producto (nombre, precio, stock, id_sucursal, Venta_VentaProducto_id_venta) VALUES (?, ?, ?, ?, ?)"
+                "INSERT INTO producto (nombre, precio, stock, id_sucursal, VentaProducto_id_venta) VALUES (?, ?, ?, ?, ?)"
             );
             statement.setString(1, producto.getNombre());
             statement.setDouble(2, producto.getPrecio());
@@ -37,6 +40,28 @@ public class ControllerProducto {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+	public static LinkedList<Producto> mostrarProductos() {
+        LinkedList<Producto> productos = new LinkedList<>();
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM producto");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id_producto");
+                String nombre = rs.getString("nombre");
+                double precio = rs.getDouble("precio");
+                int stock = rs.getInt("stock");
+                int idSucursal = rs.getInt("id_sucursal");
+                int VentaProducto_id_venta = rs.getInt("VentaProducto_id_venta");
+               
+                productos.add(new Producto(id, nombre, precio,  stock,  idSucursal, VentaProducto_id_venta));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productos;
     }
 	
 	

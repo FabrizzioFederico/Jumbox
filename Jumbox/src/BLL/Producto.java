@@ -1,6 +1,7 @@
 package BLL;
 
 public class Producto {
+	private int id;
 	private String nombre;
 	private double precio;
 	private int stock;
@@ -15,8 +16,25 @@ public class Producto {
 		this.id_sucursal= id_sucursal;
 		this.VentaProducto_id_venta= VentaProducto_id_venta;
 	}
+	
+	public Producto(int id, String nombre, double precio, int stock, int id_sucursal, int VentaProducto_id_venta) {
+		super();
+		this.id= id;
+		this.nombre = nombre;
+		this.precio = precio;
+		this.stock = stock;
+		this.id_sucursal= id_sucursal;
+		this.VentaProducto_id_venta= VentaProducto_id_venta;
+	}
 
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
