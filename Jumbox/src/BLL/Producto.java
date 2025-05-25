@@ -26,6 +26,10 @@ public class Producto {
 		this.id_sucursal= id_sucursal;
 		this.VentaProducto_id_venta= VentaProducto_id_venta;
 	}
+	
+	public Producto() {
+		
+	}
 
 	public int getId() {
 		return id;

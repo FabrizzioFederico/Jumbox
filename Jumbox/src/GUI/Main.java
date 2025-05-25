@@ -18,7 +18,7 @@ public class Main {
         
         ControllerUsuario controller = new ControllerUsuario();
         
-        String[] acciones = { "Login", "Registrar", "Ver Usuarios","Agregar Producto","Mostrar producto", "Salir" };
+        String[] acciones = { "Login", "Registrar", "Ver Usuarios","Agregar Producto","Mostrar Productos", "Buscar producto" , "Eliminar productos", "Salir" };
         int menu = 0;
         
         do {
@@ -66,7 +66,7 @@ public class Main {
 					}
                 	break;
                 case 3:
-                	ControllerProducto.agregarProducto(new Producto("Pepsi", 20, 5, 1,1));
+                	ControllerProducto.agregarProducto(new Producto("Coca", 20, 5, 1,1));
                 case 4:
                 	String nombresProductos="";
                 	if (ControllerProducto.mostrarProductos().isEmpty()) {
@@ -79,8 +79,11 @@ public class Main {
 	    				JOptionPane.showMessageDialog(null, nombreProductos);
 					}
                 	break;
+                case 5:
+                	JOptionPane.showMessageDialog(null, ControllerProducto.buscarProducto(1)==null?"Producto no encontrado":ControllerProducto.buscarProducto(1));
+                	break;
                 	
             }
-        } while (menu != 5);
+        } while (menu != 7);
     }
 }

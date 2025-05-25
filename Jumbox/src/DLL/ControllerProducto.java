@@ -64,6 +64,60 @@ public class ControllerProducto {
         return productos;
     }
 	
+	public static void actualizarProducto(Producto producto) {
+	    try {
+	        PreparedStatement statement = con.prepareStatement(
+	            "UPDATE producto SET nombre = ?, precio = ?, stock = ?, id_sucursal = ?, VentaProducto_id_venta = ? WHERE id_producto = ?"
+	        );
+	        statement.setString(1, producto.getNombre());
+	        statement.setDouble(2, producto.getPrecio());
+	        statement.setInt(3, producto.getStock());
+	        statement.setInt(4, producto.getid_sucursal());
+	        statement.setInt(5, producto.getVentaProducto_id_venta());
+	        statement.setInt(6, producto.getId()); 
+
+	        int filas = statement.executeUpdate();
+	        if (filas > 0) {
+	            System.out.println("Producto actualizado correctamente.");
+	        } else {
+	            System.out.println("No se encontró el producto para actualizar.");
+	        }
+	    } catch (MySQLIntegrityConstraintViolationException e) {
+	        JOptionPane.showMessageDialog(null, "Error de integridad: datos duplicados o campos vacíos.");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	}
 	
+	public static Producto buscarProducto(int id_producto) {
+	    Producto producto = null;
+
+	    try {
+	        PreparedStatement statement = con.prepareStatement(
+	            "SELECT * FROM producto WHERE id_producto = ?"
+	        );
+	        statement.setInt(1, id_producto);
+
+	        ResultSet rs = statement.executeQuery();
+
+	        if (rs.next()) {
+	        	producto = new Producto();
+	            producto.setId(rs.getInt("id_producto"));
+	            producto.setNombre(rs.getString("nombre"));
+	            producto.setPrecio(rs.getDouble("precio"));
+	            producto.setStock(rs.getInt("stock"));
+	            producto.setid_sucursal(rs.getInt("id_sucursal"));
+	            producto.setVentaProducto_id_venta(rs.getInt("VentaProducto_id_venta"));
+	        } else {
+	            return null;
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return producto;
+	}
 	
 }
