@@ -18,7 +18,7 @@ public class Main {
         
         ControllerUsuario controller = new ControllerUsuario();
         
-        String[] acciones = { "Login", "Registrar", "Ver Usuarios","Agregar Producto","Mostrar Productos", "Buscar producto" , "Eliminar productos", "Salir" };
+        String[] acciones = { "Login", "Registrar", "Ver Usuarios","Agregar Producto", "Buscar producto" , "Eliminar productos","Mostrar Productos", "Salir" };
         int menu = 0;
         
         do {
@@ -66,8 +66,13 @@ public class Main {
 					}
                 	break;
                 case 3:
-                	ControllerProducto.agregarProducto(new Producto("Coca", 20, 5, 1,1));
+                	ControllerProducto.agregarProducto(new Producto("Lays", 40, 5, 1,1));
                 case 4:
+                	JOptionPane.showMessageDialog(null, ControllerProducto.buscarProducto(1)==null?"Producto no encontrado":ControllerProducto.buscarProducto(1));
+                	break;
+                case 5: 
+                	ControllerProducto.eliminarProducto(6);
+                case 6: 
                 	String nombresProductos="";
                 	if (ControllerProducto.mostrarProductos().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "La lista está vacía");
@@ -79,10 +84,6 @@ public class Main {
 	    				JOptionPane.showMessageDialog(null, nombreProductos);
 					}
                 	break;
-                case 5:
-                	JOptionPane.showMessageDialog(null, ControllerProducto.buscarProducto(1)==null?"Producto no encontrado":ControllerProducto.buscarProducto(1));
-                	break;
-                	
             }
         } while (menu != 7);
     }

@@ -120,4 +120,23 @@ public class ControllerProducto {
 	    return producto;
 	}
 	
+	public static void eliminarProducto(int id_producto) {
+	    try {
+	        PreparedStatement statement = con.prepareStatement(
+	            "DELETE FROM producto WHERE id_producto = ?"
+	        );
+	        statement.setInt(1, id_producto);
+
+	        int filas = statement.executeUpdate();
+	        if (filas > 0) {
+	            JOptionPane.showMessageDialog(null, "Producto eliminado con éxito");
+	        } else {
+	            JOptionPane.showMessageDialog(null, "No se encontró el producto para eliminar.");
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 }
