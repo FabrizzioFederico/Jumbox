@@ -1,5 +1,7 @@
 package BLL;
 
+import javax.swing.JOptionPane;
+
 import repository.Encriptador;
 
 public class Usuario implements Encriptador{
@@ -124,11 +126,6 @@ public class Usuario implements Encriptador{
 				+ ", Venta_id_venta=" + Venta_id_venta + ", Venta_VentaProducto_id_venta="
 				+ Venta_VentaProducto_id_venta + "]";
 	}
+	   
 	
-	
-	
-	
-	
-    
-
 }
