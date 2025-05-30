@@ -68,7 +68,7 @@ public class ControllerUsuario{
                 System.out.println("Usuario agregado correctamente.");
             }
             
-        } catch(MySQLIntegrityConstraintViolationException e) { // Preguntar al Gami Existente (Validaciones) o Campos Vacios
+        } catch(MySQLIntegrityConstraintViolationException e) {
         	JOptionPane.showMessageDialog(null, "Usuario Existente o Campos Vacios");
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,5 +112,79 @@ public class ControllerUsuario{
             e.printStackTrace();
         }
         return usuarios;
+    }
+    
+    public static boolean Editar(Usuario usuario) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id = ?");
+			//"UPDATE `usuario` SET `nombre`=?,`email`=?,`tipo`=?,`password`=?  WHERE id = ?"
+			stmt.setString(1, usuario.getNombre());
+			stmt.setString(2, usuario.getEmail());
+			stmt.setString(3, usuario.encriptar(usuario.getContrasenia()));
+			stmt.setInt(4,usuario.getId_sucursal());
+			stmt.setString(5,usuario.getElegido());
+			stmt.setInt(6,usuario.getVenta_id_venta());
+			stmt.setInt(7,usuario.getVenta_VentaProducto_id_venta());
+			stmt.setInt(8,usuario.getId());
+
+			int filas = stmt.executeUpdate();
+			if (filas > 0) {
+				System.out.println("Usuario editado correctamente.");
+			}
+			
+		}catch (MySQLIntegrityConstraintViolationException e) {
+			JOptionPane.showMessageDialog(null, "Mail existente");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+    
+    public static boolean Eliminar(Usuario usuario) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM `usuario` WHERE id = ?");
+			stmt.setInt(1,usuario.getId());
+
+			int filas = stmt.executeUpdate();
+			if (filas > 0) {
+				System.out.println("Usuario eliminado correctamente.");
+			}
+			
+		}catch (MySQLIntegrityConstraintViolationException e) {
+			JOptionPane.showMessageDialog(null, "No existe usuario con ese ID");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+    
+    public static Usuario buscarUsuario(int id_buscado) { // esto se va a cambiar con la interfaz Gráfica
+    	Usuario usuario = new Usuario();
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM usuario WHERE id_usuario = ?");
+            stmt.setInt(1, id_buscado);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id_usuario");
+                String nombre = rs.getString("nombre");
+                String email = rs.getString("email");
+                String contrasenia = rs.getString("contrasenia");
+                String direccion = rs.getString("direccion");
+                int idSucursal = rs.getInt("Id_sucursal");
+                String elegido = rs.getString("rol");
+                int idVenta_id_venta = rs.getInt("Venta_id_venta");
+                int idVenta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta");
+               
+                usuario = new Usuario(id, nombre, email, contrasenia, direccion, idSucursal, elegido, idVenta_id_venta, idVenta_VentaProducto_id_venta);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return usuario;
     }
 }

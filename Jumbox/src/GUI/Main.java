@@ -16,7 +16,7 @@ public class Main {
         
         ControllerUsuario controller = new ControllerUsuario();
         
-        String[] acciones = { "Login", "Registrar", "Ver Usuarios", "Salir" };
+        String[] acciones = { "Login", "Registrar", "Ver Usuarios", "Buscar Usuario", "Salir" };
         int menu = 0;
         
         do {
@@ -63,7 +63,12 @@ public class Main {
 	    				JOptionPane.showMessageDialog(null, nombreUsuarios);
 					}
                 	break;
+                case 3:
+                	Usuario encontrado = ControllerUsuario.buscarUsuario(Validaciones.validarNumero("Ingrese un ID"));
+                	JOptionPane.showMessageDialog(null, 
+                	    encontrado.getNombre() != null ? encontrado : "No se encontró ningún usuario con ese ID");
+                	break;
             }
-        } while (menu != 3);
+        } while (menu != 4);
     }
 }
