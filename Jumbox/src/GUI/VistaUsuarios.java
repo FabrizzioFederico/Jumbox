@@ -154,7 +154,7 @@ public class VistaUsuarios extends JFrame {
                 "Rol", rolComboBox,
                 //"ID Venta", ventaIdVentaField,
                 //"Id Venta Producto", ventaVentaProductoIdVenta
-            //Aca Agregar cosas
+                //Aca Agregar cosas
             };
 
             int option = JOptionPane.showConfirmDialog(null, fields, "Agregar Usuario", JOptionPane.OK_CANCEL_OPTION);
@@ -183,8 +183,6 @@ public class VistaUsuarios extends JFrame {
             	EditarUsuario editar = new EditarUsuario(usuarioSeleccionado);
             	editar.setVisible(true);
             	dispose();
-            	VistaUsuarios vistaUsuarios = new VistaUsuarios();
-                vistaUsuarios.setVisible(true);
             	
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un usuario.");

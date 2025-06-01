@@ -116,20 +116,22 @@ public class ControllerUsuario{
     
     public static boolean Editar(Usuario usuario) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id = ?");
+			PreparedStatement stmt = con.prepareStatement("UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id_usuario = ?");
 			//"UPDATE `usuario` SET `nombre`=?,`email`=?,`tipo`=?,`password`=?  WHERE id = ?"
 			stmt.setString(1, usuario.getNombre());
 			stmt.setString(2, usuario.getEmail());
 			stmt.setString(3, usuario.encriptar(usuario.getContrasenia()));
-			stmt.setInt(4,usuario.getId_sucursal());
-			stmt.setString(5,usuario.getElegido());
-			stmt.setInt(6,usuario.getVenta_id_venta());
-			stmt.setInt(7,usuario.getVenta_VentaProducto_id_venta());
-			stmt.setInt(8,usuario.getId());
+			stmt.setString(4,usuario.getDireccion());
+			stmt.setInt(5,usuario.getId_sucursal());
+			stmt.setString(6,usuario.getElegido());
+			stmt.setInt(7,usuario.getVenta_id_venta());
+			stmt.setInt(8,usuario.getVenta_VentaProducto_id_venta());
+			stmt.setInt(9,usuario.getId());
 
 			int filas = stmt.executeUpdate();
 			if (filas > 0) {
 				System.out.println("Usuario editado correctamente.");
+				return true;
 			}
 			
 		}catch (MySQLIntegrityConstraintViolationException e) {
