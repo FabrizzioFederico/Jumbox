@@ -132,7 +132,7 @@ public class VistaProducto extends JFrame {
         // Cargar datos
         cargarTabla();
 
-        // Acción: Agregar usuario
+        // Acción: Agregar producto
         btnAgregar.addActionListener(e -> {
             JTextField nombreField = new JTextField();
             JTextField precioField = new JTextField();
@@ -158,14 +158,14 @@ public class VistaProducto extends JFrame {
                         id_sucursalField.getText(),
                         0);
 
-                DLLUsuario.Registrarse(nuevo);
+                DLLControllerProducto.agregarProducto(nuevo);
                 cargarTabla();
             }
         });
 
-        // Acción: Editar usuario
+        // Acción: Editar producto
         btnEditar.addActionListener(e -> {
-            if (usuarioSeleccionado != null) {
+            if (productoSeleccionado != null) {
 
             	EditarUsuario editar = new EditarUsuario(usuarioSeleccionado);
             	editar.setVisible(true);
@@ -176,18 +176,18 @@ public class VistaProducto extends JFrame {
             }
         });
 
-        // Acción: Eliminar usuario
+        // Acción: Eliminar producto
         btnEliminar.addActionListener(e -> {
-            if (usuarioSeleccionado != null) {
-                int confirm = JOptionPane.showConfirmDialog(null, "¿Eliminar a " + usuarioSeleccionado.getNombre() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (productoSeleccionado != null) {
+                int confirm = JOptionPane.showConfirmDialog(null, "¿Eliminar a " + productoSeleccionado.getNombre() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    // Asumimos que hay un método DLLUsuario.eliminarUsuario(id)
+                    // Asumimos que hay un método DLLProducto.eliminarProducto(id)
                     JOptionPane.showMessageDialog(null, "Función de eliminación aún no implementada.");
-                    // DLLUsuario.eliminarUsuario(usuarioSeleccionado.getId());
+                    // DLLProducto.eliminarProducto(productoSeleccionado.getId());
                     cargarTabla();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
+                JOptionPane.showMessageDialog(null, "Seleccione un producto.");
             }
         });
     }
@@ -196,41 +196,40 @@ public class VistaProducto extends JFrame {
         model.setRowCount(0);
         //Alfabeticamente de Z a A
        
-//        LinkedList<Usuario> ordenados = DLLUsuario.mostrarUsuarios().stream()
-//        	    .filter(usuario -> usuario.getNombre() != null && !usuario.getNombre().isEmpty())
-//        	    .sorted(Comparator.comparing(Usuario::getNombre, String.CASE_INSENSITIVE_ORDER).reversed()) //sacan esto para que sea de A a la Z
+//        LinkedList<Producto> ordenados = DLLControllerProducto.mostrarProductos().stream()
+//        	    .filter(producto -> producto.getNombre() != null && !producto.getNombre().isEmpty())
 //        	    .collect(Collectors.toCollection(LinkedList::new));
 
-        LinkedList<Usuario>ordenados = DLLUsuario.mostrarUsuarios().stream()
-        	    .sorted(Comparator.comparingInt(Usuario::getId).reversed())
+        LinkedList<Producto>ordenados = DLLControllerProducto.mostrarProductos().stream()
+        	    .sorted(Comparator.comparingInt(Producto::getId).reversed())
         	    .collect(Collectors.toCollection(LinkedList::new));
 
-        for (Usuario usuario : ordenados) {
+        for (Producto producto : ordenados) {
             model.addRow(new Object[]{
-            		usuario.getId(), 
-            		usuario.getNombre(),
-            		usuario.getEmail(), 
-            		usuario.getTipo(),
-            		usuario.getPassword()
-            		}
-            );
-    		
-        	}
+            		producto.getId(), 
+            		producto.getNombre(),
+            		producto.getPrecio(), 
+            		producto.getStock(),
+            		producto.getid_sucursal(),
+            		producto.getVentaProducto_id_venta());
+            }
+        	
     }
     private void cargarTablaFILTRAR(String filtro) {
         model.setRowCount(0);
-        LinkedList<Usuario> usuarios = DLLUsuario.mostrarUsuarios();
-        for (Usuario usuario : usuarios) {
-        	if(usuario.getNombre().toLowerCase().startsWith(
+        LinkedList<Producto> productos = DLLControllerProducto.mostrarProductos();
+        for (Producto producto : productos) {
+        	if(producto.getNombre().toLowerCase().startsWith(
         			filtro.toLowerCase())
         			||
-        			usuario.getNombre().contains(filtro)) {
+        			producto.getNombre().contains(filtro)) {
             model.addRow(new Object[]{
-            		usuario.getId(), 
-            		usuario.getNombre(),
-            		usuario.getEmail(), 
-            		usuario.getTipo(),
-            		usuario.getPassword()
+            		producto.getId(), 
+            		producto.getNombre(),
+            		producto.getPrecio(), 
+            		producto.getStock(),
+            		producto.getid_sucursal(),
+            		producto.getVentaProducto_id_venta()
             		}
             );
         	}
@@ -240,18 +239,19 @@ public class VistaProducto extends JFrame {
     private void cargarTablaFILTRARStream(String filtro) {
         model.setRowCount(0);
         
-        LinkedList<Usuario> filtradasPorLetra = DLLUsuario.mostrarUsuarios().stream()
-        	    .filter(usuario -> usuario.getNombre() != null && usuario.getNombre().startsWith(filtro))
+        LinkedList<Producto> filtradasPorLetra = DLLControllerProducto.mostrarProductos().stream()
+        	    .filter(producto -> producto.getNombre() != null && producto.getNombre().startsWith(filtro))
         	    .collect(Collectors.toCollection(LinkedList::new));
 
-        for (Usuario usuario : filtradasPorLetra) {
+        for (Producto producto : filtradasPorLetra) {
         	
             model.addRow(new Object[]{
-            		usuario.getId(), 
-            		usuario.getNombre(),
-            		usuario.getEmail(), 
-            		usuario.getTipo(),
-            		usuario.getPassword()
+            		producto.getId(), 
+            		producto.getNombre(),
+            		producto.getPrecio(), 
+            		producto.getStock(),
+            		producto.getid_sucursal(),
+            		producto.getVentaProducto_id_venta()
             		}
             );
         	
