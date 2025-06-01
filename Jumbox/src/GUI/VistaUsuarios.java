@@ -183,6 +183,8 @@ public class VistaUsuarios extends JFrame {
             	EditarUsuario editar = new EditarUsuario(usuarioSeleccionado);
             	editar.setVisible(true);
             	dispose();
+            	VistaUsuarios vistaUsuarios = new VistaUsuarios();
+                vistaUsuarios.setVisible(true);
             	
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
@@ -196,6 +198,8 @@ public class VistaUsuarios extends JFrame {
                 if (confirm == JOptionPane.YES_OPTION) {
                 	ControllerUsuario.Eliminar(usuarioSeleccionado);
                 	dispose();
+                	VistaUsuarios vistaUsuarios = new VistaUsuarios();
+                    vistaUsuarios.setVisible(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
