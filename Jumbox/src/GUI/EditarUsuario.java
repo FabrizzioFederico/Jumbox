@@ -39,7 +39,7 @@ public class EditarUsuario extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel nombre = new JLabel("nombre");
+		JLabel nombre = new JLabel("Nombre");
 		nombre.setBounds(48, 72, 116, 14);
 		contentPane.add(nombre);
 		
@@ -49,7 +49,7 @@ public class EditarUsuario extends JFrame {
 		contentPane.add(inpNombre);
 		inpNombre.setColumns(10);
 		
-		mail = new JLabel("mail");
+		mail = new JLabel("Mail");
 		mail.setBounds(48, 128, 116, 14);
 		contentPane.add(mail);
 		
@@ -65,12 +65,14 @@ public class EditarUsuario extends JFrame {
 		inpContrasenia.setBounds(48, 209, 116, 20);
 		contentPane.add(inpContrasenia);
 		
-		contrasenia = new JLabel("contraseña");
+		contrasenia = new JLabel("Contraseña");
 		contrasenia.setBounds(48, 184, 116, 14);
 		contentPane.add(contrasenia);
 		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("Profesor");
-		comboBox.addItem("Administrador");
+		comboBox.addItem("Cliente");
+		comboBox.addItem("Encargado Stock");
+		comboBox.addItem("Repartidor");
+		comboBox.addItem("Admin");
 
 		comboBox.setBounds(48, 244, 116, 22);
 		contentPane.add(comboBox);

@@ -43,8 +43,14 @@ public class VistaUsuarios extends JFrame {
         		new String[]{"ID", 
         				"Nombre",
         				"Email",
-        				"Tipo"}, 0);
-        				//"Contraseña", por si lo agrego despues
+        				"Contraseña",
+        				"Dirección",
+        				"Sucursal",
+        				"Rol",
+        				"ID Venta",
+        				"ID Venta Producto"
+        				}, 0);
+        				// Contraseña por si lo agrego despues
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(10, 40, 760, 200);
@@ -82,7 +88,13 @@ public class VistaUsuarios extends JFrame {
                     lblSeleccionado.setText("Seleccionado: ID=" + usuarioSeleccionado.getId()
                             + ", Nombre=" + usuarioSeleccionado.getNombre()
                             + ", Email=" + usuarioSeleccionado.getEmail()
-                            + ", Tipo=" + usuarioSeleccionado.getElegido());
+                            + ", Contraseña=" + usuarioSeleccionado.getContrasenia()
+                            + ", Dirección=" + usuarioSeleccionado.getDireccion() 
+                            + ", Sucursal=" + usuarioSeleccionado.getId_sucursal() 
+                            + ", Rol=" + usuarioSeleccionado.getElegido() 
+                            + ", ID Venta=" + usuarioSeleccionado.getVenta_id_venta()
+                            + ", ID Venta Producto=" + usuarioSeleccionado.getVenta_VentaProducto_id_venta()
+                    		);
                     
                    
                 }
@@ -124,23 +136,23 @@ public class VistaUsuarios extends JFrame {
         btnAgregar.addActionListener(e -> {
             JTextField nombreField = new JTextField();
             JTextField emailField = new JTextField();
-            JTextField tipoField = new JTextField();
             JPasswordField passwordField = new JPasswordField();
             JTextField direccionField = new JTextField();
             JTextField idSucursalField = new JTextField();
             JTextField elegidoField = new JTextField();
-            //JTextField ventaIdVentaField = new JTextField();
-            //JTextField ventaVentaProductoIdVenta = new JTextField();
+            JTextField ventaIdVentaField = new JTextField();
+            JTextField ventaVentaProductoIdVenta = new JTextField();
             //Aca Agregar cosas
 
             Object[] fields = {
                 "Nombre:", nombreField,
                 "Email:", emailField,
-                "Tipo:", tipoField,
                 "Contraseña:", passwordField,
                 "Dirección", direccionField,
                 "Sucursal", idSucursalField,
                 "Rol", elegidoField,
+                //"ID Venta", ventaIdVentaField,
+                //"Id Venta Producto", ventaVentaProductoIdVenta
             //Aca Agregar cosas
             };
 
@@ -181,10 +193,8 @@ public class VistaUsuarios extends JFrame {
             if (usuarioSeleccionado != null) {
                 int confirm = JOptionPane.showConfirmDialog(null, "¿Eliminar a " + usuarioSeleccionado.getNombre() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    // Asumimos que hay un método DLLUsuario.eliminarUsuario(id)
-                    JOptionPane.showMessageDialog(null, "Función de eliminación aún no implementada.");
-                    // DLLUsuario.eliminarUsuario(usuarioSeleccionado.getId());
-                    cargarTabla();
+                	ControllerUsuario.Eliminar(usuarioSeleccionado);
+                	dispose();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
@@ -210,8 +220,12 @@ public class VistaUsuarios extends JFrame {
             		usuario.getId(), 
             		usuario.getNombre(),
             		usuario.getEmail(), 
+            		usuario.getContrasenia(),
+            		usuario.getDireccion(),
+            		usuario.getId_sucursal(),
             		usuario.getElegido(),
-            		usuario.getContrasenia()
+            		usuario.getVenta_id_venta(),
+            		usuario.getVenta_VentaProducto_id_venta()
             		}
             );
     		
@@ -229,8 +243,12 @@ public class VistaUsuarios extends JFrame {
             		usuario.getId(), 
             		usuario.getNombre(),
             		usuario.getEmail(), 
+            		usuario.getContrasenia(),
+            		usuario.getDireccion(),
+            		usuario.getId_sucursal(),
             		usuario.getElegido(),
-            		usuario.getContrasenia()
+            		usuario.getVenta_id_venta(),
+            		usuario.getVenta_VentaProducto_id_venta()
             		}
             );
         	}
@@ -250,8 +268,12 @@ public class VistaUsuarios extends JFrame {
             		usuario.getId(), 
             		usuario.getNombre(),
             		usuario.getEmail(), 
+            		usuario.getContrasenia(),
+            		usuario.getDireccion(),
+            		usuario.getId_sucursal(),
             		usuario.getElegido(),
-            		usuario.getContrasenia()
+            		usuario.getVenta_id_venta(),
+            		usuario.getVenta_VentaProducto_id_venta()
             		}
             );
         	

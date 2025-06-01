@@ -24,8 +24,8 @@ public class Usuario implements Encriptador{
 		this.direccion = direccion;
 		this.id_sucursal = id_sucursal;
 		this.elegido = elegido;
-		Venta_id_venta = venta_id_venta;
-		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
+		this.Venta_id_venta = venta_id_venta;
+		this.Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
 	}
     
     public Usuario() {
@@ -41,8 +41,8 @@ public class Usuario implements Encriptador{
 		this.direccion = direccion;
 		this.id_sucursal = id_sucursal;
 		this.elegido = elegido;
-		Venta_id_venta = venta_id_venta;
-		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
+		this.Venta_id_venta = venta_id_venta;
+		this.Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
     }
 
 	public int getId() {

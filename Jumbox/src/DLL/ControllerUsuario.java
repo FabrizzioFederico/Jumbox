@@ -143,7 +143,7 @@ public class ControllerUsuario{
     
     public static boolean Eliminar(Usuario usuario) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("DELETE FROM `usuario` WHERE id = ?");
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM `usuario` WHERE id_usuario = ?");
 			stmt.setInt(1,usuario.getId());
 
 			int filas = stmt.executeUpdate();
