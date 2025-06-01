@@ -118,7 +118,26 @@ public class Usuario implements Encriptador{
 	public void setVenta_VentaProducto_id_venta(int venta_VentaProducto_id_venta) {
 		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
 	}
+	
+	
+	
+	
+	
+	
 
+	public static Usuario login(String nombre, String password) {
+		
+		if (nombre.isEmpty() || password.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "No puede ser vacio");
+		}else {
+			
+			return Usuario.login(nombre, password);
+		}
+		return null;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", contrasenia=" + contrasenia
