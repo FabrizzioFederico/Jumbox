@@ -8,7 +8,7 @@ public class Producto {
 	private int id_sucursal;
 	private int VentaProducto_id_venta;
 	
-	public Producto( String nombre, double precio, int stock, int id_sucursal, int VentaProducto_id_venta) {
+	public Producto( String nombre, double precio, int stock, int id_sucursal, int VentaProducto_id_venta) { //Sin ID
 		super();
 		this.nombre = nombre;
 		this.precio = precio;
@@ -17,7 +17,7 @@ public class Producto {
 		this.VentaProducto_id_venta= VentaProducto_id_venta;
 	}
 	
-	public Producto(int id, String nombre, double precio, int stock, int id_sucursal, int VentaProducto_id_venta) {
+	public Producto(int id, String nombre, double precio, int stock, int id_sucursal, int VentaProducto_id_venta) {//Con ID
 		super();
 		this.id= id;
 		this.nombre = nombre;
@@ -27,7 +27,7 @@ public class Producto {
 		this.VentaProducto_id_venta= VentaProducto_id_venta;
 	}
 	
-	public Producto() {
+	public Producto()  {//Vacío
 		
 	}
 

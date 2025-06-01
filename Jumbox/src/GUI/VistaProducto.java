@@ -1,7 +1,7 @@
 package GUI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
@@ -19,27 +19,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.Producto;
-import BLL.Usuario;
 import DLL.ControllerProducto;
-import java.awt.BorderLayout;
+
 
 public class VistaProducto extends JFrame {
-	public VistaProducto() {
-		getContentPane().setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(0, 0, 434, 261);
-		getContentPane().add(lblNewLabel_1);
-	}
-
-    private JPanel contentPane;
-    private JTable table;
-    private DefaultTableModel model;
-    private Producto productoSeleccionado;
-    private JTextField inpFiltro;
-
-  
-
+	 private JPanel contentPane;
+	    private JTable table;
+	    private DefaultTableModel model;
+	    private Producto productoSeleccionado;
+	    private JTextField inpFiltro;
+   
     public VistaProducto() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 500);
@@ -57,7 +46,8 @@ public class VistaProducto extends JFrame {
         				"Nombre",
         				"Precio",
         				"Stock",
-        				"Contraseña"}, 0);
+        				"Id_sucursal",
+        				"VentaProducto_id_venta"}, 0);
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(10, 40, 760, 200);
@@ -153,12 +143,12 @@ public class VistaProducto extends JFrame {
             if (option == JOptionPane.OK_OPTION) {
                 Producto nuevo = new Producto(0,
                         nombreField.getText(),
-                        precioField.getText(),
-                        stockField.getText(),
-                        id_sucursalField.getText(),
+                        Double.parseDouble(precioField.getText()),
+                        Integer.parseInt(stockField.getText()),
+                        Integer.parseInt(id_sucursalField.getText()),
                         0);
 
-                DLLControllerProducto.agregarProducto(nuevo);
+                ControllerProducto.agregarProducto(nuevo);
                 cargarTabla();
             }
         });
@@ -167,7 +157,7 @@ public class VistaProducto extends JFrame {
         btnEditar.addActionListener(e -> {
             if (productoSeleccionado != null) {
 
-            	EditarUsuario editar = new EditarUsuario(usuarioSeleccionado);
+            	EditarProducto editar = new EditarProducto(productoSeleccionado);
             	editar.setVisible(true);
             	dispose();
             	
@@ -194,14 +184,9 @@ public class VistaProducto extends JFrame {
 
     private void cargarTabla() {
         model.setRowCount(0);
-        //Alfabeticamente de Z a A
-       
-//        LinkedList<Producto> ordenados = DLLControllerProducto.mostrarProductos().stream()
-//        	    .filter(producto -> producto.getNombre() != null && !producto.getNombre().isEmpty())
-//        	    .collect(Collectors.toCollection(LinkedList::new));
-
-        LinkedList<Producto>ordenados = DLLControllerProducto.mostrarProductos().stream()
-        	    .sorted(Comparator.comparingInt(Producto::getId).reversed())
+   
+        LinkedList<Producto>ordenados = ControllerProducto.mostrarProductos().stream()
+        	    .sorted(Comparator.comparingInt(Producto::getId))
         	    .collect(Collectors.toCollection(LinkedList::new));
 
         for (Producto producto : ordenados) {
@@ -211,13 +196,13 @@ public class VistaProducto extends JFrame {
             		producto.getPrecio(), 
             		producto.getStock(),
             		producto.getid_sucursal(),
-            		producto.getVentaProducto_id_venta());
+            		producto.getVentaProducto_id_venta() }
+            		);
             }
-        	
     }
     private void cargarTablaFILTRAR(String filtro) {
         model.setRowCount(0);
-        LinkedList<Producto> productos = DLLControllerProducto.mostrarProductos();
+        LinkedList<Producto> productos = ControllerProducto.mostrarProductos();
         for (Producto producto : productos) {
         	if(producto.getNombre().toLowerCase().startsWith(
         			filtro.toLowerCase())
@@ -239,7 +224,7 @@ public class VistaProducto extends JFrame {
     private void cargarTablaFILTRARStream(String filtro) {
         model.setRowCount(0);
         
-        LinkedList<Producto> filtradasPorLetra = DLLControllerProducto.mostrarProductos().stream()
+        LinkedList<Producto> filtradasPorLetra = ControllerProducto.mostrarProductos().stream()
         	    .filter(producto -> producto.getNombre() != null && producto.getNombre().startsWith(filtro))
         	    .collect(Collectors.toCollection(LinkedList::new));
 
