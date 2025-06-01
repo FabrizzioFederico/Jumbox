@@ -35,7 +35,7 @@ public class ControllerProducto {
                 System.out.println("Producto agregado correctamente.");
             }
             
-        } catch(MySQLIntegrityConstraintViolationException e) { // Preguntar al Gami Existente (Validaciones) o Campos Vacios
+        } catch(MySQLIntegrityConstraintViolationException e) { 
         	JOptionPane.showMessageDialog(null, "Producto Existente o Campos Vacios");
         } catch (Exception e) {
             e.printStackTrace();
