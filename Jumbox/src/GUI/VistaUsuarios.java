@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import BLL.Sucursal;
 import BLL.Usuario;
 import DLL.ControllerUsuario;
+import repository.Rol;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -139,7 +140,7 @@ public class VistaUsuarios extends JFrame {
             JPasswordField passwordField = new JPasswordField();
             JTextField direccionField = new JTextField();
             JTextField idSucursalField = new JTextField();
-            JTextField elegidoField = new JTextField();
+            JComboBox<Rol> rolComboBox = new JComboBox<>(Rol.values());
             JTextField ventaIdVentaField = new JTextField();
             JTextField ventaVentaProductoIdVenta = new JTextField();
             //Aca Agregar cosas
@@ -150,7 +151,7 @@ public class VistaUsuarios extends JFrame {
                 "Contraseña:", passwordField,
                 "Dirección", direccionField,
                 "Sucursal", idSucursalField,
-                "Rol", elegidoField,
+                "Rol", rolComboBox,
                 //"ID Venta", ventaIdVentaField,
                 //"Id Venta Producto", ventaVentaProductoIdVenta
             //Aca Agregar cosas
@@ -165,7 +166,7 @@ public class VistaUsuarios extends JFrame {
                         new String(passwordField.getPassword()),
                         direccionField.getText(),
                         Integer.parseInt(idSucursalField.getText()),
-                        elegidoField.getText(),
+                        ((Rol) rolComboBox.getSelectedItem()).name(),
                         0,0
                         // Aca Agregar cosas
                 );

@@ -128,21 +128,19 @@ public class Usuario implements Encriptador{
 				+ Venta_VentaProducto_id_venta + "]";
 	}
 	
-public static Usuario login(String nombre, String password) {
+public static Usuario login(String nombre, String contrasenia) {
 		
-		if (nombre.isEmpty() || password.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "No puede ser vacio");
+		if (nombre.isEmpty() || contrasenia.isEmpty()) {
+			return null;
 		}else {
 			
-			return ControllerUsuario.login(nombre, password);
+			return ControllerUsuario.login(nombre, contrasenia);
 		}
-		return null;
 	}
 	public static boolean Editar(Usuario usuario) {
 			
 			if (usuario.getNombre().isEmpty() ||usuario.getEmail().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "No puede ser vacio");
-				
+				JOptionPane.showMessageDialog(null, "Este campo no puede ir vacio");
 			}else {
 				
 				return ControllerUsuario.Editar(usuario);
@@ -151,7 +149,7 @@ public static Usuario login(String nombre, String password) {
 		}
 	public static void Registrarse(Usuario nuevo) {
 		if (nuevo.getNombre().isEmpty() || nuevo.getContrasenia().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "No puede ser vacio");
+			JOptionPane.showMessageDialog(null, "Este campo no puede ir vacio");
 		}else {
 			
 			 ControllerUsuario.Registrarse(nuevo);

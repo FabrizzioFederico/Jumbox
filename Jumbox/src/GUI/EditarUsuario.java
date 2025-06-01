@@ -85,7 +85,7 @@ public class EditarUsuario extends JFrame {
 				nuevo.setElegido((String)comboBox.getSelectedItem());
 				nuevo.setContrasenia(inpContrasenia.getText());
 				
-				if (ControllerUsuario.Editar(nuevo)) {
+				if (Usuario.Editar(nuevo)) {
 					JOptionPane.showMessageDialog(null, "Se edito");
 					
 				}else {
