@@ -92,7 +92,7 @@ public class PantallaPrincipal extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				Usuario logueado = ControllerUsuario.login(inpEmail.getText(), inpContrasenia.getText());
+				Usuario logueado = Usuario.login(inpEmail.getText(), inpContrasenia.getText());
 				if (logueado == null) {
 					lblError.setText("No se encontró");
 				} else {

@@ -1,5 +1,8 @@
 package BLL;
 
+import javax.swing.JOptionPane;
+
+import DLL.ControllerUsuario;
 import repository.Encriptador;
 
 public class Usuario implements Encriptador{
@@ -125,6 +128,35 @@ public class Usuario implements Encriptador{
 				+ Venta_VentaProducto_id_venta + "]";
 	}
 	
+public static Usuario login(String nombre, String password) {
+		
+		if (nombre.isEmpty() || password.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "No puede ser vacio");
+		}else {
+			
+			return ControllerUsuario.login(nombre, password);
+		}
+		return null;
+	}
+	public static boolean Editar(Usuario usuario) {
+			
+			if (usuario.getNombre().isEmpty() ||usuario.getEmail().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "No puede ser vacio");
+				
+			}else {
+				
+				return ControllerUsuario.Editar(usuario);
+			}
+			return false;
+		}
+	public static void Registrarse(Usuario nuevo) {
+		if (nuevo.getNombre().isEmpty() || nuevo.getContrasenia().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "No puede ser vacio");
+		}else {
+			
+			 ControllerUsuario.Registrarse(nuevo);
+		}
+	}
 	
 	
 	

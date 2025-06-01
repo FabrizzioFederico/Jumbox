@@ -101,7 +101,7 @@ public class EditarUsuario extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				VistaUsuarios nuevo = new 	VistaUsuarios();
+				VistaUsuarios nuevo = new VistaUsuarios();
 				nuevo.setVisible(true);
 				dispose();
 			}

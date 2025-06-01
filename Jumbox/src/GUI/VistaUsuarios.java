@@ -132,7 +132,7 @@ public class VistaUsuarios extends JFrame {
         // Cargar datos
         cargarTabla();
 
-        // Acción: Agregar usuario
+        // Acción: Agregar usuario // ACA TENGO QUE EDITAR EL CONTROLLER DE ABAJO 1/6/2025
         btnAgregar.addActionListener(e -> {
             JTextField nombreField = new JTextField();
             JTextField emailField = new JTextField();
