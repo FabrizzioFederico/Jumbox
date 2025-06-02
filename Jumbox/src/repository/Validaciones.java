@@ -3,7 +3,34 @@ package repository;
 import javax.swing.JOptionPane;
 
 public interface Validaciones {
-	
+	public static String validarNombreSinIngreso(String data) {
+        boolean esValido;
+        
+        do {
+            esValido = true;
+            try {
+                
+                for (int i = 0; i < data.length(); i++) {
+                    char c = data.charAt(i);
+                    if (!Character.isAlphabetic(c) && c != ' ') {
+                        JOptionPane.showMessageDialog(null, 
+                            "El nombre solo puede contener:\n" +
+                            "- Letras \n" +
+                            "- Espacios \n" +
+                            "Carácter no válido encontrado: '" + c + "'");
+                        esValido = false;
+                        break;
+                    }
+                }
+                
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(null, "Operación cancelada");
+                return null;
+            }
+        } while (!esValido);
+
+        return data.trim();
+    }
 	public static String validarNombre(String mensaje) {
         String texto = "";
         boolean esValido;

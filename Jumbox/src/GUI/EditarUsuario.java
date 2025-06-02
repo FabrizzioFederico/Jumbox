@@ -46,7 +46,9 @@ public class EditarUsuario extends JFrame {
 		JLabel nombre = new JLabel("Nombre");
 		nombre.setBounds(48, 72, 116, 14);
 		contentPane.add(nombre);
-		
+		JLabel lblInfo = new JLabel("");
+		lblInfo.setBounds(48, 466, 338, 14);
+		contentPane.add(lblInfo);
 		inpNombre = new JTextField();
 		inpNombre.setBounds(48, 97, 116, 20);
 		inpNombre.setText(usuario.getNombre());
@@ -110,7 +112,7 @@ public class EditarUsuario extends JFrame {
 				nuevo.setEmail(inpMail.getText());
 				nuevo.setContrasenia(inpContrasenia.getText());
 				nuevo.setDireccion(inpDireccion.getText());
-				int idSucursal = Integer.parseInt(inpSucursal.getText());
+				int idSucursal = Integer.parseInt(inpSucursal.getText().isEmpty()?"0":inpSucursal.getText());
 			    nuevo.setId_sucursal(idSucursal);
 				nuevo.setElegido((String)comboBox.getSelectedItem());
 			    nuevo.setVenta_id_venta(nuevo.getVenta_id_venta());
@@ -118,12 +120,8 @@ public class EditarUsuario extends JFrame {
 			    nuevo.setId(nuevo.getId());
 				
 				
-				if (Usuario.Editar(nuevo)) {
-					JOptionPane.showMessageDialog(null, "Se edito");
-					
-				}else {
-					JOptionPane.showMessageDialog(null, "No se edito");
-				}
+			    lblInfo.setText(Usuario.Editar(nuevo) );
+				
 				
 			}
 		});
@@ -145,6 +143,8 @@ public class EditarUsuario extends JFrame {
 		tipo = new JLabel("Tipo");
 		tipo.setBounds(48, 366, 116, 14);
 		contentPane.add(tipo);
+		
+	
 		
 	
 	}

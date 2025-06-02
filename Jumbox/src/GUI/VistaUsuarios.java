@@ -106,11 +106,11 @@ public class VistaUsuarios extends JFrame {
         contentPane.add(inpFiltro);
         inpFiltro.setColumns(10);
         
-        JLabel lblNewLabel = new JLabel("criterio");
+        JLabel lblNewLabel = new JLabel("Criterio");
         lblNewLabel.setBounds(560, 251, 46, 14);
         contentPane.add(lblNewLabel);
         
-        JButton btnfiltrar = new JButton("filtrar");
+        JButton btnfiltrar = new JButton("Filtrar");
         btnfiltrar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		

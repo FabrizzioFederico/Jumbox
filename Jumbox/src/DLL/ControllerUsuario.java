@@ -114,7 +114,7 @@ public class ControllerUsuario{
         return usuarios;
     }
     
-    public static boolean Editar(Usuario usuario) {
+    public static String Editar(Usuario usuario) {
 		try {
 			PreparedStatement stmt = con.prepareStatement("UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id_usuario = ?");
 			//"UPDATE `usuario` SET `nombre`=?,`email`=?,`tipo`=?,`password`=?  WHERE id = ?"
@@ -130,17 +130,17 @@ public class ControllerUsuario{
 
 			int filas = stmt.executeUpdate();
 			if (filas > 0) {
-				System.out.println("Usuario editado correctamente.");
-				return true;
+				return"Usuario editado correctamente.";
+				 
 			}
 			
 		}catch (MySQLIntegrityConstraintViolationException e) {
-			JOptionPane.showMessageDialog(null, "Mail existente");
+			return "Mail existente";
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return false;
+		return "Error";
 	}
     
     public static boolean Eliminar(Usuario usuario) {

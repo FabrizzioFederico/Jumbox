@@ -137,15 +137,19 @@ public static Usuario login(String nombre, String contrasenia) {
 			return ControllerUsuario.login(nombre, contrasenia);
 		}
 	}
-	public static boolean Editar(Usuario usuario) {
+	public static String Editar(Usuario usuario) {
 			
+			if (usuario.getNombre()) {
+				
+			}
+		
 			if (usuario.getNombre().isEmpty() ||usuario.getEmail().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Este campo no puede ir vacio");
+				return  "Este campo no puede ir vacio";
 			}else {
 				
 				return ControllerUsuario.Editar(usuario);
 			}
-			return false;
+			
 		}
 	public static void Registrarse(Usuario nuevo) {
 		if (nuevo.getNombre().isEmpty() || nuevo.getContrasenia().isEmpty()) {
