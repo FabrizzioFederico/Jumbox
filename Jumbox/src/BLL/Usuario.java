@@ -2,6 +2,7 @@ package BLL;
 
 import javax.swing.JOptionPane;
 
+import DLL.ControllerUsuario;
 import repository.Encriptador;
 
 public class Usuario implements Encriptador{
@@ -26,8 +27,8 @@ public class Usuario implements Encriptador{
 		this.direccion = direccion;
 		this.id_sucursal = id_sucursal;
 		this.elegido = elegido;
-		Venta_id_venta = venta_id_venta;
-		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
+		this.Venta_id_venta = venta_id_venta;
+		this.Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
 	}
     
     public Usuario() {
@@ -43,8 +44,8 @@ public class Usuario implements Encriptador{
 		this.direccion = direccion;
 		this.id_sucursal = id_sucursal;
 		this.elegido = elegido;
-		Venta_id_venta = venta_id_venta;
-		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
+		this.Venta_id_venta = venta_id_venta;
+		this.Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
     }
 
 	public int getId() {
@@ -147,4 +148,41 @@ public class Usuario implements Encriptador{
 	}
 	   
 	
+public static Usuario login(String nombre, String contrasenia) {
+		
+		if (nombre.isEmpty() || contrasenia.isEmpty()) {
+			return null;
+		}else {
+			
+			return ControllerUsuario.login(nombre, contrasenia);
+		}
+	}
+	public static String Editar(Usuario usuario) {
+			
+			//if (usuario.getNombre()) {
+			//	return "El campo"
+			//}
+		
+			if (usuario.getNombre().isEmpty() ||usuario.getEmail().isEmpty()) {
+				return  "Este campo no puede ir vacio";
+			}else {
+				
+				return ControllerUsuario.Editar(usuario);
+			}
+			
+		}
+	public static void Registrarse(Usuario nuevo) {
+		if (nuevo.getNombre().isEmpty() || nuevo.getContrasenia().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Este campo no puede ir vacio");
+		}else {
+			
+			 ControllerUsuario.Registrarse(nuevo);
+		}
+	}
+	
+	
+	
+	
+    
+
 }
