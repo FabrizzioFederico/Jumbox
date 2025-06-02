@@ -64,7 +64,7 @@ public class ControllerProducto {
         return productos;
     }
 	
-	public static void actualizarProducto(Producto producto) {
+	public static boolean actualizarProducto(Producto producto) {
 	    try {
 	        PreparedStatement statement = con.prepareStatement(
 	            "UPDATE producto SET nombre = ?, precio = ?, stock = ?, id_sucursal = ?, VentaProducto_id_venta = ? WHERE id_producto = ?"
@@ -79,6 +79,7 @@ public class ControllerProducto {
 	        int filas = statement.executeUpdate();
 	        if (filas > 0) {
 	            System.out.println("Producto actualizado correctamente.");
+	            return true;
 	        } else {
 	            System.out.println("No se encontró el producto para actualizar.");
 	        }
@@ -87,7 +88,7 @@ public class ControllerProducto {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    
+	    return false;
 	}
 	
 	public static Producto buscarProducto(int id_producto) {
@@ -120,12 +121,12 @@ public class ControllerProducto {
 	    return producto;
 	}
 	
-	public static void eliminarProducto(int id_producto) {
+	public static void eliminarProducto(Producto producto) {
 	    try {
 	        PreparedStatement statement = con.prepareStatement(
 	            "DELETE FROM producto WHERE id_producto = ?"
 	        );
-	        statement.setInt(1, id_producto);
+	        statement.setInt(1, producto.getId());
 
 	        int filas = statement.executeUpdate();
 	        if (filas > 0) {

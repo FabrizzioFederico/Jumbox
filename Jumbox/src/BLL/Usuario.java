@@ -1,5 +1,8 @@
 package BLL;
 
+import javax.swing.JOptionPane;
+
+import DLL.ControllerUsuario;
 import repository.Encriptador;
 
 public class Usuario implements Encriptador{
@@ -115,6 +118,25 @@ public class Usuario implements Encriptador{
 
 	public void setVenta_VentaProducto_id_venta(int venta_VentaProducto_id_venta) {
 		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
+	}
+	
+public static Usuario login(String nombre, String contrasenia) {
+		
+		if (nombre.isEmpty() || contrasenia.isEmpty()) {
+			return null;
+		}else {
+			
+			return ControllerUsuario.login(nombre, contrasenia);
+		}
+	}
+	
+	public static void Registrarse(Usuario nuevo) {
+		if (nuevo.getNombre().isEmpty() || nuevo.getContrasenia().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Este campo no puede ir vacio");
+		}else {
+			
+			 ControllerUsuario.Registrarse(nuevo);
+		}
 	}
 
 	@Override

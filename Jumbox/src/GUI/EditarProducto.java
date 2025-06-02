@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import BLL.Producto;
-import BLL.Usuario;
 import DLL.ControllerProducto;
 
 import javax.swing.JLabel;
@@ -41,43 +40,43 @@ import javax.swing.JComboBox;
 			contentPane.setLayout(null);
 			
 			JLabel nombre = new JLabel("nombre");
-			nombre.setBounds(48, 72, 116, 14);
+			nombre.setBounds(48, 47, 116, 14);
 			contentPane.add(nombre);
 			
 			inpNombre = new JTextField();
-			inpNombre.setBounds(48, 97, 116, 20);
+			inpNombre.setBounds(48, 72, 116, 20);
 			inpNombre.setText(producto.getNombre());
 			contentPane.add(inpNombre);
 			inpNombre.setColumns(10);
 			
 			precio = new JLabel("precio");
-			precio.setBounds(48, 128, 116, 14);
+			precio.setBounds(48, 103, 116, 14);
 			contentPane.add(precio);
 			
 			inpPrecio = new JTextField();
-			inpPrecio.setText(producto.getPrecio());
+			inpPrecio.setText(String.valueOf(producto.getPrecio()));
 			inpPrecio.setColumns(10);
-			inpPrecio.setBounds(48, 153, 116, 20);
+			inpPrecio.setBounds(48, 125, 116, 20);
 			contentPane.add(inpPrecio);
 			
 			inpStock = new JTextField();
-			inpStock.setText(producto.getStock());
+			inpStock.setText(String.valueOf(producto.getStock()));   
 			inpStock.setColumns(10);
-			inpStock.setBounds(48, 209, 116, 20);
+			inpStock.setBounds(48, 181, 116, 20);
 			contentPane.add(inpStock);
 			
 			stock = new JLabel("stock");
-			stock.setBounds(48, 184, 116, 14);
+			stock.setBounds(48, 156, 116, 14);
 			contentPane.add(stock);
 			
 			inpId_sucursal = new JTextField();
-			inpId_sucursal.setText(producto.getid_sucursal());
+			inpId_sucursal.setText(String.valueOf(producto.getid_sucursal()));       
 			inpId_sucursal.setColumns(10);
-			inpId_sucursal.setBounds(48, 209, 116, 20);
+			inpId_sucursal.setBounds(48, 240, 116, 20);
 			contentPane.add(inpId_sucursal);
 			
 			id_sucursal = new JLabel("id_sucursal");
-			id_sucursal.setBounds(48, 184, 116, 14);
+			id_sucursal.setBounds(48, 215, 116, 14);
 			contentPane.add(id_sucursal);
 			
 			btnNewButton = new JButton("Editar");
@@ -85,9 +84,12 @@ import javax.swing.JComboBox;
 				public void actionPerformed(ActionEvent e) {
 					Producto nuevo = producto;
 					nuevo.setNombre(inpNombre.getText());
-					nuevo.setPrecio(inpPrecio.getText());
-					nuevo.setStock(inpStock.gerText());
-					nuevo.setId_sucursal(inpId_sucursal.getText());
+					Double precio = Double.parseDouble(inpPrecio.getText());
+					nuevo.setPrecio(precio);
+					int stock = Integer.parseInt(inpStock.getText());
+					nuevo.setStock(stock);
+					int idSucursal = Integer.parseInt(inpId_sucursal.getText());
+					nuevo.setid_sucursal(idSucursal);
 					
 					if (ControllerProducto.actualizarProducto(nuevo)) {
 						JOptionPane.showMessageDialog(null, "Se edito");

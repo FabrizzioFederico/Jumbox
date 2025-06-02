@@ -162,7 +162,7 @@ public class VistaProducto extends JFrame {
             	dispose();
             	
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione un usuario.");
+                JOptionPane.showMessageDialog(null, "Seleccione un producto.");
             }
         });
 
@@ -171,9 +171,10 @@ public class VistaProducto extends JFrame {
             if (productoSeleccionado != null) {
                 int confirm = JOptionPane.showConfirmDialog(null, "¿Eliminar a " + productoSeleccionado.getNombre() + "?", "Confirmar", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    // Asumimos que hay un método DLLProducto.eliminarProducto(id)
-                    JOptionPane.showMessageDialog(null, "Función de eliminación aún no implementada.");
-                    // DLLProducto.eliminarProducto(productoSeleccionado.getId());
+                    ControllerProducto.eliminarProducto(productoSeleccionado);
+                	dispose();
+                	VistaProducto vistaProducto = new VistaProducto();
+                    vistaProducto.setVisible(true);
                     cargarTabla();
                 }
             } else {
