@@ -139,9 +139,9 @@ public static Usuario login(String nombre, String contrasenia) {
 	}
 	public static String Editar(Usuario usuario) {
 			
-			if (usuario.getNombre()) {
-				
-			}
+			//if (usuario.getNombre()) {
+			//	return "El campo"
+			//}
 		
 			if (usuario.getNombre().isEmpty() ||usuario.getEmail().isEmpty()) {
 				return  "Este campo no puede ir vacio";

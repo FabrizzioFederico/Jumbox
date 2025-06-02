@@ -7,7 +7,7 @@ public interface Validaciones {
         boolean esValido;
         
         do {
-            esValido = true;
+            esValido = false;
             try {
                 
                 for (int i = 0; i < data.length(); i++) {
@@ -18,7 +18,7 @@ public interface Validaciones {
                             "- Letras \n" +
                             "- Espacios \n" +
                             "Carácter no válido encontrado: '" + c + "'");
-                        esValido = false;
+                        esValido = true;
                         break;
                     }
                 }

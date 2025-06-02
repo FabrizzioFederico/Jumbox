@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import BLL.Usuario;
 import DLL.ControllerUsuario;
+import repository.Validaciones;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -108,7 +109,7 @@ public class EditarUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//"UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id = ?"
 				Usuario nuevo = usuario;
-				nuevo.setNombre(inpNombre.getText());
+				nuevo.setNombre(Validaciones.validarNombreSinIngreso(inpNombre.getText()));
 				nuevo.setEmail(inpMail.getText());
 				nuevo.setContrasenia(inpContrasenia.getText());
 				nuevo.setDireccion(inpDireccion.getText());
