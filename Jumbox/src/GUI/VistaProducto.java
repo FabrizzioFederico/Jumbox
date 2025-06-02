@@ -148,7 +148,7 @@ public class VistaProducto extends JFrame {
                         Integer.parseInt(id_sucursalField.getText()),
                         0);
 
-                ControllerProducto.agregarProducto(nuevo);
+                ControllerProducto.RegistrarProducto(nuevo);
                 cargarTabla();
             }
         });

@@ -91,6 +91,18 @@ public class ControllerProducto {
 	    return false;
 	}
 	
+	public static void RegistrarProducto(Producto nuevo) {
+		LinkedList<Producto> creados = mostrarProductos();
+		for (Producto creado : creados) {
+			if (creado.getNombre().equalsIgnoreCase(nuevo.getNombre())) {
+				JOptionPane.showMessageDialog(null, "Producto creado, con este mismo nombre");
+				return;
+			}
+		}
+		agregarProducto(nuevo);
+		
+	}
+	
 	public static Producto buscarProducto(int id_producto) {
 	    Producto producto = null;
 
