@@ -18,13 +18,13 @@ public class ControllerUsuario{
 
 
     public static Usuario login(String nombre, String contrasenia) {
-    	Usuario usuario = new Usuario();
+
         try {
             PreparedStatement stmt = con.prepareStatement(
                 "SELECT * FROM usuario WHERE nombre = ? AND contrasenia = ?"
             );
             stmt.setString(1, nombre);
-            stmt.setString(2, usuario.encriptar(contrasenia));
+            stmt.setString(2, new Usuario().encriptar(contrasenia));
 
             ResultSet rs = stmt.executeQuery();
 
@@ -38,14 +38,21 @@ public class ControllerUsuario{
                 int venta_id_venta = rs.getInt("Venta_id_venta");
                 int venta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta");
                 
+                // Crear nuevo usuario y desencriptar la contraseña
+                Usuario usuario = new Usuario();
+                String contraseniaDesencriptada = usuario.desencriptar(password);
                 
-                usuario =  new Usuario(id, nombre, email, usuario.desencriptar(password), direccion, id_sucursal, elegido, venta_id_venta , venta_VentaProducto_id_venta);
+                return new Usuario(id, nombre, email, contraseniaDesencriptada, 
+                                 direccion, id_sucursal, elegido, 
+                                 venta_id_venta, venta_VentaProducto_id_venta);
+                
+               // usuario =  new Usuario(id, nombre, email, usuario.desencriptar(password), direccion, id_sucursal, elegido, venta_id_venta , venta_VentaProducto_id_venta);
   
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return usuario;
+        return null;
     }
 
     public static void agregarUsuario(Usuario usuario) {
