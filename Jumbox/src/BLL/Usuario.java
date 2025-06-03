@@ -121,24 +121,6 @@ public class Usuario implements Encriptador{
 	}
 	
 	
-	
-	
-	
-	
-
-	public static Usuario login(String nombre, String password) {
-		
-		if (nombre.isEmpty() || password.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "No puede ser vacio");
-		}else {
-			
-			return Usuario.login(nombre, password);
-		}
-		return null;
-	}
-	
-	
-	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", contrasenia=" + contrasenia
@@ -146,17 +128,36 @@ public class Usuario implements Encriptador{
 				+ ", Venta_id_venta=" + Venta_id_venta + ", Venta_VentaProducto_id_venta="
 				+ Venta_VentaProducto_id_venta + "]";
 	}
-	   
+	
+	
+
+//	public static Usuario login(String nombre, String password) {
+//		
+//		if (nombre.isEmpty() || password.isEmpty()) {
+//			JOptionPane.showMessageDialog(null, "No puede ser vacio");
+//		}else {
+//			
+//			return Usuario.login(nombre, password);
+//		}
+//		return null;
+//	}
+
+	
 	
 public static Usuario login(String nombre, String contrasenia) {
 		
-		if (nombre.isEmpty() || contrasenia.isEmpty()) {
+		if (nombre == null || contrasenia == null || 
+		        nombre.isEmpty() || contrasenia.isEmpty()) {
 			return null;
 		}else {
 			
 			return ControllerUsuario.login(nombre, contrasenia);
 		}
 	}
+
+
+
+
 	public static String Editar(Usuario usuario) {
 			
 			//if (usuario.getNombre()) {

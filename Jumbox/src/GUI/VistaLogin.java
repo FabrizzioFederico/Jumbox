@@ -118,7 +118,7 @@ public class VistaLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String usuario = inpUsuario.getText();
                 String contrasenia = new String(inpContrasenia.getPassword());
-                
+                //isLogueado
 				Usuario logueado = Usuario.login(usuario, contrasenia);
 				
 				if (logueado == null) {
@@ -129,19 +129,6 @@ public class VistaLogin extends JFrame {
 					 pantalla.setVisible(true);
 					 dispose();
 				}
-
-		
-				/*
-				 * 	public static Usuario login(String nombre, String password) {
-		
-		if (nombre.isEmpty() || password.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "No puede ser vacio");
-		}else {
-			
-			return DLLUsuario.login(nombre, password);
-		}
-		return null;
-	}*/
 				
 				
 			}
