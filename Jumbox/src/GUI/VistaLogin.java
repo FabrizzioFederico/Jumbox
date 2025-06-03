@@ -129,7 +129,7 @@ public class VistaLogin extends JFrame {
 				    
 					 switch(logueado.getElegido()) {
 				        case "ENCARGADO_STOCK":
-				            VistaEncargadoStock pantallaStock = new VistaEncargadoStock(); // Tengo que Implemetarlos
+				            VistaProducto pantallaStock = new VistaProducto(); // Tengo que Implemetarlos
 				            pantallaStock.setVisible(true);
 				            break;
 				            
@@ -139,8 +139,8 @@ public class VistaLogin extends JFrame {
 				            break;
 				        case "CLIENTE":
 				        default:
-				            VistaCliente pantallaCliente = new VistaCliente(); // Tengo que Implemetarlos
-				            pantallaCliente.setVisible(true);
+				            //VistaCliente pantallaCliente = new VistaCliente(); // Tengo que Implemetarlos
+				            //pantallaCliente.setVisible(true);
 				    }
 				    dispose();
 				}
