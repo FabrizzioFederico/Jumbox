@@ -124,10 +124,25 @@ public class VistaLogin extends JFrame {
 				if (logueado == null) {
 					lblError.setText("No se encontró");
 				} else {
-					 JOptionPane.showMessageDialog(null, "Logueado *pantalla usuario*");
-					 VistaUsuarios pantalla = new VistaUsuarios();
-					 pantalla.setVisible(true);
-					 dispose();
+					String mensaje = "Bienvenido " + logueado.getNombre();
+				    JOptionPane.showMessageDialog(null, mensaje);
+				    
+					 switch(logueado.getElegido()) {
+				        case "ENCARGADO_STOCK":
+				            VistaEncargadoStock pantallaStock = new VistaEncargadoStock(); // Tengo que Implemetarlos
+				            pantallaStock.setVisible(true);
+				            break;
+				            
+				        case "ADMIN":
+				            VistaUsuarios pantallaAdmin = new VistaUsuarios();
+				            pantallaAdmin.setVisible(true);
+				            break;
+				        case "CLIENTE":
+				        default:
+				            VistaCliente pantallaCliente = new VistaCliente(); // Tengo que Implemetarlos
+				            pantallaCliente.setVisible(true);
+				    }
+				    dispose();
 				}
 
 		
