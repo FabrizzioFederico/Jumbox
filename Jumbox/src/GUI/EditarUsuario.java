@@ -109,8 +109,23 @@ public class EditarUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//"UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id = ?"
 				Usuario nuevo = usuario;
-				nuevo.setNombre(Validaciones.validarNombreSinIngreso(inpNombre.getText()));
+				String nombreValidado = Validaciones.validarNombreSinIngreso(inpNombre.getText());
+		        if (nombreValidado == null) {
+		        	lblInfo.setText("Nombre inválido: Solo letras y espacios permitidos");
+		            return;
+		        }
+		        nuevo.setNombre(nombreValidado);
+		        String emailValidado = Validaciones.validarEmail(inpMail.getText());
+		        if (emailValidado == null) {
+		            lblInfo.setText("Email inválido o Vacio");
+		            return;
+		        }
 				nuevo.setEmail(inpMail.getText());
+				String passValidada = Validaciones.validarContraseniaSinIngreso(inpContrasenia.getText());
+				if (passValidada == null) {
+		            lblInfo.setText("Contraseña inválida: Requiere 8+ caracteres \n 1 mayúscula \n 1 minúscula");
+		            return;
+				}
 				nuevo.setContrasenia(inpContrasenia.getText());
 				nuevo.setDireccion(inpDireccion.getText());
 				int idSucursal = Integer.parseInt(inpSucursal.getText().isEmpty()?"0":inpSucursal.getText());
@@ -121,7 +136,7 @@ public class EditarUsuario extends JFrame {
 			    nuevo.setId(nuevo.getId());
 				
 				
-			    lblInfo.setText(Usuario.Editar(nuevo) );
+			    lblInfo.setText(Usuario.Editar(nuevo));
 				
 				
 			}
