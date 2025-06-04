@@ -122,14 +122,14 @@ public class VistaLogin extends JFrame {
 				Usuario logueado = Usuario.login(usuario, contrasenia);
 				
 				if (logueado == null) {
-					lblError.setText("No se encontró");
+					lblError.setText("Usuario Inválido");
 				} else {
 					String mensaje = "Bienvenido " + logueado.getNombre();
 				    JOptionPane.showMessageDialog(null, mensaje);
 				    
 					 switch(logueado.getElegido()) {
 				        case "ENCARGADO_STOCK":
-				            VistaProducto pantallaStock = new VistaProducto(); // Tengo que Implemetarlos
+				            VistaProducto pantallaStock = new VistaProducto(); // Esto se va a cambiar con la interfaz
 				            pantallaStock.setVisible(true);
 				            break;
 				            

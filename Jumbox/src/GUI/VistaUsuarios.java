@@ -11,6 +11,7 @@ import BLL.Sucursal;
 import BLL.Usuario;
 import DLL.ControllerUsuario;
 import repository.Rol;
+import repository.Validaciones;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -141,38 +142,68 @@ public class VistaUsuarios extends JFrame {
             JTextField direccionField = new JTextField();
             JTextField idSucursalField = new JTextField();
             JComboBox<Rol> rolComboBox = new JComboBox<>(Rol.values());
-            JTextField ventaIdVentaField = new JTextField();
-            JTextField ventaVentaProductoIdVenta = new JTextField();
-            //Aca Agregar cosas
 
             Object[] fields = {
                 "Nombre:", nombreField,
                 "Email:", emailField,
                 "Contraseña:", passwordField,
-                "Dirección", direccionField,
-                "Sucursal", idSucursalField,
-                "Rol", rolComboBox,
-                //"ID Venta", ventaIdVentaField,
-                //"Id Venta Producto", ventaVentaProductoIdVenta
-                //Aca Agregar cosas
+                "Dirección:", direccionField,
+                "Sucursal (ID numérico):", idSucursalField,
+                "Rol:", rolComboBox
             };
 
-            int option = JOptionPane.showConfirmDialog(null, fields, "Agregar Usuario", JOptionPane.OK_CANCEL_OPTION);
+            while (true) {
+                int option = JOptionPane.showConfirmDialog(null, fields, "Agregar Usuario", JOptionPane.OK_CANCEL_OPTION);
+                
+                if (option != JOptionPane.OK_OPTION) {
+                    return;
+                }
 
-            if (option == JOptionPane.OK_OPTION) {
+                
+                if (Validaciones.validarNombreSinIngreso(nombreField.getText()) == null) {
+                    JOptionPane.showMessageDialog(null, "Nombre inválido\nSolo letras y espacios permitidos", "Error", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+                
+                if (Validaciones.validarEmail(emailField.getText()) == null) {
+                    JOptionPane.showMessageDialog(null, "Email inválido\nFormato: usuario@dominio.com", "Error", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+
+                
+                if (Validaciones.validarContraseniaSinIngreso(new String(passwordField.getPassword())) == null) {
+                    JOptionPane.showMessageDialog(null, "Contraseña inválida\nDebe tener:\n- 8+ caracteres\n- 1 mayúscula\n- 1 minúscula\n- 1 número", "Error", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+                
+                if (Validaciones.validarAlfanumerico(direccionField.getText()) == null) {
+                    JOptionPane.showMessageDialog(null, "Dirección Incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                    continue;
+               }
+
+                
+
+                if (Validaciones.validarNumeroPositivo(idSucursalField.getText()) < 0) {
+                     JOptionPane.showMessageDialog(null, "ID Sucursal debe ser un número positivo", "Error", JOptionPane.ERROR_MESSAGE);
+                     continue;
+                }
+                
+
+                
                 Usuario nuevo = new Usuario(0,
-                        nombreField.getText(),
-                        emailField.getText(),
-                        new String(passwordField.getPassword()),
-                        direccionField.getText(),
-                        Integer.parseInt(idSucursalField.getText()),
-                        ((Rol) rolComboBox.getSelectedItem()).name(),
-                        0,0
-                        // Aca Agregar cosas
+                    nombreField.getText().trim(),
+                    emailField.getText().trim(),
+                    new String(passwordField.getPassword()),
+                    direccionField.getText().trim(),
+                    Integer.parseInt(idSucursalField.getText()),
+                    ((Rol) rolComboBox.getSelectedItem()).name(),
+                    0, 0
                 );
 
                 ControllerUsuario.Registrarse(nuevo);
                 cargarTabla();
+                break;
             }
         });
 

@@ -63,48 +63,20 @@ public interface Validaciones {
         return texto.trim();
     }
 	
-	public static String validarAlfanumerico(String mensaje) {
-        String texto = "";
-        boolean esValido;
-        
-        do {
-            esValido = true;
-            try {
-                
-                texto = JOptionPane.showInputDialog(mensaje);
-                
-                
-                if (texto == null) {
-                    throw new NullPointerException("Operación cancelada por el usuario");
-                }
-                
-                
-                if (texto.trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "El campo no puede estar vacío");
-                    esValido = false;
-                    continue;
-                }
-                
-                
-                for (int i = 0; i < texto.length(); i++) {
-                    char c = texto.charAt(i);
-                    if (!Character.isAlphabetic(c) && !Character.isDigit(c) && c != ' ') {
-                        JOptionPane.showMessageDialog(null, 
-                            "Solo se permiten letras y números.\n" +
-                            "Carácter no válido: '" + c + "'");
-                        esValido = false;
-                        break;
-                    }
-                }
-                
-            } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(null, "Operación cancelada");
-                return null;
-            }
-        } while (!esValido);
-
-        return texto;
-    }
+	public static String validarAlfanumerico(String alfa) {
+	    if (alfa == null || alfa.trim().isEmpty()) {
+	        return null;
+	    }
+	    
+	    for (int i = 0; i < alfa.length(); i++) {
+	        char c = alfa.charAt(i);
+	        if (!Character.isLetterOrDigit(c) && c != ' ') {
+	            return null;
+	        }
+	    }
+	    
+	    return alfa.trim();
+	}
 	
 	public static String validarContraseniaSinIngreso(String contrasenia) {
 	    if (contrasenia == null || contrasenia.trim().isEmpty()) {
@@ -155,26 +127,18 @@ public interface Validaciones {
 		return Double.parseDouble(num);
 	}
 
-	public static int validarNumero(String mensaje) {
-		boolean flag;
-		String num = "";
-		do {
-			flag = true;
-			num = JOptionPane.showInputDialog(mensaje);
-			while (num.isEmpty()) {
-				num = JOptionPane.showInputDialog(mensaje);
-			}
-			for (int i = 0; i < num.length(); i++) {
-				if (!Character.isDigit(num.charAt(i))) {
-					flag = false;
-					break;
-				}
-			}
-			if (flag && Integer.parseInt(num) < 0) {
-				flag = false;
-			}
-		} while (!flag);
-		return Integer.parseInt(num);
+
+	public static int validarNumeroPositivo(String texto) {
+	    if (texto == null || texto.trim().isEmpty()) {
+	        return -1; 
+	    }
+	    
+	    int numero = Integer.parseInt(texto.trim());
+	    if (numero >= 0) {
+	    	return numero; 
+	    }
+
+	    return -1; 
 	}
 	
 	public static String validarEmail(String email) {
