@@ -99,7 +99,6 @@ public class EditarUsuario extends JFrame {
 		JComboBox comboBox = new JComboBox();
 		comboBox.addItem("CLIENTE");
 		comboBox.addItem("ENCARGADO_STOCK");
-		comboBox.addItem("REPARTIDOR");
 		comboBox.addItem("ADMIN");
 		comboBox.setSelectedItem(usuario.getElegido());
 		comboBox.setBounds(48, 391, 116, 22);
