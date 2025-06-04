@@ -65,15 +65,13 @@ public interface Validaciones {
 	
 	public static String validarAlfanumerico(String alfa) {
 		 int contadorNumeros = 0;
-		 char caracterInvalido = 0;
-	    if (alfa == null || alfa.trim().isEmpty()) {
+		 if (alfa == null || alfa.trim().isEmpty()) {
 	        return null;
 	    }
 	    
 	    for (int i = 0; i < alfa.length(); i++) {
 	        char c = alfa.charAt(i);
 	        if (!Character.isLetterOrDigit(c) && c != ' ') {
-	        	caracterInvalido = c;
 	        	return null;
 	        }
 	    }
