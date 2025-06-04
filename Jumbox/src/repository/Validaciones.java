@@ -64,6 +64,8 @@ public interface Validaciones {
     }
 	
 	public static String validarAlfanumerico(String alfa) {
+		 int contadorNumeros = 0;
+		 char caracterInvalido = 0;
 	    if (alfa == null || alfa.trim().isEmpty()) {
 	        return null;
 	    }
@@ -71,11 +73,24 @@ public interface Validaciones {
 	    for (int i = 0; i < alfa.length(); i++) {
 	        char c = alfa.charAt(i);
 	        if (!Character.isLetterOrDigit(c) && c != ' ') {
-	            return null;
+	        	caracterInvalido = c;
+	        	return null;
 	        }
 	    }
 	    
-	    return alfa.trim();
+	    for (int i = 0; i < alfa.length(); i++) {
+	    	char c = alfa.charAt(i);
+	        if (Character.isDigit(c)) {
+	            contadorNumeros++;
+	        }
+	    }
+	    
+	    if (contadorNumeros > 0 && contadorNumeros <= 4) {
+	    	return alfa.trim();
+	    }
+	    
+	    return null;
+
 	}
 	
 	public static String validarContraseniaSinIngreso(String contrasenia) {
