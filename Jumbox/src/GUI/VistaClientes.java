@@ -71,15 +71,13 @@ public class VistaClientes extends JFrame {
                      (String) model.getValueAt(row, 1),
                      (double) model.getValueAt(row, 2),
                      (int) model.getValueAt(row, 3),
-                     (int) model.getValueAt(row, 4),
-                     (int) model.getValueAt(row, 5));
+                     (int) model.getValueAt(row, 4));
                  
                  lblSeleccionado.setText("Seleccionado: ID=" + productoSeleccionado.getId()
                          + ", Nombre=" + productoSeleccionado.getNombre()
                          + ", Precio=" + productoSeleccionado.getPrecio()
                          + ", Stock=" + productoSeleccionado.getStock()
                          + ", Id_Sucursal=" + productoSeleccionado.getid_sucursal()
-                         + ", VentaProducto_id_venta=" + productoSeleccionado.getVentaProducto_id_venta()
                          );
                  
                 
@@ -217,8 +215,7 @@ public class VistaClientes extends JFrame {
          		producto.getNombre(),
          		producto.getPrecio(), 
          		producto.getStock(),
-         		producto.getid_sucursal(),
-         		producto.getVentaProducto_id_venta() }
+         		producto.getid_sucursal()}
          		);
          }
  }
@@ -235,8 +232,7 @@ public class VistaClientes extends JFrame {
          		producto.getNombre(),
          		producto.getPrecio(), 
          		producto.getStock(),
-         		producto.getid_sucursal(),
-         		producto.getVentaProducto_id_venta()
+         		producto.getid_sucursal()
          		}
          );
      	}
@@ -257,9 +253,7 @@ public class VistaClientes extends JFrame {
          		producto.getNombre(),
          		producto.getPrecio(), 
          		producto.getStock(),
-         		producto.getid_sucursal(),
-         		producto.getVentaProducto_id_venta()
-         		}
+         		producto.getid_sucursal()}
          );
      	
      }
