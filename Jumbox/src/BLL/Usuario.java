@@ -13,12 +13,10 @@ public class Usuario implements Encriptador{
     protected String direccion;
     protected int id_sucursal;
     protected String elegido;
-    protected int Venta_id_venta;
-    protected int Venta_VentaProducto_id_venta;
     
     
     public Usuario(int id, String nombre, String email, String contrasenia, String direccion, int id_sucursal,
-			String elegido, int venta_id_venta, int venta_VentaProducto_id_venta) {
+			String elegido) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -27,8 +25,6 @@ public class Usuario implements Encriptador{
 		this.direccion = direccion;
 		this.id_sucursal = id_sucursal;
 		this.elegido = elegido;
-		this.Venta_id_venta = venta_id_venta;
-		this.Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
 	}
     
     public Usuario() {
@@ -36,7 +32,7 @@ public class Usuario implements Encriptador{
     }
     
 	public Usuario(String nombre, String email, String contrasenia, String direccion, int id_sucursal,
-			String elegido, int venta_id_venta, int venta_VentaProducto_id_venta) {
+			String elegido) {
 		super();
 		this.nombre = nombre;
 		this.email = email;
@@ -44,8 +40,6 @@ public class Usuario implements Encriptador{
 		this.direccion = direccion;
 		this.id_sucursal = id_sucursal;
 		this.elegido = elegido;
-		this.Venta_id_venta = venta_id_venta;
-		this.Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
     }
 
 	public int getId() {
@@ -103,31 +97,14 @@ public class Usuario implements Encriptador{
 	public void setElegido(String elegido) {
 		this.elegido = elegido;
 	}
-
-	public int getVenta_id_venta() {
-		return Venta_id_venta;
-	}
-
-	public void setVenta_id_venta(int venta_id_venta) {
-		Venta_id_venta = venta_id_venta;
-	}
-
-	public int getVenta_VentaProducto_id_venta() {
-		return Venta_VentaProducto_id_venta;
-	}
-
-	public void setVenta_VentaProducto_id_venta(int venta_VentaProducto_id_venta) {
-		Venta_VentaProducto_id_venta = venta_VentaProducto_id_venta;
-	}
-	
 	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombre=" + nombre + ", email=" + email + ", contrasenia=" + contrasenia
-				+ ", direccion=" + direccion + ", id_sucursal=" + id_sucursal + ", elegido=" + elegido
-				+ ", Venta_id_venta=" + Venta_id_venta + ", Venta_VentaProducto_id_venta="
-				+ Venta_VentaProducto_id_venta + "]";
+				+ ", direccion=" + direccion + ", id_sucursal=" + id_sucursal + ", elegido=" + elegido + "]";
 	}
+	
+	
 	
 	
 
@@ -142,8 +119,6 @@ public class Usuario implements Encriptador{
 //		return null;
 //	}
 
-	
-	
 	public static Usuario login(String nombre, String contrasenia) {
 		
 		if (nombre == null || contrasenia == null || 

@@ -35,16 +35,13 @@ public class ControllerUsuario{
                 String password = rs.getString("contrasenia");
                 int id_sucursal = rs.getInt("id_sucursal");
                 String elegido = rs.getString("rol");
-                int venta_id_venta = rs.getInt("Venta_id_venta");
-                int venta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta");
                 
                 // Crear nuevo usuario y desencriptar la contraseña
                 Usuario usuario = new Usuario();
                 String contraseniaDesencriptada = usuario.desencriptar(password);
                 
                 return new Usuario(id, nombre, email, contraseniaDesencriptada, 
-                                 direccion, id_sucursal, elegido, 
-                                 venta_id_venta, venta_VentaProducto_id_venta);
+                                 direccion, id_sucursal, elegido);
                 
                // usuario =  new Usuario(id, nombre, email, usuario.desencriptar(password), direccion, id_sucursal, elegido, venta_id_venta , venta_VentaProducto_id_venta);
   
@@ -58,7 +55,7 @@ public class ControllerUsuario{
     public static void agregarUsuario(Usuario usuario) {
         try {
             PreparedStatement statement = con.prepareStatement(
-                "INSERT INTO usuario (nombre, email, contrasenia, direccion, id_sucursal, rol, venta_id_venta, Venta_VentaProducto_id_venta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO usuario (nombre, email, contrasenia, direccion, id_sucursal, rol) VALUES (?, ?, ?, ?, ?, ?)"
             );
             statement.setString(1, usuario.getNombre());
             statement.setString(2, usuario.getEmail());
@@ -66,8 +63,6 @@ public class ControllerUsuario{
             statement.setString(4, usuario.getDireccion());
             statement.setInt(5, usuario.getId_sucursal());
             statement.setString(6, usuario.getElegido());
-            statement.setInt(7, usuario.getVenta_id_venta());
-            statement.setInt(8, usuario.getVenta_VentaProducto_id_venta());
             
 
             int filas = statement.executeUpdate();
@@ -109,10 +104,8 @@ public class ControllerUsuario{
                 String direccion = rs.getString("direccion");
                 int idSucursal = rs.getInt("Id_sucursal");
                 String elegido = rs.getString("rol");
-                int idVenta_id_venta = rs.getInt("Venta_id_venta");
-                int idVenta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta");
                
-                usuarios.add(new Usuario(id, nombre, email, contrasenia, direccion, idSucursal, elegido, idVenta_id_venta, idVenta_VentaProducto_id_venta));
+                usuarios.add(new Usuario(id, nombre, email, contrasenia, direccion, idSucursal, elegido));
 
             }
         } catch (Exception e) {
@@ -123,7 +116,7 @@ public class ControllerUsuario{
     
     public static String Editar(Usuario usuario) {
 		try {
-			PreparedStatement stmt = con.prepareStatement("UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id_usuario = ?");
+			PreparedStatement stmt = con.prepareStatement("UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=? WHERE id_usuario = ?");
 			//"UPDATE `usuario` SET `nombre`=?,`email`=?,`tipo`=?,`password`=?  WHERE id = ?"
 			stmt.setString(1, usuario.getNombre());
 			stmt.setString(2, usuario.getEmail());
@@ -131,9 +124,7 @@ public class ControllerUsuario{
 			stmt.setString(4,usuario.getDireccion());
 			stmt.setInt(5,usuario.getId_sucursal());
 			stmt.setString(6,usuario.getElegido());
-			stmt.setInt(7,usuario.getVenta_id_venta());
-			stmt.setInt(8,usuario.getVenta_VentaProducto_id_venta());
-			stmt.setInt(9,usuario.getId());
+			stmt.setInt(7,usuario.getId());
 
 			int filas = stmt.executeUpdate();
 			if (filas > 0) {
@@ -184,10 +175,8 @@ public class ControllerUsuario{
                 String direccion = rs.getString("direccion");
                 int idSucursal = rs.getInt("Id_sucursal");
                 String elegido = rs.getString("rol");
-                int idVenta_id_venta = rs.getInt("Venta_id_venta");
-                int idVenta_VentaProducto_id_venta = rs.getInt("Venta_VentaProducto_id_venta");
                
-                usuario = new Usuario(id, nombre, email, contrasenia, direccion, idSucursal, elegido, idVenta_id_venta, idVenta_VentaProducto_id_venta);
+                usuario = new Usuario(id, nombre, email, contrasenia, direccion, idSucursal, elegido);
 
             }
         } catch (Exception e) {

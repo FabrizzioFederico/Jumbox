@@ -19,13 +19,12 @@ public class ControllerProducto {
 	public static void agregarProducto(Producto producto) {
         try {
             PreparedStatement statement = con.prepareStatement(
-                "INSERT INTO producto (nombre, precio, stock, id_sucursal, VentaProducto_id_venta) VALUES (?, ?, ?, ?, ?)"
+                "INSERT INTO producto (nombre, precio, stock, id_sucursal) VALUES (?, ?, ?, ?)"
             );
             statement.setString(1, producto.getNombre());
             statement.setDouble(2, producto.getPrecio());
             statement.setInt(3, producto.getStock());
             statement.setInt(4, producto.getid_sucursal());
-            statement.setInt(5, producto.getVentaProducto_id_venta());
             
             
             
@@ -53,9 +52,8 @@ public class ControllerProducto {
                 double precio = rs.getDouble("precio");
                 int stock = rs.getInt("stock");
                 int idSucursal = rs.getInt("id_sucursal");
-                int VentaProducto_id_venta = rs.getInt("VentaProducto_id_venta");
                
-                productos.add(new Producto(id, nombre, precio,  stock,  idSucursal, VentaProducto_id_venta));
+                productos.add(new Producto(id, nombre, precio,  stock,  idSucursal));
 
             }
         } catch (Exception e) {
@@ -67,14 +65,13 @@ public class ControllerProducto {
 	public static boolean actualizarProducto(Producto producto) {
 	    try {
 	        PreparedStatement statement = con.prepareStatement(
-	            "UPDATE producto SET nombre = ?, precio = ?, stock = ?, id_sucursal = ?, VentaProducto_id_venta = ? WHERE id_producto = ?"
+	            "UPDATE producto SET nombre = ?, precio = ?, stock = ?, id_sucursal = ? WHERE id_producto = ?"
 	        );
 	        statement.setString(1, producto.getNombre());
 	        statement.setDouble(2, producto.getPrecio());
 	        statement.setInt(3, producto.getStock());
 	        statement.setInt(4, producto.getid_sucursal());
-	        statement.setInt(5, producto.getVentaProducto_id_venta());
-	        statement.setInt(6, producto.getId()); 
+	        statement.setInt(5, producto.getId()); 
 
 	        int filas = statement.executeUpdate();
 	        if (filas > 0) {
@@ -121,7 +118,6 @@ public class ControllerProducto {
 	            producto.setPrecio(rs.getDouble("precio"));
 	            producto.setStock(rs.getInt("stock"));
 	            producto.setid_sucursal(rs.getInt("id_sucursal"));
-	            producto.setVentaProducto_id_venta(rs.getInt("VentaProducto_id_venta"));
 	        } else {
 	            return null;
 	        }

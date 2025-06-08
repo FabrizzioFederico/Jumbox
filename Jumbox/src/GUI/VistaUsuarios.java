@@ -48,9 +48,7 @@ public class VistaUsuarios extends JFrame {
         				"Contraseña",
         				"Dirección",
         				"Sucursal",
-        				"Rol",
-        				"ID Venta",
-        				"ID Venta Producto"
+        				"Rol"
         				}, 0);
         				// Contraseña por si lo agrego despues
         table = new JTable(model);
@@ -82,9 +80,7 @@ public class VistaUsuarios extends JFrame {
                         (String) model.getValueAt(row, 3),
                         (String) model.getValueAt(row, 4),
                         (int) model.getValueAt(row, 5),
-                        (String) model.getValueAt(row, 6),
-                        (int) model.getValueAt(row, 7),
-                        (int) model.getValueAt(row, 8)
+                        (String) model.getValueAt(row, 6)
                      
                     );
                     lblSeleccionado.setText("Seleccionado: ID=" + usuarioSeleccionado.getId()
@@ -94,8 +90,6 @@ public class VistaUsuarios extends JFrame {
                             + ", Dirección=" + usuarioSeleccionado.getDireccion() 
                             + ", Sucursal=" + usuarioSeleccionado.getId_sucursal() 
                             + ", Rol=" + usuarioSeleccionado.getElegido() 
-                            + ", ID Venta=" + usuarioSeleccionado.getVenta_id_venta()
-                            + ", ID Venta Producto=" + usuarioSeleccionado.getVenta_VentaProducto_id_venta()
                     		);
                     
                    
@@ -197,8 +191,7 @@ public class VistaUsuarios extends JFrame {
                     new String(passwordField.getPassword()),
                     direccionField.getText().trim(),
                     Integer.parseInt(idSucursalField.getText()),
-                    ((Rol) rolComboBox.getSelectedItem()).name(),
-                    0, 0
+                    ((Rol) rolComboBox.getSelectedItem()).name()
                 );
 
                 ControllerUsuario.Registrarse(nuevo);
@@ -257,9 +250,7 @@ public class VistaUsuarios extends JFrame {
             		usuario.getContrasenia(),
             		usuario.getDireccion(),
             		usuario.getId_sucursal(),
-            		usuario.getElegido(),
-            		usuario.getVenta_id_venta(),
-            		usuario.getVenta_VentaProducto_id_venta()
+            		usuario.getElegido()
             		}
             );
     		
@@ -280,9 +271,7 @@ public class VistaUsuarios extends JFrame {
             		usuario.getContrasenia(),
             		usuario.getDireccion(),
             		usuario.getId_sucursal(),
-            		usuario.getElegido(),
-            		usuario.getVenta_id_venta(),
-            		usuario.getVenta_VentaProducto_id_venta()
+            		usuario.getElegido()
             		}
             );
         	}
@@ -305,9 +294,7 @@ public class VistaUsuarios extends JFrame {
             		usuario.getContrasenia(),
             		usuario.getDireccion(),
             		usuario.getId_sucursal(),
-            		usuario.getElegido(),
-            		usuario.getVenta_id_venta(),
-            		usuario.getVenta_VentaProducto_id_venta()
+            		usuario.getElegido()
             		}
             );
         	
