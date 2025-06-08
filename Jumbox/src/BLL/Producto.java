@@ -6,25 +6,22 @@ public class Producto {
 	private double precio;
 	private int stock;
 	private int id_sucursal;
-	private int VentaProducto_id_venta;
 	
-	public Producto( String nombre, double precio, int stock, int id_sucursal, int VentaProducto_id_venta) { //Sin ID
+	public Producto( String nombre, double precio, int stock, int id_sucursal) { //Sin ID
 		super();
 		this.nombre = nombre;
 		this.precio = precio;
 		this.stock = stock;
 		this.id_sucursal= id_sucursal;
-		this.VentaProducto_id_venta= VentaProducto_id_venta;
 	}
 	
-	public Producto(int id, String nombre, double precio, int stock, int id_sucursal, int VentaProducto_id_venta) {//Con ID
+	public Producto(int id, String nombre, double precio, int stock, int id_sucursal) {//Con ID
 		super();
 		this.id= id;
 		this.nombre = nombre;
 		this.precio = precio;
 		this.stock = stock;
 		this.id_sucursal= id_sucursal;
-		this.VentaProducto_id_venta= VentaProducto_id_venta;
 	}
 	
 	public Producto()  {//Vacío
@@ -70,19 +67,11 @@ public class Producto {
 	public void setid_sucursal(int id_sucursal) {
 		this.id_sucursal = id_sucursal;
 	}
-	
-	public int getVentaProducto_id_venta() {
-		return VentaProducto_id_venta;
-	}
-
-	public void setVentaProducto_id_venta(int VentaProducto_id_venta) {
-		this.VentaProducto_id_venta = VentaProducto_id_venta;
-	}
 
 	@Override
 	public String toString() {
 		return "Producto [nombre=" + nombre + ", precio=" + precio + ", stock=" + stock
-				+ ", id_sucursal=" + id_sucursal + ", VentaProducto_id_venta=" + VentaProducto_id_venta + "]";
+				+ ", id_sucursal=" + id_sucursal + "]";
 	}
 	
 	

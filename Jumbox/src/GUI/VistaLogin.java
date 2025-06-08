@@ -139,8 +139,8 @@ public class VistaLogin extends JFrame {
 				            break;
 				        case "CLIENTE":
 				        default:
-				            //VistaCliente pantallaCliente = new VistaCliente(); // Tengo que Implemetarlos
-				            //pantallaCliente.setVisible(true);
+				            VistaClientes pantallaClientes = new VistaClientes(logueado); // Tengo que Implemetarlos
+				            pantallaClientes.setVisible(true);
 				    }
 				    dispose();
 				}

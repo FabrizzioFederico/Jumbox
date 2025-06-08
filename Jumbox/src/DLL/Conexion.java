@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import com.mysql.jdbc.Connection;
 
 public class Conexion {
-	private static String URL ="jdbc:mysql://localhost:3306/jumbox";
+	private static String URL ="jdbc:mysql://localhost:3306/jumboxv2";
 	private static String USER = "root";
 	private static String PASSWORD ="";
 	

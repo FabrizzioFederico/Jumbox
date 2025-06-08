@@ -46,8 +46,8 @@ public class VistaProducto extends JFrame {
         				"Nombre",
         				"Precio",
         				"Stock",
-        				"Id_sucursal",
-        				"VentaProducto_id_venta"}, 0);
+        				"Id_sucursal"
+        				}, 0);
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(10, 40, 760, 200);
@@ -75,15 +75,14 @@ public class VistaProducto extends JFrame {
                         (String) model.getValueAt(row, 1),
                         (double) model.getValueAt(row, 2),
                         (int) model.getValueAt(row, 3),
-                        (int) model.getValueAt(row, 4),
-                        (int) model.getValueAt(row, 5));
+                        (int) model.getValueAt(row, 4)
+                        );
                     
                     lblSeleccionado.setText("Seleccionado: ID=" + productoSeleccionado.getId()
                             + ", Nombre=" + productoSeleccionado.getNombre()
                             + ", Precio=" + productoSeleccionado.getPrecio()
                             + ", Stock=" + productoSeleccionado.getStock()
                             + ", Id_Sucursal=" + productoSeleccionado.getid_sucursal()
-                            + ", VentaProducto_id_venta=" + productoSeleccionado.getVentaProducto_id_venta()
                             );
                     
                    
@@ -128,14 +127,12 @@ public class VistaProducto extends JFrame {
             JTextField precioField = new JTextField();
             JTextField stockField = new JTextField();
             JTextField id_sucursalField = new JTextField();
-            JTextField id_venta_productoField = new JTextField();
 
             Object[] fields = {
                 "Nombre:", nombreField,
                 "Precio:", precioField,
                 "Stock:", stockField,
-                "Id_sucursal:", id_sucursalField,
-                "Id_venta_producto:", id_venta_productoField
+                "Id_sucursal:", id_sucursalField
                	};
 
             int option = JOptionPane.showConfirmDialog(null, fields, "Agregar Producto", JOptionPane.OK_CANCEL_OPTION);
@@ -145,8 +142,8 @@ public class VistaProducto extends JFrame {
                         nombreField.getText(),
                         Double.parseDouble(precioField.getText()),
                         Integer.parseInt(stockField.getText()),
-                        Integer.parseInt(id_sucursalField.getText()),
-                        0);
+                        Integer.parseInt(id_sucursalField.getText())
+                        );
 
                 ControllerProducto.RegistrarProducto(nuevo);
                 cargarTabla();
@@ -196,8 +193,8 @@ public class VistaProducto extends JFrame {
             		producto.getNombre(),
             		producto.getPrecio(), 
             		producto.getStock(),
-            		producto.getid_sucursal(),
-            		producto.getVentaProducto_id_venta() }
+            		producto.getid_sucursal()
+            		}
             		);
             }
     }
@@ -214,8 +211,7 @@ public class VistaProducto extends JFrame {
             		producto.getNombre(),
             		producto.getPrecio(), 
             		producto.getStock(),
-            		producto.getid_sucursal(),
-            		producto.getVentaProducto_id_venta()
+            		producto.getid_sucursal()
             		}
             );
         	}
@@ -236,8 +232,7 @@ public class VistaProducto extends JFrame {
             		producto.getNombre(),
             		producto.getPrecio(), 
             		producto.getStock(),
-            		producto.getid_sucursal(),
-            		producto.getVentaProducto_id_venta()
+            		producto.getid_sucursal()
             		}
             );
         	
