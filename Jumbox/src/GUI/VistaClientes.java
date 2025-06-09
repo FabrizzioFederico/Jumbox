@@ -23,6 +23,7 @@ import BLL.Usuario;
 import BLL.VentaProducto;
 import DLL.ControllerProducto;
 import DLL.ControllerVenta;
+import javax.swing.JSpinner;
 
 public class VistaClientes extends JFrame {
 	 private JPanel contentPane;
@@ -107,6 +108,8 @@ public class VistaClientes extends JFrame {
      btnFinalizarCompra.setBounds(178, 270, 150, 40);
      btnFinalizarCompra.addActionListener(e -> finalizarCompra());
      contentPane.add(btnFinalizarCompra);
+     
+    
  }
  
  private void agregarAlCarrito() {
