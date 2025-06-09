@@ -185,11 +185,15 @@ public class VistaClientes extends JFrame {
      for (VentaProducto vp : carrito) {
          vp.setId_venta(idVenta);
          ControllerVenta.registrarProductoEnVenta(vp);
+         
+         productoSeleccionado.setStock(productoSeleccionado.getStock() - vp.getCantidad());
+         ControllerProducto.actualizarProducto(productoSeleccionado);
      }
      
      JOptionPane.showMessageDialog(this, "Venta realizada con éxito!");
      carrito.clear();
      actualizarTablaCarrito();
+     cargarTabla();
  }
  
  private double calcularTotal() {
