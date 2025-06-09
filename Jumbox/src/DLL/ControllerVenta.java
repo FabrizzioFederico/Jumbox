@@ -3,6 +3,7 @@ package DLL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -18,24 +19,34 @@ import BLL.VentaProducto;
 public class ControllerVenta {
 	private static Connection con = Conexion.getInstance().getConnection();
 	
-	public static int crearVenta(int idUsuario, double total) {
-        try {
+	public static int crearVenta(int idUsuario, int idSucursal, double total) {
+		try {
             PreparedStatement stmt = con.prepareStatement(
-                "INSERT INTO venta (id_usuario, fecha, total) VALUES (?, NOW(), ?)" 
-                );
+                "INSERT INTO venta (id_sucursal, fecha, total, id_usuario) VALUES (?, NOW(), ?, ?)",
+                PreparedStatement.RETURN_GENERATED_KEYS);
             
-            stmt.setInt(1, idUsuario);
+            stmt.setInt(1, idSucursal);
             stmt.setDouble(2, total);
-            stmt.executeUpdate();
+            stmt.setInt(3, idUsuario);
             
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getInt(1);
+            int affectedRows = stmt.executeUpdate();
+            
+            if (affectedRows == 0) {
+                throw new SQLException("No se pudo crear la venta, ninguna fila afectada.");
             }
-        } catch (Exception e) {
+            
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("No se obtuvo el ID de la venta creada.");
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
-        return -1;
     }
     
     public static boolean registrarProductoEnVenta(VentaProducto vp) {
