@@ -156,12 +156,12 @@ public class VistaLogin extends JFrame {
 		btnRegistrar.setFont(new Font("Montserrat", Font.PLAIN, 12));
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				 RegistrarUsuario pantallaRegistrar = new RegistrarUsuario();
-				 pantallaRegistrar.setVisible(true);
+				// RegistrarUsuario pantallaRegistrar = new RegistrarUsuario();
+				 //pantallaRegistrar.setVisible(true);
 					
 				 //nos tiene q llevar a RegistrarUsuario.java
 				
-				    dispose();
+				   // dispose();
 				}
 				
 				

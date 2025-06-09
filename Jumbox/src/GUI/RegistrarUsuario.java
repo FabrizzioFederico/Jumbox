@@ -130,8 +130,6 @@ public class RegistrarUsuario extends JFrame {
 				int idSucursal = Integer.parseInt(inpSucursal.getText().isEmpty()?"0":inpSucursal.getText());
 			    nuevo.setId_sucursal(idSucursal);
 				nuevo.setElegido((String)comboBox.getSelectedItem());
-			    nuevo.setVenta_id_venta(nuevo.getVenta_id_venta());
-			    nuevo.setVenta_VentaProducto_id_venta(nuevo.getVenta_VentaProducto_id_venta());
 			    nuevo.setId(nuevo.getId());
 				
 				
