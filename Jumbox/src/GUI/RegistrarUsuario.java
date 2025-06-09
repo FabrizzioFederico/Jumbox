@@ -131,8 +131,8 @@ public class RegistrarUsuario extends JFrame {
 				Usuario.Registrarse(nuevo);
 				JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente!!!");
 				
-				VistaLogin login = new VistaLogin();
-				login.setVisible(true);
+				VistaClientes vistaCliente = new VistaClientes(nuevo);
+				vistaCliente.setVisible(true);
 				dispose();
 				
 				
