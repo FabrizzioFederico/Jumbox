@@ -53,8 +53,7 @@ public class VistaClientes extends JFrame {
      				"Nombre",
      				"Precio",
      				"Cantidad",
-     				"Sucursal",
-     				"Venta"
+     				"Sucursal"
      				}, 0);
      table = new JTable(model);
      JScrollPane scrollPane = new JScrollPane(table);
@@ -180,7 +179,7 @@ public class VistaClientes extends JFrame {
      }
      
      // Crear la venta principal
-     int idVenta = ControllerVenta.crearVenta(usuarioActual.getId(), calcularTotal());
+     int idVenta = ControllerVenta.crearVenta(usuarioActual.getId(), usuarioActual.getId_sucursal(), calcularTotal());
      
      // Registrar los productos
      for (VentaProducto vp : carrito) {
