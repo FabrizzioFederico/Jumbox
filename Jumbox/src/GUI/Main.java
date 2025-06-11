@@ -49,7 +49,15 @@ public class Main {
                     break;
                     
                 case 1:
-                	ControllerUsuario.Registrarse(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.validarContraseniaSinIngreso("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,((Rol)JOptionPane.showInputDialog(null,"Seleccione una Opción","Jumbox",0,null,Rol.values(),Rol.values()[0])).name(),1,1));
+                    ControllerUsuario.Registrarse(new Usuario(
+                        0,  // el ID se autogenera en la base de datos, pero lo pasamos para que tenga un valor
+                        Validaciones.validarNombre("Ingresa tu nombre"),
+                        Validaciones.validarEmail("Ingrese su Mail"),
+                        Validaciones.validarContraseniaSinIngreso("Ingrese su contraseña"),
+                        Validaciones.validarAlfanumerico("Ingrese su domicilio"),
+                        1,  // id_sucursal 
+                        ((Rol) JOptionPane.showInputDialog(null, "Seleccione una Opción", "Jumbox", 0, null, Rol.values(), Rol.values()[0])).name()
+                    ));
                     break;
                 case 2:
                 	String nombresUsuarios="";

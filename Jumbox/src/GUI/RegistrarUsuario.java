@@ -95,8 +95,6 @@ public class RegistrarUsuario extends JFrame {
 		inpDireccion.setBounds(48, 211, 116, 20);
 		contentPane.add(inpDireccion);
 		
-		
-		
 		btnNewButton = new JButton("Registrarse");
 		btnNewButton.setBounds(48, 424, 116, 23);
 		contentPane.add(btnNewButton);
@@ -141,4 +139,5 @@ public class RegistrarUsuario extends JFrame {
 		
 		
 	}
+	
 }
