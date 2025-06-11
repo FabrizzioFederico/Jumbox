@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
 public class RegistrarUsuario extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField inpNombre;
@@ -35,7 +34,7 @@ public class RegistrarUsuario extends JFrame {
 	private JLabel direccion;
 	private JTextField inpDireccion;
 	//Constructor 
-	public RegistrarUsuario( Usuario usuario ) {
+	public RegistrarUsuario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 571);
 		contentPane = new JPanel();
@@ -52,7 +51,7 @@ public class RegistrarUsuario extends JFrame {
 		contentPane.add(lblInfo);
 		inpNombre = new JTextField();
 		inpNombre.setBounds(48, 97, 116, 20);
-		inpNombre.setText(usuario.getNombre());
+		inpNombre.setText("");
 		contentPane.add(inpNombre);
 		inpNombre.setColumns(10);
 		
@@ -61,7 +60,7 @@ public class RegistrarUsuario extends JFrame {
 		contentPane.add(mail);
 		
 		inpMail = new JTextField();
-		inpMail.setText(usuario.getEmail());
+		inpMail.setText("");
 		inpMail.setColumns(10);
 		inpMail.setBounds(48, 153, 116, 20);
 		contentPane.add(inpMail);
@@ -71,7 +70,7 @@ public class RegistrarUsuario extends JFrame {
 		contentPane.add(contrasenia);
 		
 		inpContrasenia = new JTextField();
-		inpContrasenia.setText(usuario.getContrasenia());
+		inpContrasenia.setText("");
 		inpContrasenia.setColumns(10);
 		inpContrasenia.setBounds(48, 335, 116, 20);
 		contentPane.add(inpContrasenia);
@@ -81,7 +80,7 @@ public class RegistrarUsuario extends JFrame {
 		contentPane.add(sucursal);
 		
 		inpSucursal = new JTextField();
-		inpSucursal.setText(String.valueOf(usuario.getId_sucursal()));
+		inpSucursal.setText("");
 		inpSucursal.setColumns(10);
 		inpSucursal.setBounds(48, 279, 116, 20);
 		contentPane.add(inpSucursal);
@@ -91,23 +90,19 @@ public class RegistrarUsuario extends JFrame {
 		contentPane.add(direccion);
 		
 		inpDireccion = new JTextField();
-		inpDireccion.setText(usuario.getDireccion());
+		inpDireccion.setText("");
 		inpDireccion.setColumns(10);
 		inpDireccion.setBounds(48, 211, 116, 20);
 		contentPane.add(inpDireccion);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("CLIENTE");
-		comboBox.addItem("ENCARGADO_STOCK");
-		comboBox.addItem("ADMIN");
-		comboBox.setSelectedItem(usuario.getElegido());
-		comboBox.setBounds(48, 391, 116, 22);
-		contentPane.add(comboBox);
-		btnNewButton = new JButton("Editar");
+		
+		
+		btnNewButton = new JButton("Registrarse");
+		btnNewButton.setBounds(48, 424, 116, 23);
+		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//"UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id = ?"
-				Usuario nuevo = usuario;
+				Usuario nuevo = new Usuario();
 				String nombreValidado = Validaciones.validarNombreSinIngreso(inpNombre.getText());
 		        if (nombreValidado == null) {
 		        	lblInfo.setText("Nombre inválido: Solo letras y espacios permitidos");
@@ -129,38 +124,21 @@ public class RegistrarUsuario extends JFrame {
 				nuevo.setDireccion(inpDireccion.getText());
 				int idSucursal = Integer.parseInt(inpSucursal.getText().isEmpty()?"0":inpSucursal.getText());
 			    nuevo.setId_sucursal(idSucursal);
-				nuevo.setElegido((String)comboBox.getSelectedItem());
-			    nuevo.setVenta_id_venta(nuevo.getVenta_id_venta());
-			    nuevo.setVenta_VentaProducto_id_venta(nuevo.getVenta_VentaProducto_id_venta());
-			    nuevo.setId(nuevo.getId());
+				nuevo.setElegido("CLIENTE");
+			    
 				
 				
-			    lblInfo.setText(Usuario.Editar(nuevo));
+				Usuario.Registrarse(nuevo);
+				JOptionPane.showMessageDialog(null, "Usuario Creado Correctamente!!!");
 				
-				
-			}
-		});
-		btnNewButton.setBounds(48, 424, 89, 23);
-		contentPane.add(btnNewButton);
-		
-		btnNewButton_1 = new JButton("Volver");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				VistaUsuarios nuevo = new VistaUsuarios();
-				nuevo.setVisible(true);
+				VistaClientes vistaCliente = new VistaClientes(nuevo);
+				vistaCliente.setVisible(true);
 				dispose();
+				
+				
 			}
 		});
-		btnNewButton_1.setBounds(171, 424, 89, 23);
-		contentPane.add(btnNewButton_1);
 		
-		tipo = new JLabel("Tipo");
-		tipo.setBounds(48, 366, 116, 14);
-		contentPane.add(tipo);
 		
-	
-		
-	
 	}
 }

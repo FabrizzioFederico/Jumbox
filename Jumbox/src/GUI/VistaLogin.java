@@ -168,5 +168,14 @@ public class VistaLogin extends JFrame {
 			});
 		
 		contentPane.add(btnRegistrar);
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistrarUsuario registrarUsuario = new RegistrarUsuario(); // Tengo que Implemetarlos
+				registrarUsuario.setVisible(true);
+				    dispose();
+				
+				
+			}
+		});
 	}
 }
