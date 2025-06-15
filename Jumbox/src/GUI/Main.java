@@ -49,7 +49,7 @@ public class Main {
                     break;
                     
                 case 1:
-                	ControllerUsuario.Registrarse(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.ValidarContraseña("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,((Rol)JOptionPane.showInputDialog(null,"Seleccione una Opción","Jumbox",0,null,Rol.values(),Rol.values()[0])).name(),1,1));
+                	//ControllerUsuario.Registrarse(new Usuario(Validaciones.validarNombre("Ingresa tu nombre"),Validaciones.validarEmail("Ingrese su Mail"),Validaciones.validarContraseniaSinIngreso("Ingrese su contraseña"),Validaciones.validarAlfanumerico("Ingrese su domicilio"),1,((Rol)JOptionPane.showInputDialog(null,"Seleccione una Opción","Jumbox",0,null,Rol.values(),Rol.values()[0])).name(),1,1));
                     break;
                 case 2:
                 	String nombresUsuarios="";
@@ -64,7 +64,7 @@ public class Main {
 					}
                 	break;
                 case 3:
-                	Usuario encontrado = ControllerUsuario.buscarUsuario(Validaciones.validarNumero("Ingrese un ID"));
+                	Usuario encontrado = ControllerUsuario.buscarUsuario(Validaciones.validarNumeroPositivo("Ingrese un ID"));
                 	JOptionPane.showMessageDialog(null, 
                 	    encontrado.getNombre() != null ? encontrado : "No se encontró ningún usuario con ese ID");
                 	break;

@@ -31,9 +31,9 @@ public class EditarUsuario extends JFrame {
 	private JButton btnNewButton_1;
 	private JLabel tipo;
 	private JLabel sucursal;
-	private JTextField inpSucursal;
 	private JLabel direccion;
 	private JTextField inpDireccion;
+	private JComboBox comboBox_1;
 	//Constructor 
 	public EditarUsuario( Usuario usuario ) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,12 +80,6 @@ public class EditarUsuario extends JFrame {
 		sucursal.setBounds(48, 254, 116, 14);
 		contentPane.add(sucursal);
 		
-		inpSucursal = new JTextField();
-		inpSucursal.setText(String.valueOf(usuario.getId_sucursal()));
-		inpSucursal.setColumns(10);
-		inpSucursal.setBounds(48, 279, 116, 20);
-		contentPane.add(inpSucursal);
-		
 		direccion = new JLabel("Direccion");
 		direccion.setBounds(48, 184, 116, 14);
 		contentPane.add(direccion);
@@ -96,6 +90,7 @@ public class EditarUsuario extends JFrame {
 		inpDireccion.setBounds(48, 211, 116, 20);
 		contentPane.add(inpDireccion);
 		
+		//Combox Rol
 		JComboBox comboBox = new JComboBox();
 		comboBox.addItem("CLIENTE");
 		comboBox.addItem("ENCARGADO_STOCK");
@@ -103,6 +98,15 @@ public class EditarUsuario extends JFrame {
 		comboBox.setSelectedItem(usuario.getElegido());
 		comboBox.setBounds(48, 391, 116, 22);
 		contentPane.add(comboBox);
+		//Combox Sucursal
+		comboBox_1 = new JComboBox();
+		comboBox_1.addItem("Flores");
+		comboBox_1.addItem("Palermo");
+		comboBox_1.addItem("Boedo");
+		comboBox_1.addItem("Balvanera");
+		comboBox_1.addItem("Almagro");
+		comboBox_1.setBounds(48, 277, 116, 22);
+		contentPane.add(comboBox_1);
 		btnNewButton = new JButton("Editar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -127,8 +131,9 @@ public class EditarUsuario extends JFrame {
 				}
 				nuevo.setContrasenia(inpContrasenia.getText());
 				nuevo.setDireccion(inpDireccion.getText());
-				int idSucursal = Integer.parseInt(inpSucursal.getText().isEmpty()?"0":inpSucursal.getText());
-			    nuevo.setId_sucursal(idSucursal);
+				comboBox_1.setSelectedItem(nuevo.getId_sucursal());
+				int indiceSeleccionado = comboBox_1.getSelectedIndex(); 
+				nuevo.setId_sucursal(indiceSeleccionado + 1);
 				nuevo.setElegido((String)comboBox.getSelectedItem());
 			    nuevo.setId(nuevo.getId());
 				
@@ -157,8 +162,5 @@ public class EditarUsuario extends JFrame {
 		tipo.setBounds(48, 366, 116, 14);
 		contentPane.add(tipo);
 		
-	
-		
-	
 	}
 }

@@ -112,41 +112,64 @@ public class VistaClientes extends JFrame {
     
  }
  
+ 
  private void agregarAlCarrito() {
-     int row = table.getSelectedRow();
-     if (row == -1) {
-         JOptionPane.showMessageDialog(this, "Seleccione un producto primero");
-         return;
-     }
-     
-     // Pedir cantidad
-     String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese cantidad:");
-     if (cantidadStr == null || cantidadStr.trim().isEmpty()) return;
-     
-     try {
-         int cantidad = Integer.parseInt(cantidadStr);
-         int idProducto = (int) model.getValueAt(row, 0);
-         String nombre = (String) model.getValueAt(row, 1);
-         double precio = (double) model.getValueAt(row, 2);
-         
-         // Verificar si ya está en el carrito
-         for (VentaProducto vp : carrito) {
-             if (vp.getId_producto() == idProducto) {
-                 vp.setCantidad(vp.getCantidad() + cantidad);
-                 actualizarTablaCarrito();
-                 return;
-             }
-         }
-         
-         // Si no está, agregarlo
-         VentaProducto nuevo = new VentaProducto(0, idProducto, cantidad, precio);
-         carrito.add(nuevo);
-         actualizarTablaCarrito();
-         
-     } catch (NumberFormatException e) {
-         JOptionPane.showMessageDialog(this, "Cantidad inválida");
-     }
- }
+	    int row = table.getSelectedRow();
+	    if (row == -1) {
+	        JOptionPane.showMessageDialog(this, "Seleccione un producto primero");
+	        return;
+	    }
+
+	    int stockDisponible = (int) model.getValueAt(row, 3); // Columna "Cantidad"
+	    if (stockDisponible == 0) {
+	        JOptionPane.showMessageDialog(this, "Este producto no tiene stock disponible.");
+	        return;
+	    }
+
+	    // Pedir cantidad
+	    String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese cantidad:");
+	    if (cantidadStr == null || cantidadStr.trim().isEmpty()) return;
+
+	    try {
+	        int cantidad = Integer.parseInt(cantidadStr);
+
+	        if (cantidad <= 0) {
+	            JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor a 0.");
+	            return;
+	        }
+
+	        if (cantidad > stockDisponible) {
+	            JOptionPane.showMessageDialog(this, "No hay suficiente stock. Stock disponible: " + stockDisponible);
+	            return;
+	        }
+
+	        int idProducto = (int) model.getValueAt(row, 0);
+	        String nombre = (String) model.getValueAt(row, 1);
+	        double precio = (double) model.getValueAt(row, 2);
+
+	        // Verificar si ya está en el carrito
+	        for (VentaProducto vp : carrito) {
+	            if (vp.getId_producto() == idProducto) {
+	                if (vp.getCantidad() + cantidad > stockDisponible) {
+	                    JOptionPane.showMessageDialog(this, "No hay suficiente stock para aumentar esa cantidad. Stock disponible: " + stockDisponible);
+	                    return;
+	                }
+	                vp.setCantidad(vp.getCantidad() + cantidad);
+	                actualizarTablaCarrito();
+	                return;
+	            }
+	        }
+
+	        // Si no está, agregarlo
+	        VentaProducto nuevo = new VentaProducto(0, idProducto, cantidad, precio);
+	        carrito.add(nuevo);
+	        actualizarTablaCarrito();
+
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(this, "Cantidad inválida");
+	    }
+	}
+ 
  
  private String obtenerNombreProducto(int idProducto) {
 	    // Busca en la tabla de productos que ya tienes cargada
@@ -176,28 +199,63 @@ public class VistaClientes extends JFrame {
  }
  
  private void finalizarCompra() {
-     if (carrito.isEmpty()) {
-         JOptionPane.showMessageDialog(this, "El carrito está vacío");
-         return;
-     }
-     
-     // Crear la venta principal
-     int idVenta = ControllerVenta.crearVenta(usuarioActual.getId(), usuarioActual.getId_sucursal(), calcularTotal());
-     
-     // Registrar los productos
-     for (VentaProducto vp : carrito) {
-         vp.setId_venta(idVenta);
-         ControllerVenta.registrarProductoEnVenta(vp);
-         
-         productoSeleccionado.setStock(productoSeleccionado.getStock() - vp.getCantidad());
-         ControllerProducto.actualizarProducto(productoSeleccionado);
-     }
-     
-     JOptionPane.showMessageDialog(this, "Venta realizada con éxito!");
-     carrito.clear();
-     actualizarTablaCarrito();
-     cargarTabla();
- }
+	    if (carrito.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "El carrito está vacío");
+	        return;
+	    }
+
+	    for (VentaProducto vp : carrito) {
+	        Producto p = ControllerProducto.buscarProducto(vp.getId_producto());
+	        if (p == null) {
+	            JOptionPane.showMessageDialog(this, "Producto no encontrado (ID: " + vp.getId_producto() + ")");
+	            return; 
+	        }
+	        if (p.getStock() < vp.getCantidad()) {
+	            JOptionPane.showMessageDialog(this, "Stock insuficiente para el producto: " + p.getNombre());
+	            return; 
+	        }
+	    }
+
+	    int idVenta = ControllerVenta.crearVenta(usuarioActual.getId(), usuarioActual.getId_sucursal(), calcularTotal());
+	    if (idVenta <= 0) {
+	        JOptionPane.showMessageDialog(this, "Error al crear la venta.");
+	        return;
+	    }
+
+	    boolean errorStock = false;
+
+	    for (VentaProducto vp : carrito) {
+	        Producto p = ControllerProducto.buscarProducto(vp.getId_producto());
+
+	        if (p.getStock() < vp.getCantidad()) {
+	            JOptionPane.showMessageDialog(this, "Stock insuficiente para el producto (al confirmar): " + p.getNombre());
+	            errorStock = true;
+	            break;
+	        }
+
+	        boolean actualizado = ControllerProducto.reducirStock(p.getId(), vp.getCantidad());
+	        if (!actualizado) {
+	            JOptionPane.showMessageDialog(this, "Error al actualizar stock para: " + p.getNombre());
+	            errorStock = true;
+	            break;
+	        }
+
+	        vp.setId_venta(idVenta);
+	        ControllerVenta.registrarProductoEnVenta(vp);
+	    }
+
+	    if (errorStock) {
+	        JOptionPane.showMessageDialog(this, "No se pudo completar la compra debido a problemas con el stock.");
+
+	        return;
+	    }
+
+	    JOptionPane.showMessageDialog(this, "Venta realizada con éxito!");
+	    carrito.clear();
+	    actualizarTablaCarrito();
+	    cargarTabla(); 
+	}
+
  
  private double calcularTotal() {
      double total = 0;
