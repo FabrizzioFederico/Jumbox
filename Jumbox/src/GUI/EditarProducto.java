@@ -26,7 +26,6 @@ import javax.swing.JComboBox;
 		private JLabel stock;
 		private JTextField inpStock;
 		private JLabel id_sucursal;
-		private JTextField inpId_sucursal;
 		private JButton btnNewButton;
 		private JButton btnNewButton_1;
 		//Constructor 
@@ -39,7 +38,7 @@ import javax.swing.JComboBox;
 			setContentPane(contentPane);
 			contentPane.setLayout(null);
 			
-			JLabel nombre = new JLabel("nombre");
+			JLabel nombre = new JLabel("Nombre");
 			nombre.setBounds(48, 47, 116, 14);
 			contentPane.add(nombre);
 			
@@ -49,7 +48,7 @@ import javax.swing.JComboBox;
 			contentPane.add(inpNombre);
 			inpNombre.setColumns(10);
 			
-			precio = new JLabel("precio");
+			precio = new JLabel("Precio");
 			precio.setBounds(48, 103, 116, 14);
 			contentPane.add(precio);
 			
@@ -65,19 +64,23 @@ import javax.swing.JComboBox;
 			inpStock.setBounds(48, 181, 116, 20);
 			contentPane.add(inpStock);
 			
-			stock = new JLabel("stock");
+			stock = new JLabel("Stock");
 			stock.setBounds(48, 156, 116, 14);
 			contentPane.add(stock);
 			
-			inpId_sucursal = new JTextField();
-			inpId_sucursal.setText(String.valueOf(producto.getid_sucursal()));       
-			inpId_sucursal.setColumns(10);
-			inpId_sucursal.setBounds(48, 240, 116, 20);
-			contentPane.add(inpId_sucursal);
-			
-			id_sucursal = new JLabel("id_sucursal");
+			id_sucursal = new JLabel("Sucursal");
 			id_sucursal.setBounds(48, 215, 116, 14);
 			contentPane.add(id_sucursal);
+			
+			JComboBox comboBox = new JComboBox();
+			comboBox.setBounds(48, 240, 116, 22);
+			comboBox.addItem("Flores");
+			comboBox.addItem("Palermo");
+			comboBox.addItem("Boedo");
+			comboBox.addItem("Balvanera");
+			comboBox.addItem("Almagro");
+			contentPane.add(comboBox);
+			
 			
 			btnNewButton = new JButton("Editar");
 			btnNewButton.addActionListener(new ActionListener() {
@@ -88,8 +91,9 @@ import javax.swing.JComboBox;
 					nuevo.setPrecio(precio);
 					int stock = Integer.parseInt(inpStock.getText());
 					nuevo.setStock(stock);
-					int idSucursal = Integer.parseInt(inpId_sucursal.getText());
-					nuevo.setid_sucursal(idSucursal);
+					comboBox.setSelectedItem(nuevo.getid_sucursal());
+					int indiceSeleccionado = comboBox.getSelectedIndex(); 
+					nuevo.setid_sucursal(indiceSeleccionado + 1);
 					
 					if (ControllerProducto.actualizarProducto(nuevo)) {
 						JOptionPane.showMessageDialog(null, "Se edito");
@@ -114,6 +118,8 @@ import javax.swing.JComboBox;
 			});
 			btnNewButton_1.setBounds(181, 277, 89, 23);
 			contentPane.add(btnNewButton_1);
+			
+			
 		}
 	}
 	

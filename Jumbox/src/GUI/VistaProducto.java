@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import BLL.Producto;
 import DLL.ControllerProducto;
+import repository.Local;
 
 
 public class VistaProducto extends JFrame {
@@ -126,13 +128,13 @@ public class VistaProducto extends JFrame {
             JTextField nombreField = new JTextField();
             JTextField precioField = new JTextField();
             JTextField stockField = new JTextField();
-            JTextField id_sucursalField = new JTextField();
+            JComboBox<Local> idSucursalCombox = new JComboBox<>(Local.values());
 
             Object[] fields = {
                 "Nombre:", nombreField,
                 "Precio:", precioField,
                 "Stock:", stockField,
-                "Id_sucursal:", id_sucursalField
+                "Id_sucursal:", idSucursalCombox
                	};
 
             int option = JOptionPane.showConfirmDialog(null, fields, "Agregar Producto", JOptionPane.OK_CANCEL_OPTION);
@@ -142,7 +144,7 @@ public class VistaProducto extends JFrame {
                         nombreField.getText(),
                         Double.parseDouble(precioField.getText()),
                         Integer.parseInt(stockField.getText()),
-                        Integer.parseInt(id_sucursalField.getText())
+                        ((Local)idSucursalCombox.getSelectedItem()).getId()
                         );
 
                 ControllerProducto.RegistrarProducto(nuevo);

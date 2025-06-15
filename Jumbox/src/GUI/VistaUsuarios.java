@@ -12,6 +12,7 @@ import BLL.Usuario;
 import DLL.ControllerUsuario;
 import repository.Rol;
 import repository.Validaciones;
+import repository.Local;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -134,7 +135,7 @@ public class VistaUsuarios extends JFrame {
             JTextField emailField = new JTextField();
             JPasswordField passwordField = new JPasswordField();
             JTextField direccionField = new JTextField();
-            JTextField idSucursalField = new JTextField();
+            JComboBox<Local> idSucursalCombox = new JComboBox<>(Local.values());
             JComboBox<Rol> rolComboBox = new JComboBox<>(Rol.values());
 
             Object[] fields = {
@@ -142,7 +143,7 @@ public class VistaUsuarios extends JFrame {
                 "Email:", emailField,
                 "Contraseña:", passwordField,
                 "Dirección:", direccionField,
-                "Sucursal (ID numérico):", idSucursalField,
+                "Sucursal (ID numérico):", idSucursalCombox,
                 "Rol:", rolComboBox
             };
 
@@ -175,13 +176,6 @@ public class VistaUsuarios extends JFrame {
                     JOptionPane.showMessageDialog(null, "Dirección Incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                     continue;
                }
-
-                
-
-                if (Validaciones.validarNumeroPositivo(idSucursalField.getText()) < 0) {
-                     JOptionPane.showMessageDialog(null, "ID Sucursal debe ser un número positivo", "Error", JOptionPane.ERROR_MESSAGE);
-                     continue;
-                }
                 
 
                 
@@ -190,7 +184,7 @@ public class VistaUsuarios extends JFrame {
                     emailField.getText().trim(),
                     new String(passwordField.getPassword()),
                     direccionField.getText().trim(),
-                    Integer.parseInt(idSucursalField.getText()),
+                    ((Local)idSucursalCombox.getSelectedItem()).getId(),
                     ((Rol) rolComboBox.getSelectedItem()).name()
                 );
 
