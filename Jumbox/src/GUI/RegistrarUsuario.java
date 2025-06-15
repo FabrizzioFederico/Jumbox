@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import BLL.Usuario;
@@ -69,8 +70,7 @@ public class RegistrarUsuario extends JFrame {
 		contrasenia.setBounds(48, 310, 116, 14);
 		contentPane.add(contrasenia);
 		
-		inpContrasenia = new JTextField();
-		inpContrasenia.setText("");
+		inpContrasenia = new JPasswordField();
 		inpContrasenia.setColumns(10);
 		inpContrasenia.setBounds(48, 335, 116, 20);
 		contentPane.add(inpContrasenia);
