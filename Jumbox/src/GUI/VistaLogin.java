@@ -154,19 +154,15 @@ public class VistaLogin extends JFrame {
 		btnRegistrar.setBounds(384, 242, 114, 29);
 		btnRegistrar.setBackground(new Color(255, 255, 255));
 		btnRegistrar.setFont(new Font("Montserrat", Font.PLAIN, 12));
-		btnIngresar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				// RegistrarUsuario pantallaRegistrar = new RegistrarUsuario();
-				 //pantallaRegistrar.setVisible(true);
-					
-				 //nos tiene q llevar a RegistrarUsuario.java
-				
-				   // dispose();
-				}
-				
-				
-			});
-		
 		contentPane.add(btnRegistrar);
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistrarUsuario registrarUsuario = new RegistrarUsuario(); // Tengo que Implemetarlos
+				registrarUsuario.setVisible(true);
+				    dispose();
+				
+				
+			}
+		});
 	}
 }
