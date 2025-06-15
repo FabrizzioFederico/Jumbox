@@ -25,10 +25,7 @@ public class ControllerProducto {
             statement.setDouble(2, producto.getPrecio());
             statement.setInt(3, producto.getStock());
             statement.setInt(4, producto.getid_sucursal());
-            
-            
-            
-
+                                    
             int filas = statement.executeUpdate();
             if (filas > 0) {
                 System.out.println("Producto agregado correctamente.");
@@ -147,5 +144,43 @@ public class ControllerProducto {
 	        e.printStackTrace();
 	    }
 	}
+	
+	public static boolean reducirStock(int idProducto, int cantidad) {
+	    try (
+	        PreparedStatement checkStmt = con.prepareStatement(
+	            "SELECT stock FROM producto WHERE id_producto = ?"
+	        );
+	    ) {
+	        checkStmt.setInt(1, idProducto);
+	        try (ResultSet rs = checkStmt.executeQuery()) {
+	            if (rs.next()) {
+	                int stockActual = rs.getInt("stock");
+	                System.out.println("Stock actual para producto " + idProducto + ": " + stockActual);
+	                System.out.println("Cantidad a reducir: " + cantidad);
+
+	                if (stockActual >= cantidad) {
+	                    try (PreparedStatement updateStmt = con.prepareStatement(
+	                        "UPDATE producto SET stock = stock - ? WHERE id_producto = ?"
+	                    )) {
+	                        updateStmt.setInt(1, cantidad);
+	                        updateStmt.setInt(2, idProducto);
+	                        int filasActualizadas = updateStmt.executeUpdate();
+	                        System.out.println("Filas actualizadas: " + filasActualizadas);
+	                        return filasActualizadas > 0;
+	                    }
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "Stock insuficiente.");
+	                }
+	            } else {
+	                System.out.println("Producto no encontrado con id: " + idProducto);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
+
 	
 }

@@ -50,7 +50,7 @@ public class ControllerVenta {
     }
     
     public static boolean registrarProductoEnVenta(VentaProducto vp) {
-        try {
+        try {        	
             PreparedStatement stmt = con.prepareStatement(
                 "INSERT INTO ventaproducto (id_venta, id_producto, cantidad, precio_unitario) VALUES (?,?,?,?)");
             
@@ -65,4 +65,6 @@ public class ControllerVenta {
         }
         return false;
     }
+    
+    
 }
