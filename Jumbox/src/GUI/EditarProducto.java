@@ -6,7 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import BLL.Producto;
+import BLL.Usuario;
 import DLL.ControllerProducto;
+import repository.Validaciones;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,6 +43,9 @@ import javax.swing.JComboBox;
 			JLabel nombre = new JLabel("Nombre");
 			nombre.setBounds(48, 47, 116, 14);
 			contentPane.add(nombre);
+			JLabel lblInfo = new JLabel("");
+			lblInfo.setBounds(48, 466, 338, 14);
+			contentPane.add(lblInfo);
 			
 			inpNombre = new JTextField();
 			inpNombre.setBounds(48, 72, 116, 20);
@@ -86,11 +91,25 @@ import javax.swing.JComboBox;
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Producto nuevo = producto;
-					nuevo.setNombre(inpNombre.getText());
-					Double precio = Double.parseDouble(inpPrecio.getText());
-					nuevo.setPrecio(precio);
-					int stock = Integer.parseInt(inpStock.getText());
-					nuevo.setStock(stock);
+					String nombreValido= Validaciones.validarNombreSinIngreso(inpNombre.getText());
+					if (nombreValido == null) {
+			        	lblInfo.setText("Nombre inválido: Solo letras y espacios permitidos");
+			            return;
+			        }
+					nuevo.setNombre(nombreValido);
+					Double precioValido=Validaciones.validarDinero(inpPrecio.getText());
+					if (precioValido == null) {
+			        	lblInfo.setText("Precio inválido: Ingrese un precio positivo");
+			            return;
+			        }
+					nuevo.setPrecio(precioValido);
+					int stockValido = Validaciones.validarNumeroPositivo(inpStock.getText());
+					if (stockValido <0) {
+			        	lblInfo.setText("Stock inválido: Ingrese una cantidad positiva");
+			            return;
+					}
+					nuevo.setStock(stockValido);
+					
 					comboBox.setSelectedItem(nuevo.getid_sucursal());
 					int indiceSeleccionado = comboBox.getSelectedIndex(); 
 					nuevo.setid_sucursal(indiceSeleccionado + 1);
@@ -111,7 +130,7 @@ import javax.swing.JComboBox;
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
-					VistaProducto nuevo = new 	VistaProducto();
+					VistaProducto nuevo = new VistaProducto();
 					nuevo.setVisible(true);
 					dispose();
 				}

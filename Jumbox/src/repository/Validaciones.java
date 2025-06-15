@@ -112,34 +112,46 @@ public interface Validaciones {
 	    return contrasenia;
 	}
 	
-	public static double validarDinero(String mensaje) {
-		boolean flag;
-		String num = "";
-		int cont = 0;
-		do {
-			flag = true;
-			num = JOptionPane.showInputDialog(mensaje);
-			while (num.isEmpty()) {
-				num = JOptionPane.showInputDialog(mensaje);
-			}
-			for (int i = 0; i < num.length(); i++) {
-				char c = num.charAt(i);
-				if (!Character.isDigit(num.charAt(i))) {
-					if (c == '.' && cont == 0) {
-						cont++;
-					} else {
-						flag = false;
-						break;
-					}
-				}
-			}
-			if (flag && Double.parseDouble(num) <= 0) {
-				flag = false;
-			}
-		} while (!flag);
-		return Double.parseDouble(num);
-	}
+	public static Double validarDinero(String input) {
+	    
+	    if (input == null || input.trim().isEmpty()) {
+	        return null;
+	    }
 
+	    String trimmed = input.trim();
+	    int puntoCount = 0;
+	    boolean tieneDigito = false;
+
+	    for (int i = 0; i < trimmed.length(); i++) {
+	        char c = trimmed.charAt(i);
+
+	        if (Character.isDigit(c)) {
+	            tieneDigito = true;
+	        } else if (c == '.') {
+	            puntoCount++;
+	            if (puntoCount > 1) {  
+	                return null;
+	            }
+	        } else if (i == 0 && c == '-') {
+	            return null; 
+	        } else {
+	            return null; 
+	        }
+	    }
+
+	    
+	    if (!tieneDigito) {
+	        return null;
+	    }
+
+	   
+	    try {
+	        double valor = Double.parseDouble(trimmed);
+	        return valor > 0 ? valor : null;
+	    } catch (NumberFormatException e) {
+	        return null; 
+	    }
+	}
 
 	public static int validarNumeroPositivo(String texto) {
 	    if (texto == null || texto.trim().isEmpty()) {

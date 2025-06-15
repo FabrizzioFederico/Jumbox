@@ -20,8 +20,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.Producto;
+import BLL.Usuario;
 import DLL.ControllerProducto;
+import DLL.ControllerUsuario;
 import repository.Local;
+import repository.Rol;
+import repository.Validaciones;
 
 
 public class VistaProducto extends JFrame {
@@ -136,19 +140,44 @@ public class VistaProducto extends JFrame {
                 "Stock:", stockField,
                 "Id_sucursal:", idSucursalCombox
                	};
+            
+            
+            while (true) {
+                int option = JOptionPane.showConfirmDialog(null, fields, "Agregar Producto", JOptionPane.OK_CANCEL_OPTION);
+                
+                if (option != JOptionPane.OK_OPTION) {
+                    return;
+                }
 
-            int option = JOptionPane.showConfirmDialog(null, fields, "Agregar Producto", JOptionPane.OK_CANCEL_OPTION);
+                
+                if (Validaciones.validarNombreSinIngreso(nombreField.getText()) == null) {
+                    JOptionPane.showMessageDialog(null, "Nombre inválido\nSolo letras y espacios permitidos", "Error", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
 
-            if (option == JOptionPane.OK_OPTION) {
-                Producto nuevo = new Producto(0,
-                        nombreField.getText(),
-                        Double.parseDouble(precioField.getText()),
-                        Integer.parseInt(stockField.getText()),
-                        ((Local)idSucursalCombox.getSelectedItem()).getId()
-                        );
+                
+                if (Validaciones.validarDinero(precioField.getText())== null) {
+                    JOptionPane.showMessageDialog(null, "Ingrese un precio válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
 
-                ControllerProducto.RegistrarProducto(nuevo);
-                cargarTabla();
+                
+                if (Validaciones.validarNumeroPositivo(stockField.getText())<0) {
+                    JOptionPane.showMessageDialog(null, "Ingrese número positivo para el stock", "Error", JOptionPane.ERROR_MESSAGE);
+                    continue;
+                }
+                if (option == JOptionPane.OK_OPTION) {
+                    Producto nuevo = new Producto(0,
+                            nombreField.getText(),
+                            Double.parseDouble(precioField.getText()),
+                            Integer.parseInt(stockField.getText()),
+                            ((Local)idSucursalCombox.getSelectedItem()).getId()
+                            );
+
+                    ControllerProducto.RegistrarProducto(nuevo);
+                    cargarTabla();
+                    break;
+                }
             }
         });
 
