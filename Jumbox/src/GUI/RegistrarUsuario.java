@@ -30,7 +30,6 @@ public class RegistrarUsuario extends JFrame {
 	private JButton btnNewButton_1;
 	private JLabel tipo;
 	private JLabel sucursal;
-	private JTextField inpSucursal;
 	private JLabel direccion;
 	private JTextField inpDireccion;
 	//Constructor 
@@ -79,12 +78,6 @@ public class RegistrarUsuario extends JFrame {
 		sucursal.setBounds(48, 254, 116, 14);
 		contentPane.add(sucursal);
 		
-		inpSucursal = new JTextField();
-		inpSucursal.setText("");
-		inpSucursal.setColumns(10);
-		inpSucursal.setBounds(48, 279, 116, 20);
-		contentPane.add(inpSucursal);
-		
 		direccion = new JLabel("Direccion");
 		direccion.setBounds(48, 184, 116, 14);
 		contentPane.add(direccion);
@@ -100,6 +93,15 @@ public class RegistrarUsuario extends JFrame {
 		btnNewButton = new JButton("Registrarse");
 		btnNewButton.setBounds(48, 424, 116, 23);
 		contentPane.add(btnNewButton);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.addItem("Flores");
+		comboBox.addItem("Palermo");
+		comboBox.addItem("Boedo");
+		comboBox.addItem("Balvanera");
+		comboBox.addItem("Almagro");
+		comboBox.setBounds(48, 277, 116, 22);
+		contentPane.add(comboBox);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuario nuevo = new Usuario();
@@ -122,8 +124,9 @@ public class RegistrarUsuario extends JFrame {
 				}
 				nuevo.setContrasenia(inpContrasenia.getText());
 				nuevo.setDireccion(inpDireccion.getText());
-				int idSucursal = Integer.parseInt(inpSucursal.getText().isEmpty()?"0":inpSucursal.getText());
-			    nuevo.setId_sucursal(idSucursal);
+				comboBox.setSelectedItem(nuevo.getId_sucursal());
+				int indiceSeleccionado = comboBox.getSelectedIndex(); 
+				nuevo.setId_sucursal(indiceSeleccionado + 1);
 				nuevo.setElegido("CLIENTE");
 			    
 				
