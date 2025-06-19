@@ -251,6 +251,9 @@ public class VistaClientes extends JFrame {
 	    }
 
 	    JOptionPane.showMessageDialog(this, "Venta realizada con éxito!");
+	    
+	    mostrarTicket();
+	    
 	    carrito.clear();
 	    actualizarTablaCarrito();
 	    cargarTabla(); 
@@ -265,6 +268,24 @@ public class VistaClientes extends JFrame {
      return total;
  }
  
+ private void mostrarTicket() {
+	    StringBuilder detalle = new StringBuilder("DETALLE DE COMPRA\n");
+	    detalle.append("===========================\n");
+
+	    for (VentaProducto vp : carrito) {
+	        String nombreProducto = obtenerNombreProducto(vp.getId_producto());
+	        double subtotal = vp.getCantidad() * vp.getPrecio_unitario();
+
+	        detalle.append(String.format("%s x%d $%.2f -> Subtotal: $%.2f\n",
+	                nombreProducto, vp.getCantidad(), vp.getPrecio_unitario(), subtotal));
+	    }
+
+	    detalle.append("===========================\n");
+	    detalle.append(String.format("TOTAL A PAGAR: $%.2f", calcularTotal()));
+
+	    JOptionPane.showMessageDialog(this, detalle.toString(), "Resumen de compra", JOptionPane.INFORMATION_MESSAGE);
+	}
+
 
  private void cargarTabla() {
      model.setRowCount(0);
