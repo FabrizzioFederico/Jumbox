@@ -26,10 +26,9 @@ Esta aplicación permite gestionar de manera eficiente **inventario**, **compras
 
 
 
-## Diagrama de clases
+## Diagrama de Base de Datos
 
-![Image](https://github.com/user-attachments/assets/2b441c69-fc1e-4835-a215-fb794a0cbdc6)
-
+![Base de Datos JumboxV2](https://github.com/user-attachments/assets/02a10a5e-f26b-462a-885d-3dbd9a463ff5)
 
 
 ### Instalación
