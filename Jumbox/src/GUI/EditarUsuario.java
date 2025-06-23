@@ -1,166 +1,136 @@
 package GUI;
 
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import BLL.Usuario;
 import DLL.ControllerUsuario;
+import repository.Local;
+import repository.Rol;
 import repository.Validaciones;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
-public class EditarUsuario extends JFrame {
+public class EditarUsuario extends JDialog {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField inpNombre;
-	private JLabel mail;
-	private JTextField inpMail;
-	private JTextField inpContrasenia;
-	private JLabel contrasenia;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JLabel tipo;
-	private JLabel sucursal;
-	private JLabel direccion;
-	private JTextField inpDireccion;
-	private JComboBox comboBox_1;
-	//Constructor 
-	public EditarUsuario( Usuario usuario ) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 571);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    private VistaAdmin parentFrame;
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JLabel nombre = new JLabel("Nombre");
-		nombre.setBounds(48, 72, 116, 14);
-		contentPane.add(nombre);
-		JLabel lblInfo = new JLabel("");
-		lblInfo.setBounds(48, 466, 338, 14);
-		contentPane.add(lblInfo);
-		inpNombre = new JTextField();
-		inpNombre.setBounds(48, 97, 116, 20);
-		inpNombre.setText(usuario.getNombre());
-		contentPane.add(inpNombre);
-		inpNombre.setColumns(10);
-		
-		mail = new JLabel("Mail");
-		mail.setBounds(48, 128, 116, 14);
-		contentPane.add(mail);
-		
-		inpMail = new JTextField();
-		inpMail.setText(usuario.getEmail());
-		inpMail.setColumns(10);
-		inpMail.setBounds(48, 153, 116, 20);
-		contentPane.add(inpMail);
-		
-		contrasenia = new JLabel("Contraseña");
-		contrasenia.setBounds(48, 310, 116, 14);
-		contentPane.add(contrasenia);
-		
-		inpContrasenia = new JTextField();
-		inpContrasenia.setText(usuario.getContrasenia());
-		inpContrasenia.setColumns(10);
-		inpContrasenia.setBounds(48, 335, 116, 20);
-		contentPane.add(inpContrasenia);
-		
-		sucursal = new JLabel("Sucursal");
-		sucursal.setBounds(48, 254, 116, 14);
-		contentPane.add(sucursal);
-		
-		direccion = new JLabel("Direccion");
-		direccion.setBounds(48, 184, 116, 14);
-		contentPane.add(direccion);
-		
-		inpDireccion = new JTextField();
-		inpDireccion.setText(usuario.getDireccion());
-		inpDireccion.setColumns(10);
-		inpDireccion.setBounds(48, 211, 116, 20);
-		contentPane.add(inpDireccion);
-		
-		//Combox Rol
-		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("CLIENTE");
-		comboBox.addItem("ENCARGADO_STOCK");
-		comboBox.addItem("ADMIN");
-		comboBox.setSelectedItem(usuario.getElegido());
-		comboBox.setBounds(48, 391, 116, 22);
-		contentPane.add(comboBox);
-		//Combox Sucursal
-		comboBox_1 = new JComboBox();
-		comboBox_1.addItem("Flores");
-		comboBox_1.addItem("Palermo");
-		comboBox_1.addItem("Boedo");
-		comboBox_1.addItem("Balvanera");
-		comboBox_1.addItem("Almagro");
-		comboBox_1.setBounds(48, 277, 116, 22);
-		contentPane.add(comboBox_1);
-		btnNewButton = new JButton("Editar");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//"UPDATE `usuario` SET `nombre`=?,`email`=?,`contrasenia`=?,`direccion`=?,`id_sucursal`=?,`rol`=?,`Venta_id_venta`=?,`Venta_VentaProducto_id_venta`=? WHERE id = ?"
-				Usuario nuevo = usuario;
-				String nombreValidado = Validaciones.validarNombreSinIngreso(inpNombre.getText());
-		        if (nombreValidado == null) {
-		        	lblInfo.setText("Nombre inválido: Solo letras y espacios permitidos");
-		            return;
-		        }
-		        nuevo.setNombre(nombreValidado);
-		        String emailValidado = Validaciones.validarEmail(inpMail.getText());
-		        if (emailValidado == null) {
-		            lblInfo.setText("Email inválido o Vacio");
-		            return;
-		        }
-				nuevo.setEmail(inpMail.getText());
-				String passValidada = Validaciones.validarContraseniaSinIngreso(inpContrasenia.getText());
-				if (passValidada == null) {
-		            lblInfo.setText("Contraseña inválida: Requiere 8+ caracteres \n 1 mayúscula \n 1 minúscula");
-		            return;
-				}
-				nuevo.setContrasenia(inpContrasenia.getText());
-				nuevo.setDireccion(inpDireccion.getText());
-				comboBox_1.setSelectedItem(nuevo.getId_sucursal());
-				int indiceSeleccionado = comboBox_1.getSelectedIndex(); 
-				nuevo.setId_sucursal(indiceSeleccionado + 1);
-				nuevo.setElegido((String)comboBox.getSelectedItem());
-			    nuevo.setId(nuevo.getId());
-				
-				
-			    lblInfo.setText(Usuario.Editar(nuevo));
-				
-				
-			}
-		});
-		btnNewButton.setBounds(48, 424, 89, 23);
-		contentPane.add(btnNewButton);
-		
-		btnNewButton_1 = new JButton("Volver");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				VistaUsuarios nuevo = new VistaUsuarios();
-				nuevo.setVisible(true);
-				dispose();
-			}
-		});
-		btnNewButton_1.setBounds(171, 424, 89, 23);
-		contentPane.add(btnNewButton_1);
-		
-		tipo = new JLabel("Tipo");
-		tipo.setBounds(48, 366, 116, 14);
-		contentPane.add(tipo);
-		
-	}
+    public EditarUsuario(VistaAdmin parent, Usuario usuario) {
+        super(parent, "Editar Usuario", true);
+        this.parentFrame = parent;
+        
+        setSize(500, 400);
+        setLocationRelativeTo(parent);
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().setBackground(new Color(222, 221, 218));
+
+        // Resto del código de inicialización del formulario...
+        JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 10));
+        formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        formPanel.setBackground(new Color(222, 221, 218));
+
+        JTextField nombreField = new JTextField(usuario.getNombre());
+        JTextField emailField = new JTextField(usuario.getEmail());
+        JPasswordField passwordField = new JPasswordField(usuario.getContrasenia());
+        JTextField direccionField = new JTextField(usuario.getDireccion());
+        
+        JComboBox<Local> idSucursalCombox = new JComboBox<>(Local.values());
+        idSucursalCombox.setSelectedIndex(usuario.getId_sucursal() - 1);
+        
+        JComboBox<Rol> rolComboBox = new JComboBox<>(Rol.values());
+        rolComboBox.setSelectedItem(Rol.valueOf(usuario.getElegido()));
+
+        formPanel.add(new JLabel("Nombre:"));
+        formPanel.add(nombreField);
+        formPanel.add(new JLabel("Email:"));
+        formPanel.add(emailField);
+        formPanel.add(new JLabel("Contraseña:"));
+        formPanel.add(passwordField);
+        formPanel.add(new JLabel("Dirección:"));
+        formPanel.add(direccionField);
+        formPanel.add(new JLabel("Sucursal:"));
+        formPanel.add(idSucursalCombox);
+        formPanel.add(new JLabel("Rol:"));
+        formPanel.add(rolComboBox);
+
+        JLabel lblInfo = new JLabel();
+        lblInfo.setForeground(Color.RED);
+        
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setBackground(new Color(222, 221, 218));
+        
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setBackground(new Color(192, 57, 43));
+        btnCancelar.addActionListener(e -> dispose());
+        
+        JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.setForeground(Color.WHITE);
+        btnGuardar.setBackground(new Color(63, 192, 108));
+        btnGuardar.addActionListener(e -> {
+            if (validarCampos(nombreField, emailField, passwordField, direccionField, lblInfo)) {
+                usuario.setNombre(nombreField.getText().trim());
+                usuario.setEmail(emailField.getText().trim());
+                usuario.setContrasenia(new String(passwordField.getPassword()));
+                usuario.setDireccion(direccionField.getText().trim());
+                usuario.setId_sucursal(((Local)idSucursalCombox.getSelectedItem()).getId());
+                usuario.setElegido(((Rol) rolComboBox.getSelectedItem()).name());
+                
+                String resultado = ControllerUsuario.Editar(usuario);
+                if (resultado.equals("Usuario editado correctamente.")) {
+                    parentFrame.cargarTabla(); // Actualizar la tabla en VistaAdmin
+                    dispose(); // Cerrar solo el diálogo
+                } else {
+                    lblInfo.setText(resultado);
+                }
+            }
+        });
+
+        buttonPanel.add(btnCancelar);
+        buttonPanel.add(btnGuardar);
+
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+        mainPanel.add(lblInfo, BorderLayout.NORTH);
+        
+        getContentPane().add(mainPanel, BorderLayout.CENTER);
+        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+    }
+    private boolean validarCampos(JTextField nombreField, JTextField emailField, 
+                                JPasswordField passwordField, JTextField direccionField,
+                                JLabel lblError) {
+        if (Validaciones.validarNombreSinIngreso(nombreField.getText()) == null) {
+            lblError.setText("Nombre inválido: Solo letras y espacios permitidos");
+            return false;
+        }
+
+        if (Validaciones.validarEmail(emailField.getText()) == null) {
+            lblError.setText("Email inválido o vacío");
+            return false;
+        }
+
+        if (Validaciones.validarContraseniaSinIngreso(new String(passwordField.getPassword())) == null) {
+            lblError.setText("Contraseña inválida: 8+ caracteres, 1 mayúscula, 1 minúscula");
+            return false;
+        }
+        
+        if (Validaciones.validarAlfanumerico(direccionField.getText()) == null) {
+            lblError.setText("Dirección incorrecta");
+            return false;
+        }
+        
+        lblError.setText("");
+        return true;
+    }
 }

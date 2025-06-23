@@ -62,9 +62,6 @@ public class VistaAdmin extends JFrame {
         scrollPane.setBounds(34, 58, 1006, 290);
         contentPane.add(scrollPane);
         
-        
-        
-        
 
         // Panel superior
         JPanel panel = new JPanel();
@@ -144,6 +141,10 @@ public class VistaAdmin extends JFrame {
         panel_2.add(textField);
         textField.setColumns(10);
         
+        JLabel lblSeleccionado = new JLabel("Seleccionado:");
+        lblSeleccionado.setBounds(10, 10, 760, 20);
+        contentPane.add(lblSeleccionado);
+        
         JLabel lblFiltrarResultados = new JLabel("Filtrar Resultados");
         lblFiltrarResultados.setForeground(new Color(63, 192, 108));
         lblFiltrarResultados.setFont(new Font("Montserrat", Font.BOLD, 16));
@@ -169,6 +170,14 @@ public class VistaAdmin extends JFrame {
                         (int) model.getValueAt(row, 5),
                         (String) model.getValueAt(row, 6)
                     );
+                    lblSeleccionado.setText("Seleccionado: ID=" + usuarioSeleccionado.getId()
+                    + ", Nombre=" + usuarioSeleccionado.getNombre()
+                    + ", Email=" + usuarioSeleccionado.getEmail()
+                    + ", Contraseña=" + usuarioSeleccionado.getContrasenia()
+                    + ", Dirección=" + usuarioSeleccionado.getDireccion() 
+                    + ", Sucursal=" + usuarioSeleccionado.getId_sucursal() 
+                    + ", Rol=" + usuarioSeleccionado.getElegido() 
+            		);
                 }
             }
         });
@@ -283,9 +292,9 @@ public class VistaAdmin extends JFrame {
 
     private void editarUsuarioSeleccionado() {
         if (usuarioSeleccionado != null) {
-            EditarUsuario editar = new EditarUsuario(usuarioSeleccionado);
-            editar.setVisible(true);
-            dispose();
+            EditarUsuario dialog = new EditarUsuario(this, usuarioSeleccionado);
+            dialog.setVisible(true);
+            // No necesitas llamar a cargarTabla() aquí porque ya se llama desde EditarUsuario
         } else {
             mostrarError("Seleccione un usuario.");
         }
@@ -308,7 +317,7 @@ public class VistaAdmin extends JFrame {
         }
     }
 
-    private void cargarTabla() {
+    public void cargarTabla() {
         model.setRowCount(0);
         LinkedList<Usuario> ordenados = ControllerUsuario.mostrarUsuarios().stream()
             .sorted(Comparator.comparingInt(Usuario::getId).reversed())
@@ -343,6 +352,29 @@ public class VistaAdmin extends JFrame {
                     usuario.getElegido()
                 });
             }
+        }
+    }
+    
+    private void cargarTablaFILTRARStream(String filtro) {
+        model.setRowCount(0);
+        
+        LinkedList<Usuario> filtradasPorLetra = ControllerUsuario.mostrarUsuarios().stream()
+        	    .filter(usuario -> usuario.getNombre() != null && usuario.getNombre().startsWith(filtro))
+        	    .collect(Collectors.toCollection(LinkedList::new));
+
+        for (Usuario usuario : filtradasPorLetra) {
+        	
+            model.addRow(new Object[]{
+            		usuario.getId(), 
+            		usuario.getNombre(),
+            		usuario.getEmail(), 
+            		usuario.getContrasenia(),
+            		usuario.getDireccion(),
+            		usuario.getId_sucursal(),
+            		usuario.getElegido()
+            		}
+            );
+        	
         }
     }
 }
