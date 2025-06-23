@@ -134,7 +134,8 @@ public class VistaLogin extends JFrame {
 				            break;
 				            
 				        case "ADMIN":
-				            VistaUsuarios pantallaAdmin = new VistaUsuarios();
+				            //VistaUsuarios pantallaAdmin = new VistaUsuarios();
+				            VistaAdmin pantallaAdmin = new VistaAdmin();
 				            pantallaAdmin.setVisible(true);
 				            break;
 				        case "CLIENTE":
