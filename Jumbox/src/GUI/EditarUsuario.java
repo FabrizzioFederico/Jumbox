@@ -35,7 +35,6 @@ public class EditarUsuario extends JDialog {
         getContentPane().setLayout(new BorderLayout());
         getContentPane().setBackground(new Color(222, 221, 218));
 
-        // Resto del código de inicialización del formulario...
         JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 10));
         formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         formPanel.setBackground(new Color(222, 221, 218));
