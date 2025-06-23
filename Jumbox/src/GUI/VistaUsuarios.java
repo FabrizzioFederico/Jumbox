@@ -198,7 +198,7 @@ public class VistaUsuarios extends JFrame {
         btnEditar.addActionListener(e -> {
             if (usuarioSeleccionado != null) {
 
-            	EditarUsuario editar = new EditarUsuario(usuarioSeleccionado);
+            	EditarUsuario editar = new EditarUsuario(null, usuarioSeleccionado);
             	editar.setVisible(true);
             	dispose();
             	
