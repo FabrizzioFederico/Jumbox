@@ -456,7 +456,6 @@ public class VistaClientes extends JFrame {
         lblFiltreLosResultados.setBounds(36, 50, 436, 17);
         panelFiltro.add(lblFiltreLosResultados);
 
-        // Inicializar carrito
         initCarrito();
         
         // Listeners
@@ -501,7 +500,6 @@ public class VistaClientes extends JFrame {
         lblCarrito.setBounds(34, 450, 200, 20);
         contentPane.add(lblCarrito);
         
-        // Etiqueta para mostrar el total
         lblTotalCarrito = new JLabel("Total: $0.00");
         lblTotalCarrito.setFont(new Font("Montserrat", Font.BOLD, 14));
         lblTotalCarrito.setForeground(new Color(63, 192, 108));
@@ -532,11 +530,11 @@ public class VistaClientes extends JFrame {
         formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         formPanel.setBackground(new Color(222, 221, 218));
 
-        JLabel lblCantidad = new JLabel("Cantidad:");
-        JSpinner spinnerCantidad = new JSpinner(new SpinnerNumberModel(1, 1, stockDisponible, 1));
+        JLabel lblCantidad = new JLabel("Cantidad (Disponible: " + stockDisponible + "):");
+        JTextField txtCantidad = new JTextField("1");
         
         formPanel.add(lblCantidad);
-        formPanel.add(spinnerCantidad);
+        formPanel.add(txtCantidad);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(new Color(222, 221, 218));
@@ -550,9 +548,24 @@ public class VistaClientes extends JFrame {
         btnAgregar.setForeground(Color.WHITE);
         btnAgregar.setBackground(new Color(63, 192, 108));
         btnAgregar.addActionListener(e -> {
-            int cantidad = (int) spinnerCantidad.getValue();
-            agregarProductoAlCarrito(row, cantidad);
-            dialog.dispose();
+            try {
+                int cantidad = Integer.parseInt(txtCantidad.getText().trim());
+                
+                if (cantidad <= 0) {
+                    mostrarError("La cantidad debe ser mayor a cero");
+                    return;
+                }
+                
+                if (cantidad > stockDisponible) {
+                    mostrarError("No hay suficiente stock. Disponible: " + stockDisponible);
+                    return;
+                }
+                
+                agregarProductoAlCarrito(row, cantidad);
+                dialog.dispose();
+            } catch (NumberFormatException ex) {
+                mostrarError("Ingrese un número válido");
+            }
         });
 
         buttonPanel.add(btnCancelar);
@@ -567,16 +580,17 @@ public class VistaClientes extends JFrame {
         int idProducto = (int) model.getValueAt(row, 0);
         String nombre = (String) model.getValueAt(row, 1);
         double precio = (double) model.getValueAt(row, 2);
+        int stockDisponible = (int) model.getValueAt(row, 3);
 
         for (VentaProducto vp : carrito) {
             if (vp.getId_producto() == idProducto) {
-                
-                Producto p = ControllerProducto.buscarProducto(idProducto);
-                if (p != null && (vp.getCantidad() + cantidad) > p.getStock()) {
-                    mostrarError("No hay suficiente stock. Stock disponible: " + p.getStock());
+                int cantidadTotal = vp.getCantidad() + cantidad;
+                if (cantidadTotal > stockDisponible) {
+                    mostrarError("No hay suficiente stock. Ya tienes " + vp.getCantidad() + 
+                                " en el carrito. Stock disponible: " + stockDisponible);
                     return;
                 }
-                vp.setCantidad(vp.getCantidad() + cantidad);
+                vp.setCantidad(cantidadTotal);
                 actualizarTablaCarrito();
                 return;
             }
@@ -622,7 +636,6 @@ public class VistaClientes extends JFrame {
             }
         }
 
-
         Object[] options = {"Confirmar", "Cancelar"};
         int confirm = JOptionPane.showOptionDialog(this,
             crearPanelConfirmacion(),
@@ -636,7 +649,6 @@ public class VistaClientes extends JFrame {
         if (confirm != JOptionPane.YES_OPTION) {
             return;
         }
-
 
         int idVenta = ControllerVenta.crearVenta(usuarioActual.getId(), usuarioActual.getId_sucursal(), calcularTotal());
         if (idVenta <= 0) {
