@@ -129,12 +129,13 @@ public class VistaLogin extends JFrame {
 				    
 					 switch(logueado.getElegido()) {
 				        case "ENCARGADO_STOCK":
-				            VistaProducto pantallaStock = new VistaProducto(); // Esto se va a cambiar con la interfaz
+				            VistaProducto pantallaStock = new VistaProducto(); 
 				            pantallaStock.setVisible(true);
 				            break;
 				            
 				        case "ADMIN":
-				            VistaUsuarios pantallaAdmin = new VistaUsuarios();
+				            //VistaUsuarios pantallaAdmin = new VistaUsuarios();
+				            VistaAdmin pantallaAdmin = new VistaAdmin();
 				            pantallaAdmin.setVisible(true);
 				            break;
 				        case "CLIENTE":

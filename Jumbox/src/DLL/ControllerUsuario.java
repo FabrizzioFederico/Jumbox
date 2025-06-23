@@ -17,20 +17,20 @@ public class ControllerUsuario{
     private static Connection con = Conexion.getInstance().getConnection();
 
 
-    public static Usuario login(String nombre, String contrasenia) {
+    public static Usuario login(String email, String contrasenia) {
 
         try {
             PreparedStatement stmt = con.prepareStatement(
-                "SELECT * FROM usuario WHERE nombre = ? AND contrasenia = ?"
+                "SELECT * FROM usuario WHERE email = ? AND contrasenia = ?"
             );
-            stmt.setString(1, nombre);
+            stmt.setString(1, email);
             stmt.setString(2, new Usuario().encriptar(contrasenia));
 
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 int id = rs.getInt("id_usuario");
-                String email = rs.getString("email");
+                String nombre = rs.getString("nombre");
                 String direccion = rs.getString("direccion");
                 String password = rs.getString("contrasenia");
                 int id_sucursal = rs.getInt("id_sucursal");
