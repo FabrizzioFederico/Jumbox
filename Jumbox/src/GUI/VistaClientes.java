@@ -320,9 +320,6 @@
 // }
 //}
 
-
-
-
 package GUI;
 
 import javax.swing.*;
@@ -338,6 +335,8 @@ import java.awt.*;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaClientes extends JFrame {
 
@@ -455,8 +454,21 @@ public class VistaClientes extends JFrame {
         lblFiltreLosResultados.setFont(new Font("Montserrat", Font.PLAIN, 12));
         lblFiltreLosResultados.setBounds(36, 50, 436, 17);
         panelFiltro.add(lblFiltreLosResultados);
+        
+        JButton btnEliminarCarrito = new JButton("Eliminar del carrito");
+        btnEliminarCarrito.setForeground(Color.WHITE);
+        btnEliminarCarrito.setFont(new Font("Dialog", Font.PLAIN, 14));
+        btnEliminarCarrito.setBackground(new Color(192, 57, 43));
+        btnEliminarCarrito.setBounds(69, 621, 180, 27);
+        contentPane.add(btnEliminarCarrito);
 
-        // Inicializar carrito
+        JButton btnHistorial = new JButton("Ver Historial de Compras");
+        btnHistorial.setBounds(80, 640, 260, 40); // Ajusta posición según tu layout
+        btnHistorial.setForeground(Color.WHITE);
+        btnHistorial.setBackground(new Color(63, 192, 108));
+        btnHistorial.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        contentPane.add(btnHistorial);
+
         initCarrito();
         
         // Listeners
@@ -474,15 +486,34 @@ public class VistaClientes extends JFrame {
                 }
             }
         });
+        
+        // Listeners carrito
+        tableCarrito.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = tableCarrito.getSelectedRow();
+                if (row != -1) {
+                    productoSeleccionado = new Producto(
+                        (int) model.getValueAt(row, 0),
+                        (String) model.getValueAt(row, 1),
+                        (double) model.getValueAt(row, 2),
+                        (int) model.getValueAt(row, 3),
+                        (int) model.getValueAt(row, 4)
+                    );
+                }
+            }
+        });
 
         btnAgregarCarrito.addActionListener(e -> mostrarDialogoAgregarAlCarrito());
         btnFinalizarCompra.addActionListener(e -> finalizarCompra());
+        btnEliminarCarrito.addActionListener(e -> mostrarDialogoBorrarDelCarrito());
         btnFiltrar.addActionListener(e -> cargarTablaFILTRAR(textField.getText()));
         btnLimpiar.addActionListener(e -> {
             cargarTabla();
             textField.setText("");
+            
+            
         });
-
+        btnHistorial.addActionListener(e -> new VistaMovimientos(usuarioActual).setVisible(true));
         cargarTabla();
     }
 
@@ -501,12 +532,100 @@ public class VistaClientes extends JFrame {
         lblCarrito.setBounds(34, 450, 200, 20);
         contentPane.add(lblCarrito);
         
-        // Etiqueta para mostrar el total
         lblTotalCarrito = new JLabel("Total: $0.00");
         lblTotalCarrito.setFont(new Font("Montserrat", Font.BOLD, 14));
         lblTotalCarrito.setForeground(new Color(63, 192, 108));
         lblTotalCarrito.setBounds(850, 640, 200, 20);
         contentPane.add(lblTotalCarrito);
+    }
+    
+    private void mostrarDialogoBorrarDelCarrito() {
+        int row = tableCarrito.getSelectedRow();
+        if (row == -1) {
+            mostrarError("Seleccione un producto primero");
+            return;
+        }
+        
+        int idProducto = (int) modelCarrito.getValueAt(row, 0);
+        String nombreProducto = (String) modelCarrito.getValueAt(row, 1);
+        int cantidad = Integer.parseInt(modelCarrito.getValueAt(row, 3).toString());
+        
+        JDialog dialog = new JDialog(this, "Eliminar del Carrito", true);
+        dialog.setSize(400, 200);
+        dialog.setLocationRelativeTo(this);
+        dialog.getContentPane().setLayout(new BorderLayout());
+        dialog.getContentPane().setBackground(new Color(222, 221, 218));
+
+        JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 10));
+        formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        formPanel.setBackground(new Color(222, 221, 218));
+
+        JLabel lblInfo = new JLabel("Producto: " + nombreProducto);
+        JLabel lblCantidad = new JLabel("Cantidad a eliminar (máx: " + cantidad + "):");
+        JTextField txtCantidad = new JTextField(String.valueOf(cantidad));
+        
+        formPanel.add(lblInfo);
+        formPanel.add(new JLabel()); 
+        formPanel.add(lblCantidad);
+        formPanel.add(txtCantidad);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setBackground(new Color(222, 221, 218));
+        
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setBackground(new Color(192, 57, 43));
+        btnCancelar.addActionListener(e -> dialog.dispose());
+        
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setBackground(new Color(192, 57, 43));
+        btnEliminar.addActionListener(e -> {
+            try {
+                int cantidadEliminar = Integer.parseInt(txtCantidad.getText().trim());
+                
+                if (cantidadEliminar <= 0) {
+                    mostrarError("La cantidad debe ser mayor a cero");
+                    return;
+                }
+                
+                if (cantidadEliminar > cantidad) {
+                    mostrarError("No puede eliminar más de lo que tiene en el carrito");
+                    return;
+                }
+                
+                eliminarDelCarrito(idProducto, cantidadEliminar);
+                dialog.dispose();
+            } catch (NumberFormatException ex) {
+                mostrarError("Ingrese un número válido");
+            }
+        });
+
+        buttonPanel.add(btnCancelar);
+        buttonPanel.add(btnEliminar);
+
+        dialog.getContentPane().add(formPanel, BorderLayout.CENTER);
+        dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        dialog.setVisible(true);
+    }
+    
+    private void eliminarDelCarrito(int idProducto, int cantidad) {
+        
+        for (VentaProducto vp : carrito) {
+            if (vp.getId_producto() == idProducto) {
+                if (vp.getCantidad() <= cantidad) {
+                    
+                    carrito.remove(vp);
+                } else {
+                    
+                    vp.setCantidad(vp.getCantidad() - cantidad);
+                }
+                actualizarTablaCarrito();
+                return;
+            }
+        }
+        
+        mostrarError("No se encontró el producto en el carrito");
     }
 
     private void mostrarDialogoAgregarAlCarrito() {
@@ -525,18 +644,18 @@ public class VistaClientes extends JFrame {
         JDialog dialog = new JDialog(this, "Agregar al Carrito", true);
         dialog.setSize(400, 200);
         dialog.setLocationRelativeTo(this);
-        dialog.setLayout(new BorderLayout());
+        dialog.getContentPane().setLayout(new BorderLayout());
         dialog.getContentPane().setBackground(new Color(222, 221, 218));
 
         JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 10));
         formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
         formPanel.setBackground(new Color(222, 221, 218));
 
-        JLabel lblCantidad = new JLabel("Cantidad:");
-        JSpinner spinnerCantidad = new JSpinner(new SpinnerNumberModel(1, 1, stockDisponible, 1));
+        JLabel lblCantidad = new JLabel("Cantidad (Disponible: " + stockDisponible + "):");
+        JTextField txtCantidad = new JTextField("1");
         
         formPanel.add(lblCantidad);
-        formPanel.add(spinnerCantidad);
+        formPanel.add(txtCantidad);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(new Color(222, 221, 218));
@@ -550,33 +669,50 @@ public class VistaClientes extends JFrame {
         btnAgregar.setForeground(Color.WHITE);
         btnAgregar.setBackground(new Color(63, 192, 108));
         btnAgregar.addActionListener(e -> {
-            int cantidad = (int) spinnerCantidad.getValue();
-            agregarProductoAlCarrito(row, cantidad);
-            dialog.dispose();
+            try {
+                int cantidad = Integer.parseInt(txtCantidad.getText().trim());
+                
+                if (cantidad <= 0) {
+                    mostrarError("La cantidad debe ser mayor a cero");
+                    return;
+                }
+                
+                if (cantidad > stockDisponible) {
+                    mostrarError("No hay suficiente stock. Disponible: " + stockDisponible);
+                    return;
+                }
+                
+                agregarProductoAlCarrito(row, cantidad);
+                dialog.dispose();
+            } catch (NumberFormatException ex) {
+                mostrarError("Ingrese un número válido");
+            }
         });
 
         buttonPanel.add(btnCancelar);
         buttonPanel.add(btnAgregar);
 
-        dialog.add(formPanel, BorderLayout.CENTER);
-        dialog.add(buttonPanel, BorderLayout.SOUTH);
+        dialog.getContentPane().add(formPanel, BorderLayout.CENTER);
+        dialog.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         dialog.setVisible(true);
+        
     }
 
     private void agregarProductoAlCarrito(int row, int cantidad) {
         int idProducto = (int) model.getValueAt(row, 0);
         String nombre = (String) model.getValueAt(row, 1);
         double precio = (double) model.getValueAt(row, 2);
+        int stockDisponible = (int) model.getValueAt(row, 3);
 
         for (VentaProducto vp : carrito) {
             if (vp.getId_producto() == idProducto) {
-                
-                Producto p = ControllerProducto.buscarProducto(idProducto);
-                if (p != null && (vp.getCantidad() + cantidad) > p.getStock()) {
-                    mostrarError("No hay suficiente stock. Stock disponible: " + p.getStock());
+                int cantidadTotal = vp.getCantidad() + cantidad;
+                if (cantidadTotal > stockDisponible) {
+                    mostrarError("No hay suficiente stock. Ya tienes " + vp.getCantidad() + 
+                                " en el carrito. Stock disponible: " + stockDisponible);
                     return;
                 }
-                vp.setCantidad(vp.getCantidad() + cantidad);
+                vp.setCantidad(cantidadTotal);
                 actualizarTablaCarrito();
                 return;
             }
@@ -622,7 +758,6 @@ public class VistaClientes extends JFrame {
             }
         }
 
-
         Object[] options = {"Confirmar", "Cancelar"};
         int confirm = JOptionPane.showOptionDialog(this,
             crearPanelConfirmacion(),
@@ -636,7 +771,6 @@ public class VistaClientes extends JFrame {
         if (confirm != JOptionPane.YES_OPTION) {
             return;
         }
-
 
         int idVenta = ControllerVenta.crearVenta(usuarioActual.getId(), usuarioActual.getId_sucursal(), calcularTotal());
         if (idVenta <= 0) {
@@ -741,7 +875,7 @@ public class VistaClientes extends JFrame {
         panelBoton.add(btnCerrar);
         
         panel.add(panelBoton, BorderLayout.SOUTH);
-        ticketDialog.add(panel);
+        ticketDialog.getContentPane().add(panel);
         ticketDialog.setVisible(true);
     }
 
