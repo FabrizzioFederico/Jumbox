@@ -380,7 +380,7 @@ public class VistaClientes extends JFrame {
         contentPane.add(panel);
         panel.setLayout(null);
         
-        JLabel lblPanelDeCliente = new JLabel("Panel de Cliente - Jumbox");
+        JLabel lblPanelDeCliente = new JLabel("Panel de Cliente - Jumbox " + "("+this.usuarioActual.getNombre()+")");
         lblPanelDeCliente.setForeground(Color.WHITE);
         lblPanelDeCliente.setFont(new Font("Montserrat", Font.BOLD, 18));
         lblPanelDeCliente.setBounds(42, 15, 374, 27);

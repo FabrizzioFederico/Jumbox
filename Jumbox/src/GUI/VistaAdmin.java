@@ -22,21 +22,11 @@ public class VistaAdmin extends JFrame {
     private DefaultTableModel model;
     private Usuario usuarioSeleccionado;
     private JTextField textField;
+    private Usuario usuarioActual;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VistaAdmin frame = new VistaAdmin();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
-    public VistaAdmin() {
+    public VistaAdmin(Usuario usuario) {
+    	this.usuarioActual = usuario;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1080, 580);
         contentPane = new JPanel();
@@ -70,7 +60,7 @@ public class VistaAdmin extends JFrame {
         contentPane.add(panel);
         panel.setLayout(null);
         
-        JLabel lblPanelDeAdministrador = new JLabel("Panel de Administrador - Jumbox");
+        JLabel lblPanelDeAdministrador = new JLabel("Panel de Administrador - Jumbox " + "("+this.usuarioActual.getNombre()+")");
         lblPanelDeAdministrador.setForeground(Color.WHITE);
         lblPanelDeAdministrador.setFont(new Font("Montserrat", Font.BOLD, 18));
         lblPanelDeAdministrador.setBounds(42, 15, 374, 27);
@@ -309,7 +299,7 @@ public class VistaAdmin extends JFrame {
             if (confirm == JOptionPane.YES_OPTION) {
                 ControllerUsuario.Eliminar(usuarioSeleccionado);
                 dispose();
-                VistaAdmin vistaAdmin = new VistaAdmin();
+                VistaAdmin vistaAdmin = new VistaAdmin(this.usuarioActual);
                 vistaAdmin.setVisible(true);
             }
         } else {

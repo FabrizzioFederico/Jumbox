@@ -23,21 +23,10 @@ public class VistaProducto extends JFrame {
     private DefaultTableModel model;
     private Producto productoSeleccionado;
     private JTextField textField;
+    private Usuario usuarioActual;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VistaProducto frame = new VistaProducto();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public VistaProducto() {
+    public VistaProducto(Usuario usuario) {
+    	this.usuarioActual = usuario;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1080, 580);
         contentPane = new JPanel();
@@ -69,7 +58,7 @@ public class VistaProducto extends JFrame {
         contentPane.add(panel);
         panel.setLayout(null);
         
-        JLabel lblPanelDeAdministrador = new JLabel("Panel de Productos - Jumbox");
+        JLabel lblPanelDeAdministrador = new JLabel("Panel de Productos - Jumbox " + "("+this.usuarioActual.getNombre()+")");
         lblPanelDeAdministrador.setForeground(Color.WHITE);
         lblPanelDeAdministrador.setFont(new Font("Montserrat", Font.BOLD, 18));
         lblPanelDeAdministrador.setBounds(42, 15, 374, 27);
@@ -284,7 +273,7 @@ public class VistaProducto extends JFrame {
             if (confirm == JOptionPane.YES_OPTION) {
                 ControllerProducto.eliminarProducto(productoSeleccionado);
                 dispose();
-                VistaProducto vistaProducto = new VistaProducto();
+                VistaProducto vistaProducto = new VistaProducto(this.usuarioActual);
                 vistaProducto.setVisible(true);
             }
         } else {
