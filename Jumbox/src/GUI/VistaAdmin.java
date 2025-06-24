@@ -262,33 +262,33 @@ public class VistaAdmin extends JFrame {
     }
 
     private boolean validarCampos(JTextField nombreField, JTextField emailField, 
-                                JPasswordField passwordField, JTextField direccionField) {
-        if (Validaciones.validarNombreSinIngreso(nombreField.getText()) == null) {
-            mostrarError("Nombre inválido\nSolo letras y espacios permitidos");
-            return false;
-        }
+            JPasswordField passwordField, JTextField direccionField) {
+    	if (Validaciones.validarNombreSinIngreso(nombreField.getText()) == null) {
+    		mostrarError("Nombre inválido\nSolo letras y espacios permitidos");
+    		return false;
+    	}
 
-        if (Validaciones.validarEmail(emailField.getText()) == null) {
-            mostrarError("Email inválido\nFormato: usuario@dominio.com");
-            return false;
-        }
+    	if (Validaciones.validarEmail(emailField.getText()) == null) {
+    		mostrarError("Email inválido\nFormato: usuario@dominio.com");
+    		return false;
+    	}
 
-        if (Validaciones.validarContraseniaSinIngreso(new String(passwordField.getPassword())) == null) {
-            mostrarError("Contraseña inválida\nDebe tener:\n- 8+ caracteres\n- 1 mayúscula\n- 1 minúscula\n- 1 número");
-            return false;
-        }
-        
-        if (Validaciones.validarAlfanumerico(direccionField.getText()) == null) {
-            mostrarError("Dirección Incorrecta");
-            return false;
-        }
-        
-        return true;
-    }
+    	if (Validaciones.validarContraseniaSinIngreso(new String(passwordField.getPassword())) == null) {
+    		mostrarError("Contraseña inválida\nDebe tener:\n- 8+ caracteres\n- 1 mayúscula\n- 1 minúscula\n- 1 número");
+    		return false;
+    	}
+
+    	if (Validaciones.validarAlfanumerico(direccionField.getText()) == null) {
+    		mostrarError("Dirección Incorrecta");
+    		return false;
+    	}
+
+    	return true;
+    	}
 
     private void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
+    	JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    	}	
 
     private void editarUsuarioSeleccionado() {
         if (usuarioSeleccionado != null) {

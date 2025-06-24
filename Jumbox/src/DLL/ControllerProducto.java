@@ -59,7 +59,7 @@ public class ControllerProducto {
         return productos;
     }
 	
-	public static boolean actualizarProducto(Producto producto) {
+	public static String actualizarProducto(Producto producto) {
 	    try {
 	        PreparedStatement statement = con.prepareStatement(
 	            "UPDATE producto SET nombre = ?, precio = ?, stock = ?, id_sucursal = ? WHERE id_producto = ?"
@@ -72,17 +72,16 @@ public class ControllerProducto {
 
 	        int filas = statement.executeUpdate();
 	        if (filas > 0) {
-	            System.out.println("Producto actualizado correctamente.");
-	            return true;
-	        } else {
-	            System.out.println("No se encontró el producto para actualizar.");
-	        }
-	    } catch (MySQLIntegrityConstraintViolationException e) {
-	        JOptionPane.showMessageDialog(null, "Error de integridad: datos duplicados o campos vacíos.");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return false;
+	        	return"Producto editado correctamente.";
+	        } 
+	    	
+		}catch (MySQLIntegrityConstraintViolationException e) {
+			return "Mail existente";
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Error";
 	}
 	
 	public static void RegistrarProducto(Producto nuevo) {
