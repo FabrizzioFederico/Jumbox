@@ -253,7 +253,7 @@ public class VistaProducto extends JFrame {
     		return false;
     	}
 
-    	if (Validaciones.validarNumeroPositivo(stockField.getText()) == 0) {
+    	if (Validaciones.validarNumeroPositivo(stockField.getText()) < 0) {
     		mostrarError("Stock inválido\nIngrese un número de stock positivo");
     		return false;
     	}
