@@ -320,9 +320,6 @@
 // }
 //}
 
-
-
-
 package GUI;
 
 import javax.swing.*;
@@ -456,6 +453,13 @@ public class VistaClientes extends JFrame {
         lblFiltreLosResultados.setBounds(36, 50, 436, 17);
         panelFiltro.add(lblFiltreLosResultados);
 
+        JButton btnHistorial = new JButton("Ver Historial de Compras");
+        btnHistorial.setBounds(80, 640, 260, 40); // Ajusta posición según tu layout
+        btnHistorial.setForeground(Color.WHITE);
+        btnHistorial.setBackground(new Color(63, 192, 108));
+        btnHistorial.setFont(new Font("Montserrat", Font.PLAIN, 14));
+        contentPane.add(btnHistorial);
+
         initCarrito();
         
         // Listeners
@@ -481,7 +485,7 @@ public class VistaClientes extends JFrame {
             cargarTabla();
             textField.setText("");
         });
-
+        btnHistorial.addActionListener(e -> new VistaMovimientos(usuarioActual).setVisible(true));
         cargarTabla();
     }
 
@@ -574,6 +578,7 @@ public class VistaClientes extends JFrame {
         dialog.add(formPanel, BorderLayout.CENTER);
         dialog.add(buttonPanel, BorderLayout.SOUTH);
         dialog.setVisible(true);
+        
     }
 
     private void agregarProductoAlCarrito(int row, int cantidad) {
