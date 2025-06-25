@@ -51,7 +51,7 @@ public class VistaMovimientos extends JFrame {
          				"Sucursal",
          				"Detalles"
          				}, 0);
-         table = new JTable(model);
+//         table = new JTable(model);
          JScrollPane scrollPane = new JScrollPane(table);
          scrollPane.setBounds(34, 58, 1006, 200);
          contentPane.add(scrollPane);

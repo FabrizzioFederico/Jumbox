@@ -97,32 +97,62 @@ public class ControllerVenta {
         return ventas;
     }
     
-
+//
+//    public static LinkedList<VentaProducto> obtenerProductosDeVenta(int idVenta) {
+//        LinkedList<VentaProducto> productos = new LinkedList<>();
+//        
+//        try {
+//            PreparedStatement stmt = con.prepareStatement(
+//                "SELECT id, id_producto, cantidad, precio_unitario FROM ventaproducto WHERE id_venta = ?");
+//            stmt.setInt(1, idVenta);
+//            
+//            ResultSet rs = stmt.executeQuery();
+//            
+//            while (rs.next()) {
+//                VentaProducto vp = new VentaProducto(
+//                    rs.getInt("id"),
+//                    idVenta,
+//                    rs.getInt("id_producto"),
+//                    rs.getInt("cantidad"),
+//                    rs.getDouble("precio_unitario")
+//                );
+//                productos.add(vp);
+//            }
+//            
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        
+//        return productos;
+//    }
+    
     public static LinkedList<VentaProducto> obtenerProductosDeVenta(int idVenta) {
         LinkedList<VentaProducto> productos = new LinkedList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         
         try {
-            PreparedStatement stmt = con.prepareStatement(
-                "SELECT id, id_producto, cantidad, precio_unitario FROM ventaproducto WHERE id_venta = ?");
+            stmt = con.prepareStatement(
+                "SELECT id_producto, cantidad, precio_unitario FROM ventaproducto WHERE id_venta = ?");
             stmt.setInt(1, idVenta);
             
-            ResultSet rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
             
             while (rs.next()) {
                 VentaProducto vp = new VentaProducto(
-                    rs.getInt("id"),
-                    idVenta,
+                    idVenta,  // id_venta
                     rs.getInt("id_producto"),
                     rs.getInt("cantidad"),
                     rs.getDouble("precio_unitario")
                 );
                 productos.add(vp);
             }
-            
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al obtener productos: " + e.getMessage());
+        } finally {
+            try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
-        
         return productos;
     }
     
