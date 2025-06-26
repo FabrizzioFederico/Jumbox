@@ -463,7 +463,7 @@ public class VistaClientes extends JFrame {
         contentPane.add(btnEliminarCarrito);
 
         JButton btnHistorial = new JButton("Ver Historial de Compras");
-        btnHistorial.setBounds(80, 640, 260, 40); // Ajusta posición según tu layout
+        btnHistorial.setBounds(277, 621, 210, 27); // Ajusta posición según tu layout
         btnHistorial.setForeground(Color.WHITE);
         btnHistorial.setBackground(new Color(63, 192, 108));
         btnHistorial.setFont(new Font("Montserrat", Font.PLAIN, 14));

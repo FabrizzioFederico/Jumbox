@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
 import BLL.Usuario;
@@ -20,9 +21,10 @@ public class VistaMovimientos extends JFrame {
     private JTable table;
     private DefaultTableModel model;
     private Usuario usuarioActual;
+    private Venta ventaSeleccionada;
 
     public VistaMovimientos(Usuario usuario) {
-        this.usuarioActual = usuario;
+    	this.usuarioActual = usuario;
         setTitle("Historial de Compras - " + usuario.getNombre());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 900, 600);
@@ -31,6 +33,7 @@ public class VistaMovimientos extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
+        
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(new Color(63, 192, 108));
         panelSuperior.setBounds(0, 0, 900, 60);
@@ -43,22 +46,37 @@ public class VistaMovimientos extends JFrame {
         lblTitulo.setBounds(20, 15, 300, 30);
         panelSuperior.add(lblTitulo);
 
-
+        
         model = new DefaultTableModel(
-         		new String[]{"ID Venta",
-         				"Fecha",
-         				"Total",
-         				"Sucursal",
-         				"Detalles"
-         				}, 0);
-//         table = new JTable(model);
-         JScrollPane scrollPane = new JScrollPane(table);
-         scrollPane.setBounds(34, 58, 1006, 200);
-         contentPane.add(scrollPane);
-         
+            new String[]{"ID Venta", "Fecha", "Total", "Sucursal", "Detalles"}, 0);
+        
+        
         table = new JTable(model);
         table.setFont(new Font("SansSerif", Font.PLAIN, 14));
         table.setRowHeight(25);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(20, 70, 850, 350); 
+        contentPane.add(scrollPane);
+
+        
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = table.getSelectedRow();
+                if (row != -1) {
+                    ventaSeleccionada = new Venta(
+                        (int) model.getValueAt(row, 0),       
+                        usuarioActual.getId(),                
+                        (int) model.getValueAt(row, 3),       
+                        (Timestamp) model.getValueAt(row, 1), 
+                        (double) model.getValueAt(row, 2)     
+                    );
+                    System.out.println("Venta seleccionada: " + ventaSeleccionada.getId()); 
+                }
+            }
+        });
 
         JButton btnDetalles = new JButton("Ver Detalles");
         btnDetalles.setBounds(20, 450, 150, 30);
@@ -111,8 +129,7 @@ public class VistaMovimientos extends JFrame {
     }
 
     private void mostrarDetalleVenta() {
-        int row = table.getSelectedRow();
-        if (row == -1) {
+        if (ventaSeleccionada == null) {
             JOptionPane.showMessageDialog(this, 
                 "Seleccione una venta primero", 
                 "Advertencia", 
@@ -120,8 +137,7 @@ public class VistaMovimientos extends JFrame {
             return;
         }
 
-        int idVenta = (int) model.getValueAt(row, 0);
-        LinkedList<VentaProducto> productos = ControllerVenta.obtenerProductosDeVenta(idVenta);
+        LinkedList<VentaProducto> productos = ControllerVenta.obtenerProductosDeVenta(ventaSeleccionada.getId());
         
         if (productos.isEmpty()) {
             JOptionPane.showMessageDialog(this, 
@@ -131,7 +147,7 @@ public class VistaMovimientos extends JFrame {
             return;
         }
 
-        JDialog dialog = new JDialog(this, "Detalles de Venta #" + idVenta, true);
+        JDialog dialog = new JDialog(this, "Detalles de Venta #" + ventaSeleccionada.getId(), true);
         dialog.setSize(600, 400);
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new BorderLayout());

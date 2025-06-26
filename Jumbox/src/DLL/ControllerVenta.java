@@ -74,14 +74,14 @@ public class ControllerVenta {
         
         try {
             PreparedStatement stmt = con.prepareStatement(
-                "SELECT id, id_sucursal, fecha, total FROM venta WHERE id_usuario = ? ORDER BY fecha DESC");
+                "SELECT id_venta, id_sucursal, fecha, total FROM venta WHERE id_usuario = ? ORDER BY fecha DESC");
             stmt.setInt(1, idUsuario);
             
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next()) {
                 Venta venta = new Venta(
-                    rs.getInt("id"),
+                    rs.getInt("id_venta"),
                     idUsuario,
                     rs.getInt("id_sucursal"),
                     rs.getTimestamp("fecha"),
@@ -160,7 +160,7 @@ public class ControllerVenta {
     public static boolean reducirStock(int idProducto, int cantidad) {
         try {
             PreparedStatement stmt = con.prepareStatement(
-                "UPDATE producto SET stock = stock - ? WHERE id = ? AND stock >= ?");
+                "UPDATE producto SET stock = stock - ? WHERE id_venta = ? AND stock >= ?");
             
             stmt.setInt(1, cantidad);
             stmt.setInt(2, idProducto);
