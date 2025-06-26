@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.jdbc.Statement;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import BLL.Usuario;
@@ -55,7 +56,8 @@ public class ControllerUsuario{
     public static void agregarUsuario(Usuario usuario) {
         try {
             PreparedStatement statement = con.prepareStatement(
-                "INSERT INTO usuario (nombre, email, contrasenia, direccion, id_sucursal, rol) VALUES (?, ?, ?, ?, ?, ?)"
+                "INSERT INTO usuario (nombre, email, contrasenia, direccion, id_sucursal, rol) VALUES (?, ?, ?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
             );
             statement.setString(1, usuario.getNombre());
             statement.setString(2, usuario.getEmail());
@@ -67,7 +69,11 @@ public class ControllerUsuario{
 
             int filas = statement.executeUpdate();
             if (filas > 0) {
-                System.out.println("Usuario agregado correctamente.");
+            	ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    usuario.setId(generatedKeys.getInt(1));
+                    System.out.println("Usuario agregado correctamente. ID: " + usuario.getId());
+                }
             }
             
         } catch(MySQLIntegrityConstraintViolationException e) {
