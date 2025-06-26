@@ -48,7 +48,7 @@ public class VistaMovimientos extends JFrame {
 
         
         model = new DefaultTableModel(
-            new String[]{"ID Venta", "Fecha", "Total", "Sucursal", "Detalles"}, 0);
+            new String[]{"ID Venta", "Fecha", "Total", "Sucursal"}, 0);
         
         
         table = new JTable(model);
@@ -122,8 +122,7 @@ public class VistaMovimientos extends JFrame {
                 venta.getId(),
                 venta.getFecha(),
                 venta.getTotal(),
-                venta.getId_sucursal(),
-                "Ver detalles"
+                venta.getId_sucursal()
             });
         }
     }
